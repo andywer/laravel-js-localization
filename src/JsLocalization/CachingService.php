@@ -24,7 +24,7 @@ class CachingService
     public function getMessagesJson ()
     {
         if (!Cache::has(self::CACHE_KEY)) {
-            $this->cacheMessagesJson();
+            $this->refreshMessageCache();
         }
         
         return Cache::get(self::CACHE_KEY);
@@ -36,7 +36,7 @@ class CachingService
      *
      * @return void
      */
-    public function cacheMessagesJson ()
+    public function refreshMessageCache ()
     {
         $messageKeys = Config::get('js-localization::config.messages');
         $translatedMessages = array();

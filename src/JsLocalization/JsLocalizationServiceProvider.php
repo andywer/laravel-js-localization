@@ -1,9 +1,11 @@
 <?php namespace JsLocalization;
 
 use App;
+use Artisan;
 use Config;
 use View;
 use Illuminate\Support\ServiceProvider;
+use JsLocalization\Console\RefreshCommand;
 
 class JsLocalizationServiceProvider extends ServiceProvider {
 
@@ -34,6 +36,22 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+		$this->registerNamespaces();
+		$this->registerRefreshCommand();
+	}
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return array('js-localization');
+	}
+
+	private function registerNamespaces ()
+	{
 		$fs = App::make('files');
 
 		if ($fs->isDirectory( app_path().'/config/packages/andywer/js-localization' )) {
@@ -46,13 +64,16 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	}
 
 	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
+	 * Register js-localization.refresh
 	 */
-	public function provides()
+	private function registerRefreshCommand ()
 	{
-		return array('js-localization');
+		$this->app['js-localization.refresh'] = $this->app->share(function($app)
+		{
+			return new RefreshCommand;
+		});
+
+		$this->commands('js-localization.refresh');
 	}
 
 }
