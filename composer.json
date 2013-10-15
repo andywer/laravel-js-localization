@@ -1,0 +1,23 @@
+{
+    "name": "andywer/js-localization",
+    "description": "Laravel package to provide localizations to the Javascript logic.",
+    "authors": [
+        {
+            "name": "Andy Wermke",
+            "email": "andy@dev.next-step-software.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x"
+    },
+    "autoload": {
+        "classmap": [
+            "src/controllers"
+        ],
+        "psr-0": {
+            "JsLocalization": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
