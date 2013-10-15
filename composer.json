@@ -11,9 +11,14 @@
         "php": ">=5.3.0",
         "illuminate/support": "4.0.x"
     },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "illuminate/foundation": "4.0.x"
+    },
     "autoload": {
         "classmap": [
-            "src/controllers"
+            "src/controllers",
+            "tests/TestCase.php"
         ],
         "psr-0": {
             "JsLocalization": "src/"
