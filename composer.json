@@ -12,8 +12,9 @@
         "illuminate/support": "4.0.x"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*",
-        "illuminate/foundation": "4.0.x"
+        "illuminate/foundation": "4.0.x",
+        "mockery/mockery": "dev-master@dev",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "classmap": [
