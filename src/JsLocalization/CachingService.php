@@ -1,9 +1,9 @@
 <?php
 namespace JsLocalization;
 
-use Cache;
-use Config;
-use Lang;
+use \Cache;
+use \Config;
+use \Lang;
 
 class CachingService
 {
