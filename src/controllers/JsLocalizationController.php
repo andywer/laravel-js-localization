@@ -5,11 +5,12 @@ class JsLocalizationController extends Controller
     
     public function createJsMessages ()
     {
-        // TODO:
-        $messages = array();
+        $cachingService = App::make('JsLocalizationCachingService');
+
+        $messages = $cachingService->getMessagesJson();
 
         $contents  = 'Lang.setLocale("'.Lang::locale().'");';
-        $contents .= 'Lang.addMessages('.json_encode($messages).');';
+        $contents .= 'Lang.addMessages('.$messages.');';
 
         return Response::make($contents)
                 ->header('Content-Type', 'text/javascript');

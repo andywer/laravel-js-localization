@@ -1,7 +1,8 @@
 <?php namespace JsLocalization;
 
-use \Config;
-use \View;
+use App;
+use Config;
+use View;
 use Illuminate\Support\ServiceProvider;
 
 class JsLocalizationServiceProvider extends ServiceProvider {
@@ -22,6 +23,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	{
 		$this->package('andywer/js-localization');
 
+		require __DIR__.'/../../bindings.php';
 		require __DIR__.'/../../routes.php';
 	}
 
@@ -32,7 +34,14 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		Config::addNamespace('js-localization', __DIR__.'/../config');
+		$fs = App::make('files');
+
+		if ($fs->isDirectory( app_path().'/config/packages/andywer/js-localization' )) {
+			Config::addNamespace('js-localization', app_path().'/config/packages/andywer/js-localization');
+		} else {
+			Config::addNamespace('js-localization', __DIR__.'/../config');
+		}
+
 		View::addNamespace('js-localization', __DIR__.'/../views');
 	}
 
@@ -43,7 +52,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('js-localization');
 	}
 
 }
