@@ -4,6 +4,8 @@ class JsLocalizationControllerTest extends TestCase
 {
     public function testCreateJsMessages ()
     {
+        // Prepare
+
         $this->mockLang($locale = 'en');
 
         $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
