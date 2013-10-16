@@ -1,23 +1,11 @@
 <?php
 
-use Mockery as m;
 use JsLocalization\CachingService;
 
 class CachingServiceTest extends TestCase
 {
 
     private $cachingService;
-    private $config;
-
-    private $testMessagesConfig = array(
-            'test_string',
-            'test' => array('string')
-        );
-
-    private $testMessages = array(
-            'test_string' => 'This is: test_string',
-            'test.string' => 'This is: test.string'
-        );
 
     public function setUp ()
     {
@@ -26,31 +14,7 @@ class CachingServiceTest extends TestCase
         $this->cachingService = new CachingService;
         
         Cache::forget(CachingService::CACHE_KEY);
-
-        $this->updateConfig($this->testMessagesConfig);
-        $this->mockLang();
-    }
-
-    private function updateConfig (array $config)
-    {
-        Config::set('js-localization::config.messages', $config);
-    }
-
-    private function mockLang ()
-    {
-        Illuminate\Support\Facades\Lang::swap($lang = m::mock('LangMock'));
-
-        foreach ($this->testMessages as $key=>$message) {
-            $lang->shouldReceive('get')
-                ->with($key)->andReturn($message);
-        }
-    }
-
-    public function tearDown ()
-    {
-        m::close();
-
-        parent::tearDown();
+        Cache::forget(CachingService::CACHE_TIMESTAMP_KEY);
     }
 
     public function testGetMessagesJson ()
@@ -89,7 +53,7 @@ class CachingServiceTest extends TestCase
 
         $this->testMessages[$messageKey] = $message;
 
-        $this->updateConfig($this->testMessagesConfig);
+        $this->updateMessagesConfig($this->testMessagesConfig);
         $this->mockLang();
     }
 
