@@ -31,7 +31,7 @@ class JsLocalizationHelper
         foreach ($messageKeys as $index=>$key) {
             $this->resolveMessageKey($key, $index, function($qualifiedKey) use(&$messagesToExport)
                 {
-                    $messagesToExport[$qualifiedKey] = Lang::get($qualifiedKey);
+                    $messagesToExport[] = $qualifiedKey;
                 });
         }
 
