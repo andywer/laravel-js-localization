@@ -1,9 +1,10 @@
 <?php
 namespace JsLocalization;
 
-use \Cache;
-use \Config;
-use \Lang;
+use App;
+use Cache;
+use Config;
+use Lang;
 
 class CachingService
 {
@@ -22,6 +23,16 @@ class CachingService
      * @var string
      */
     const CACHE_TIMESTAMP_KEY = 'js-localization-last-modified';
+
+    /**
+     * @var \JsLocalization\JsLocalizationHelper
+     */
+    private $helper;
+
+    public function __construct ()
+    {
+        $this->helper = App::make('JsLocalizationHelper');
+    }
 
     /**
      * Returns the cached messages (already JSON encoded).
@@ -46,11 +57,12 @@ class CachingService
      */
     public function refreshMessageCache ()
     {
-        $messageKeys = Config::get('js-localization::config.messages');
+        $messageKeys = $this->getMessageKeys();
         $translatedMessages = array();
 
         foreach ($messageKeys as $index=>$key) {
-            $this->resolveMessageKey($key, $index, function($qualifiedKey) use(&$translatedMessages)
+            $this->helper->resolveMessageKey($key, $index, function($qualifiedKey)
+                use(&$translatedMessages)
                 {
                     $translatedMessages[$qualifiedKey] = Lang::get($qualifiedKey);
                 });
@@ -61,7 +73,8 @@ class CachingService
     }
 
     /**
-     * Returns the UNIX timestamp of the last refreshMessageCache() call.
+     * Returns the UNIX timestamp of the last
+     * refreshMessageCache() call.
      *
      * @return UNIX timestamp
      */
@@ -71,27 +84,20 @@ class CachingService
     }
 
     /**
-     * Returns the concatenation of prefix and key if the key
-     * is a string. If the key is an array then the function
-     * will recurse.
+     * Returns the message keys of all messages
+     * that are supposed to be sent to the browser.
      *
-     * @param mixed $key            An array item read from the configuration ('messages' array).
-     * @param mixed $keyIndex       The array index of $key. Is neccessary if $key is an array.
-     * @param callable $callback    A callback function: function($fullyQualifiedKey).
-     * @param string $prefix        Optional key prefix.
+     * @return array Array of message keys.
      */
-    private function resolveMessageKey ($key, $keyIndex, $callback, $prefix="")
+    protected function getMessageKeys ()
     {
-        if (is_array($key)) {
-            $_prefix = $prefix ? $prefix.$keyIndex."." : $keyIndex.".";
+        $messageKeys = Config::get('js-localization::config.messages');
 
-            foreach ($key as $_index=>$_key) {
-                $this->resolveMessageKey($_key, $_index, $callback, $_prefix);
-            }
+        $messageKeys = array_unique(
+            array_merge($messageKeys, $this->helper->getAdditionalMessages())
+        );
 
-        } else {
-            $callback($prefix.$key);
-        }
+        return $messageKeys;
     }
 
 }
