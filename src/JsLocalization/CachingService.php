@@ -16,6 +16,14 @@ class CachingService
     const CACHE_KEY = 'js-localization-messages-json';
 
     /**
+     * The key used to cache the timestamp of the last
+     * refreshMessageCache() call.
+     *
+     * @var string
+     */
+    const CACHE_TIMESTAMP_KEY = 'js-localization-last-modified';
+
+    /**
      * Returns the cached messages (already JSON encoded).
      * Creates the neccessary cache item if neccessary.
      *
@@ -49,6 +57,17 @@ class CachingService
         }
 
         Cache::forever(self::CACHE_KEY, json_encode($translatedMessages));
+        Cache::forever(self::CACHE_TIMESTAMP_KEY, time());
+    }
+
+    /**
+     * Returns the UNIX timestamp of the last refreshMessageCache() call.
+     *
+     * @return UNIX timestamp
+     */
+    public function getLastRefreshTimestamp ()
+    {
+        return Cache::get(self::CACHE_TIMESTAMP_KEY);
     }
 
     /**
