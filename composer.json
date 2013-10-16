@@ -25,5 +25,9 @@
             "JsLocalization": "src/"
         }
     },
+    "extra": {
+        "component": "package",
+        "frameworks": ["Laravel 4"]
+    },
     "minimum-stability": "dev"
 }
