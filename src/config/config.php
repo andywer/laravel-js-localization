@@ -13,6 +13,11 @@ return array(
     | time the website needs to load. So you are encouraged to limit these
     | messages to the minimum you really need.
     |
+    | Supports nesting:
+    |   array( 'mynamespace' => array( 'test1', 'test2' ) )
+    | for instance will be internally resolved to:
+    |   array('mynamespace.test1', 'mynamespace.test2')
+    |
     */
 
     'messages' => array(),
