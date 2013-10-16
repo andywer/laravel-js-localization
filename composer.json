@@ -1,6 +1,7 @@
 {
     "name": "andywer/js-localization",
     "description": "Laravel package to provide localizations to the Javascript logic.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Andy Wermke",
