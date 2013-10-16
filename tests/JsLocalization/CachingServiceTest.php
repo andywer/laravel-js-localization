@@ -71,6 +71,18 @@ class CachingServiceTest extends TestCase
         $this->assertMessagesJsonEquals($this->testMessages);
     }
 
+    public function testGetLastRefreshTimestamp ()
+    {
+        $timestamp = $this->cachingService->getLastRefreshTimestamp();
+        $this->assertEquals(0, $timestamp);
+
+        $this->cachingService->refreshMessageCache();
+        $refreshTime = time();
+
+        $timestamp = $this->cachingService->getLastRefreshTimestamp();
+        $this->assertEquals($refreshTime, $timestamp);
+    }
+
     private function addTestMessage ($messageKey, $message)
     {
         $this->testMessagesConfig[] = $messageKey;
