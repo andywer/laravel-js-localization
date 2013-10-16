@@ -1,19 +1,19 @@
 <?php
 
+use JsLocalization\Facades\CachingService;
+
 class JsLocalizationController extends Controller
 {
     
     public function createJsMessages ()
     {
-        $cachingService = App::make('JsLocalizationCachingService');
-
-        $messages = $cachingService->getMessagesJson();
+        $messages = CachingService::getMessagesJson();
 
         $contents  = 'Lang.setLocale("'.Lang::locale().'");';
         $contents .= 'Lang.addMessages('.$messages.');';
 
         $lastModified = new DateTime();
-        $lastModified->setTimestamp($cachingService->getLastRefreshTimestamp());
+        $lastModified->setTimestamp(CachingService::getLastRefreshTimestamp());
 
         return Response::make($contents)
                 ->header('Content-Type', 'text/javascript')

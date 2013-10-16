@@ -1,10 +1,10 @@
 <?php
 namespace JsLocalization;
 
-use App;
 use Cache;
 use Config;
 use Lang;
+use JsLocalization\Facades\JsLocalizationHelper;
 
 class CachingService
 {
@@ -23,16 +23,6 @@ class CachingService
      * @var string
      */
     const CACHE_TIMESTAMP_KEY = 'js-localization-last-modified';
-
-    /**
-     * @var \JsLocalization\JsLocalizationHelper
-     */
-    private $helper;
-
-    public function __construct ()
-    {
-        $this->helper = App::make('JsLocalizationHelper');
-    }
 
     /**
      * Returns the cached messages (already JSON encoded).
@@ -61,7 +51,7 @@ class CachingService
         $translatedMessages = array();
 
         foreach ($messageKeys as $index=>$key) {
-            $this->helper->resolveMessageKey($key, $index, function($qualifiedKey)
+            JsLocalizationHelper::resolveMessageKey($key, $index, function($qualifiedKey)
                 use(&$translatedMessages)
                 {
                     $translatedMessages[$qualifiedKey] = Lang::get($qualifiedKey);
@@ -94,7 +84,7 @@ class CachingService
         $messageKeys = Config::get('js-localization::config.messages');
 
         $messageKeys = array_unique(
-            array_merge($messageKeys, $this->helper->getAdditionalMessages())
+            array_merge($messageKeys, JsLocalizationHelper::getAdditionalMessages())
         );
 
         return $messageKeys;

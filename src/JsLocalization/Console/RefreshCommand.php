@@ -1,8 +1,8 @@
 <?php
 namespace JsLocalization\Console;
 
-use App;
 use Illuminate\Console\Command;
+use JsLocalization\Facades\CachingService;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -32,8 +32,7 @@ class RefreshCommand extends Command
     {
         $this->line('Refreshing the message cache...');
 
-        $cachingService = App::make('JsLocalizationCachingService');
-        $cachingService->refreshMessageCache();
+        CachingService::refreshMessageCache();
     }
 
 }
