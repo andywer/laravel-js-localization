@@ -47,16 +47,6 @@ class CachingServiceTest extends TestCase
         $this->assertEquals($refreshTime, $timestamp);
     }
 
-    private function addTestMessage ($messageKey, $message)
-    {
-        $this->testMessagesConfig[] = $messageKey;
-
-        $this->testMessages[$messageKey] = $message;
-
-        $this->updateMessagesConfig($this->testMessagesConfig);
-        $this->mockLang();
-    }
-
     private function assertMessagesJsonEquals (array $expectedMessages)
     {
         $messagesJson = $this->cachingService->getMessagesJson();

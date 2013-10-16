@@ -36,6 +36,13 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
         $this->mockLang();
     }
 
+    public function tearDown ()
+    {
+        m::close();
+
+        parent::tearDown();
+    }
+
     protected function updateMessagesConfig (array $config)
     {
         Config::set('js-localization::config.messages', $config);
@@ -54,11 +61,14 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
         }
     }
 
-    public function tearDown ()
+    protected function addTestMessage ($messageKey, $message)
     {
-        m::close();
+        $this->testMessagesConfig[] = $messageKey;
 
-        parent::tearDown();
+        $this->testMessages[$messageKey] = $message;
+
+        $this->updateMessagesConfig($this->testMessagesConfig);
+        $this->mockLang();
     }
 
 }
