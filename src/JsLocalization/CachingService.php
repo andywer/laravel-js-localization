@@ -50,12 +50,8 @@ class CachingService
         $messageKeys = $this->getMessageKeys();
         $translatedMessages = array();
 
-        foreach ($messageKeys as $index=>$key) {
-            JsLocalizationHelper::resolveMessageKey($key, $index, function($qualifiedKey)
-                use(&$translatedMessages)
-                {
-                    $translatedMessages[$qualifiedKey] = Lang::get($qualifiedKey);
-                });
+        foreach ($messageKeys as $key) {
+            $translatedMessages[$key] = Lang::get($key);
         }
 
         Cache::forever(self::CACHE_KEY, json_encode($translatedMessages));
@@ -82,6 +78,7 @@ class CachingService
     protected function getMessageKeys ()
     {
         $messageKeys = Config::get('js-localization::config.messages');
+        $messageKeys = JsLocalizationHelper::resolveMessageKeyArray($messageKeys);
 
         $messageKeys = array_unique(
             array_merge($messageKeys, JsLocalizationHelper::getAdditionalMessages())

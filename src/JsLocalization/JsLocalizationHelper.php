@@ -26,16 +26,12 @@ class JsLocalizationHelper
      */
     public function addMessagesToExport (array $messageKeys)
     {
-        $messagesToExport = $this->messagesToExport;
-
-        foreach ($messageKeys as $index=>$key) {
-            $this->resolveMessageKey($key, $index, function($qualifiedKey) use(&$messagesToExport)
-                {
-                    $messagesToExport[] = $qualifiedKey;
-                });
-        }
-
-        $this->messagesToExport = array_unique($messagesToExport);
+        $this->messagesToExport = array_unique(
+            array_merge(
+                $this->messagesToExport,
+                $this->resolveMessageKeyArray($messageKeys)
+            )
+        );
     }
 
     /**
@@ -52,6 +48,28 @@ class JsLocalizationHelper
     }
 
     /**
+     * Takes an array of message keys with nested
+     * sub-arrays and returns a flat array of
+     * fully qualified message keys.
+     *
+     * @param array $messageKeys    Complex array of message keys.
+     * @return array Flat array of fully qualified message keys.
+     */
+    public function resolveMessageKeyArray (array $messageKeys)
+    {
+        $flatArray = array();
+
+        foreach ($messageKeys as $index=>$key) {
+            $this->resolveMessageKey($key, $index, function($qualifiedKey) use(&$flatArray)
+                {
+                    $flatArray[] = $qualifiedKey;
+                });
+        }
+
+        return $flatArray;
+    }
+
+    /**
      * Returns the concatenation of prefix and key if the key
      * is a string. If the key is an array then the function
      * will recurse.
@@ -61,7 +79,7 @@ class JsLocalizationHelper
      * @param callable $callback    A callback function: function($fullyQualifiedKey).
      * @param string $prefix        Optional key prefix.
      */
-    public function resolveMessageKey ($key, $keyIndex, $callback, $prefix="")
+    private function resolveMessageKey ($key, $keyIndex, $callback, $prefix="")
     {
         if (is_array($key)) {
             $_prefix = $prefix ? $prefix.$keyIndex."." : $keyIndex.".";

@@ -22,7 +22,7 @@ class JsLocalizationHelperTest extends TestCase
         );
     }
 
-    public function testResolveMessageKey ()
+    public function testResolveMessageKeyArray ()
     {
         $helper = App::make('JsLocalizationHelper');
 
@@ -43,17 +43,7 @@ class JsLocalizationHelperTest extends TestCase
             'prefix1.test4'
         );
 
-        $_this = $this;
-        $callbackRun = 0;
-
-        foreach ($testKeys as $index=>$key) {
-            $helper->resolveMessageKey($key, $index, function($qualifiedKey)
-                use ($_this, &$callbackRun, $testKeysFlat)
-                {
-                    $_this->assertEquals($testKeysFlat[$callbackRun], $qualifiedKey);
-                    $callbackRun++;
-                });
-        }
+        $this->assertEquals($testKeysFlat, $helper->resolveMessageKeyArray($testKeys));
     }
     
     public function testAddingRetrieving ()
