@@ -15,6 +15,7 @@
     "require-dev": {
         "illuminate/foundation": "4.0.x",
         "mockery/mockery": "dev-master@dev",
+        "orchestra/testbench": "2.0.*",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
