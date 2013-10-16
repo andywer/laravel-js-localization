@@ -1,6 +1,9 @@
 laravel-js-localization
 =======================
 
+[![Build Status](https://travis-ci.org/andywer/laravel-js-localization.png?branch=master)](https://travis-ci.org/andywer/laravel-js-localization)
+
+
 Simple, ease-to-use and flexible package for the [Laravel](http://laravel.com/) web framework. Allows you to use localized messages of the Laravel webapp (see `app/lang` directory) in your Javascript code. You may easily configure which messages you need to export.
 
 Installation
