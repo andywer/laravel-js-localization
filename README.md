@@ -8,7 +8,7 @@ Installation
 
 Add the following line to the `require` section of your Laravel webapp's `composer.json` file:
 
-```json
+```javascript
 "require": {
     "andywer/js-localization": "dev-master"
 }
@@ -53,7 +53,7 @@ Usage
 
 You just need to add the neccessary `<script>` tags to your view's `<head>`. Here is an example blade view:
 
-```
+```html
 @include('js-localization::head')
 <!doctype html>
 <html lang="en">
