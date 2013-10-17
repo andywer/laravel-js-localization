@@ -50,6 +50,10 @@ return array(
 );
 ```
 
+__Important:__
+
+The messages configuration will be cached when the JsLocalizationController is used for the first time. After changing the messages configuration you will need to call __`php artisan js-localization:refresh`__ to refresh that cache.
+
 
 Usage
 -----
@@ -83,6 +87,36 @@ You may use Lang.get(), Lang.has(), Lang.choice(), Lang.locale() and trans() (al
 Variables in messages are supported. For instance: `"This is my test string for :name."`.
 
 Pluralization is also supported, but does not care about the local. It only uses the English pluralization rule (`"singular text|plural text"`). More complex pluralization quantifiers are not yet supported.
+
+
+Service providers
+-----------------
+
+Assume you are developing a laravel package that depends on this javascript localization features and you want to configure which messages of your package have to be visible to the JS code.
+
+Fortunately that's pretty easy. Just use the `JsLocalization\Facades\JsLocalizationHelper::addMessagesToExport()` method. Like so:
+
+```php
+<?php
+
+use Illuminate\Support\ServiceProvider;
+use JsLocalization\Facades\JsLocalizationHelper;
+
+class MyServiceProvider extends ServiceProvider
+{
+    /* ... */
+
+    public function register()
+    {
+        JsLocalizationHelper::addMessagesToExport(array(
+            // list the keys of the messages here, similar
+            // to the 'messages' array in the config file
+        ));
+    }
+
+    /* ... */
+}
+```
 
 
 License
