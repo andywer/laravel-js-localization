@@ -12,12 +12,23 @@ Installation
 Add the following line to the `require` section of your Laravel webapp's `composer.json` file:
 
 ```javascript
-"require": {
-    "andywer/js-localization": "dev-master"
-}
+    "require": {
+        "andywer/js-localization": "dev-master"
+    }
 ```
 
-Run `composer update` to finally install the package.
+
+Run `composer update` to install the package.
+
+
+Finally add the following line to the `providers` array of your `app/config/app.php` file:
+
+```php
+    'providers' => array(
+        /* ... */
+        'JsLocalization\JsLocalizationServiceProvider'
+    )
+```
 
 
 Configuration
