@@ -10,6 +10,8 @@ class JsLocalizationControllerTest extends TestCase
 
         $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
         $content = $response->getContent();
+        
+        $this->assertTrue($response->isOk());
 
         // Test for Lang.setLocale()
 
