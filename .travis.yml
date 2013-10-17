@@ -10,6 +10,3 @@ before_script:
   - php composer.phar install --dev
 
 script: phpunit
-
-tools:
-  php_code_coverage: true
