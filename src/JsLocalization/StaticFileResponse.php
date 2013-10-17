@@ -6,7 +6,7 @@ use DateTime;
 use Exception;
 use Illuminate\Http\Response;
 
-class StaticFileRequest extends Response
+class StaticFileResponse extends Response
 {
     public function __construct ($filePath)
     {
