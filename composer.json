@@ -1,6 +1,6 @@
 {
     "name": "andywer/js-localization",
-    "description": "Laravel package to provide localizations to the Javascript logic.",
+    "description": "Laravel package to provide localizations to the Javascript code.",
     "license": "MIT",
     "authors": [
         {
