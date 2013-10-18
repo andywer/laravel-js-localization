@@ -2,7 +2,8 @@
 
 use Mockery as m;
 
-class TestCase extends Orchestra\Testbench\TestCase {
+class TestCase extends Orchestra\Testbench\TestCase
+{
 
     protected $testMessagesConfig = array(
             'test_string',
