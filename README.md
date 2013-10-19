@@ -97,7 +97,7 @@ You may use Lang.get(), Lang.has(), Lang.choice(), Lang.locale() and trans() (al
 
 Variables in messages are supported. For instance: `"This is my test string for :name."`.
 
-Pluralization is also supported, but does not care about the local. It only uses the English pluralization rule (`"singular text|plural text"`). More complex pluralization quantifiers are not yet supported.
+Pluralization is also supported, but does not care about the locale. It only uses the English pluralization rule (`"singular text|plural text"`). More complex pluralization quantifiers are not yet supported.
 
 
 Service providers
