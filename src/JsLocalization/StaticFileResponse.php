@@ -24,6 +24,8 @@ class StaticFileResponse extends Response
         $lastModified = new DateTime();
         $lastModified->setTimestamp( $fs->lastModified($filePath) );
 
-        $this->header('Last-Modified', $lastModified->format('D, d M Y H:i:s T'));
+        $this->setLastModified($lastModified);
+
+        $this->isNotModified(App::make('request'));
     }
 }
