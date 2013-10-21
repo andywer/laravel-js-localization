@@ -8,9 +8,11 @@
     /**
      * Replace variables used in the message by appropriate values.
      *
-     * @param string message        Input message.
-     * @param object replacements   Associative array: { variableName: "replacement", ... }
-     * @return string The input message with all replacements applied.
+     * @method applyReplacements
+     * @static
+     * @param {String} message      Input message.
+     * @param {Object} replacements Associative array: { variableName: "replacement", ... }
+     * @return {String} The input message with all replacements applied.
      */
     var applyReplacements = function (message, replacements) {
         for (var replacementName in replacements) {
@@ -24,10 +26,23 @@
     };
 
 
-    /* Lang object: */
-    /* (works like the Laravel Lang object) */
+    /* Lang: */
 
+    /**
+     * Lang class. Works similar to the Laravel Lang object.
+     * @class Lang
+     */
     var Lang = {
+
+        /**
+         * Translate a message.
+         *
+         * @method get
+         * @static
+         * @param {String} messageKey       The message key (message identifier).
+         * @param {Object} [replacements]   Associative array: { variableName: "replacement", ... }
+         * @return {String} Translated message.
+         */
         get : function(messageKey, replacements) {
             if (typeof messages[messageKey] == "undefined") {
                 return messageKey;
@@ -42,10 +57,32 @@
             return message;
         },
 
+        /**
+         * Returns whether the given message is defined or not.
+         *
+         * @method has
+         * @static
+         * @param {String} messageKey   Message key.
+         * @return {Boolean} True if the given message exists.
+         */
         has : function(messageKey) {
             return typeof messages[messageKey] != "undefined";
         },
 
+        /**
+         * Choose one of multiple message versions, based on
+         * pluralization rules. Only English pluralization
+         * supported for now. If `count` is one then the first
+         * version of the message is retuned, otherwise the
+         * second version.
+         *
+         * @method choice
+         * @static
+         * @param {String} messageKey       Message key.
+         * @param {Integer} count           Subject count for pluralization.
+         * @param {Object} [replacements]   Associative array: { variableName: "replacement", ... }
+         * @return {String} Translated message.
+         */
         choice : function(messageKey, count, replacements) {
             if (typeof messages[messageKey] == "undefined") {
                 return messageKey;
@@ -67,10 +104,25 @@
             return message;
         },
 
+        /**
+         * Sets the current locale. Normally only used once
+         * during initialization. The value comes from the backend.
+         *
+         * @method setLocale
+         * @static
+         * @param {String} localeId The locale returned by Laravel's Lang::locale().
+         */
         setLocale : function(localeId) {
             locale = localeId;
         },
 
+        /**
+         * Returns the current locale.
+         *
+         * @method locale
+         * @static
+         * @return {String} The current locale.
+         */
         locale : function() {
             return locale;
         },
@@ -79,8 +131,9 @@
          * Used to initialize the message catalog. You may use this
          * method to add further messages on runtime if neccessary.
          *
-         * @param object _messages  An associative array: { messageKey: "message", ... }
-         * @return void
+         * @method addMessages
+         * @static
+         * @param {Object} _messages  An associative array: { messageKey: "message", ... }
          */
         addMessages : function(_messages) {
             for (var key in _messages) {
