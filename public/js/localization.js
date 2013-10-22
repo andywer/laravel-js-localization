@@ -145,6 +145,7 @@
 
     /* Export: */
 
-    this.Lang = Lang;
-    this.trans = Lang.get;
+    this.Lang   = Lang;
+    this.trans  = Lang.get;
+    this.transChoice = Lang.choice;
 })();
