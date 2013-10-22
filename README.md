@@ -105,7 +105,7 @@ Service providers
 
 Assume you are developing a laravel package that depends on this javascript localization features and you want to configure which messages of your package have to be visible to the JS code.
 
-Fortunately that's pretty easy. Just use the `JsLocalization\Facades\JsLocalizationHelper::addMessagesToExport()` method. Like so:
+Fortunately that's pretty easy. Just listen to the `JsLocalization.registerMessages` event and use the `JsLocalization\Facades\JsLocalizationHelper::addMessagesToExport()` method. Like so:
 
 ```php
 <?php
@@ -119,10 +119,13 @@ class MyServiceProvider extends ServiceProvider
 
     public function register()
     {
-        JsLocalizationHelper::addMessagesToExport(array(
-            // list the keys of the messages here, similar
-            // to the 'messages' array in the config file
-        ));
+        Event::listen('JsLocalization.registerMessages', function()
+        {
+            JsLocalizationHelper::addMessagesToExport(array(
+                // list the keys of the messages here, similar
+                // to the 'messages' array in the config file
+            ));
+        });
     }
 
     /* ... */
