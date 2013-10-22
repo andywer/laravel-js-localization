@@ -66,5 +66,41 @@ class JsLocalizationHelperTest extends TestCase
             $additionalMessageKeys
         );
     }
+    
+    public function testEventBasedAdding ()
+    {
+        $helper = App::make('JsLocalizationHelper');
+        $additionalMessageKeys = $this->additionalMessageKeys;
+
+        Event::listen('JsLocalization.registerMessages', function()
+        use($helper, $additionalMessageKeys)
+        {
+            $helper->addMessagesToExport($additionalMessageKeys);
+        });
+
+        $additionalMessageKeys = $helper->getAdditionalMessages();
+        $this->assertEquals(array(), $additionalMessageKeys);
+
+        $helper->triggerRegisterMessages();
+
+        $additionalMessageKeys = $helper->getAdditionalMessages();
+        $this->assertEquals($this->additionalMessageKeysFlat, $additionalMessageKeys);
+
+
+        $this->addTestMessage('another', 'Another test text.');
+
+        Event::listen('JsLocalization.registerMessages', function() use($helper)
+        {
+            $helper->addMessagesToExport(array('another'));
+        });
+
+        $helper->triggerRegisterMessages();
+        $additionalMessageKeys = $helper->getAdditionalMessages();
+
+        $this->assertEquals(
+            array_merge($this->additionalMessageKeysFlat, array('another')),
+            $additionalMessageKeys
+        );
+    }
 
 }

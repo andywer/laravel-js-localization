@@ -1,9 +1,11 @@
 <?php
 namespace JsLocalization;
 
+use Event;
+
 class Helper
 {
-    
+
     /**
      * Array of message keys. A set of messages that are
      * supposed to be exported to the JS code in addition
@@ -45,6 +47,19 @@ class Helper
     public function getAdditionalMessages ()
     {
         return $this->messagesToExport;
+    }
+
+    /**
+     * Trigger registerMessages event.
+     * Other Laravel packages that use this package
+     * and need to export their own messages to
+     * the JS code should use a listener on that event.
+     *
+     * @return void
+     */
+    public function triggerRegisterMessages ()
+    {
+        Event::fire('JsLocalization.registerMessages');
     }
 
     /**

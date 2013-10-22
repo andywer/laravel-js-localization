@@ -1,5 +1,6 @@
 <?php
 
+use Mockery as m;
 use JsLocalization\CachingService;
 
 class CachingServiceTest extends TestCase
@@ -16,6 +17,14 @@ class CachingServiceTest extends TestCase
         Cache::forget(CachingService::CACHE_KEY);
         Cache::forget(CachingService::CACHE_TIMESTAMP_KEY);
     }
+
+    public function tearDown ()
+    {
+        m::close();
+
+        parent::tearDown();
+    }
+
 
     public function testGetMessagesJson ()
     {
@@ -45,6 +54,13 @@ class CachingServiceTest extends TestCase
 
         $timestamp = $this->cachingService->getLastRefreshTimestamp();
         $this->assertEquals($refreshTime, $timestamp);
+    }
+
+    public function testRefreshMessageCacheEvent ()
+    {
+        Event::shouldReceive('fire')->once()->with('JsLocalization.registerMessages');
+
+        $this->cachingService->refreshMessageCache();
     }
 
     private function assertMessagesJsonEquals (array $expectedMessages)

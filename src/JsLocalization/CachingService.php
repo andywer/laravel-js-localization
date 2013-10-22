@@ -42,11 +42,14 @@ class CachingService
     /**
      * Refreshs the cache item containing the JSON encoded
      * messages object.
+     * Fires the 'JsLocalization.refresh' event.
      *
      * @return void
      */
     public function refreshMessageCache ()
     {
+        JsLocalizationHelper::triggerRegisterMessages();
+
         $messageKeys = $this->getMessageKeys();
         $translatedMessages = array();
 
