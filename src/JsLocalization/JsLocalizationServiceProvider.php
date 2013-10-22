@@ -25,9 +25,9 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('andywer/js-localization');
-
-		require __DIR__.'/../../bindings.php';
-		require __DIR__.'/../../routes.php';
+		
+		$this->registerNamespaces();
+		$this->registerRefreshCommand();
 	}
 
 	/**
@@ -37,8 +37,8 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->registerNamespaces();
-		$this->registerRefreshCommand();
+		require __DIR__.'/../../bindings.php';
+		require __DIR__.'/../../routes.php';
 	}
 
 	/**
