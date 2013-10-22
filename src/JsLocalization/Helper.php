@@ -1,7 +1,7 @@
 <?php
 namespace JsLocalization;
 
-class JsLocalizationHelper
+class Helper
 {
     
     /**
