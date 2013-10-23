@@ -143,8 +143,9 @@ class JsLocalizationHelperTest extends TestCase
         $fileContents = '<?php return ' . var_export($this->testMessages, true) . ';';
         file_put_contents($this->tmpFilePath, $fileContents);
 
-        $prefix = preg_replace('/\.php$/i', '', basename($this->tmpFilePath)) . '.';
-        $helper->addMessageFileToExport($this->tmpFilePath);
+        $prefix  = 'xyz::';
+        $prefix .= preg_replace('/\.php$/i', '', basename($this->tmpFilePath)) . '.';
+        $helper->addMessageFileToExport($this->tmpFilePath, 'xyz::');
 
         $testKeysFlat = $this->testKeysFlat;
         array_walk($testKeysFlat, function(&$key) use($prefix)

@@ -45,9 +45,10 @@ class Helper
      * PHP files in app/lang).
      *
      * @param string $filePath  Path to the message file.
+     * @param string $prefix    Optional. Prefix to prepend before the message keys.
      * @return void
      */
-    public function addMessageFileToExport ($filePath)
+    public function addMessageFileToExport ($filePath, $prefix="")
     {
         $fs = App::make('files');
 
@@ -56,7 +57,8 @@ class Helper
         }
 
         $messages = require_once $filePath;
-        $prefix = preg_replace('/\.php$/i', '', basename($filePath)) . '.';
+        $prefix  = $this->prefix($prefix);
+        $prefix .= preg_replace('/\.php$/i', '', basename($filePath)) . '.';
 
         $this->messagesToExport = array_unique(
             array_merge(
@@ -182,6 +184,25 @@ class Helper
         } else {
             $callback($prefix.$key);
         }
+    }
+
+    /**
+     * Appends a dot to the prefix if neccessary.
+     *
+     * @param string $prefix    Prefix to validate and possibly append dot to.
+     * @return string Processed prefix.
+     */
+    private function prefix ($prefix)
+    {
+        if ($prefix) {
+            $prefixLastChar = substr($prefix, -1);
+
+            if ($prefixLastChar != '.' && $prefixLastChar != ':') {
+                $prefix .= '.';
+            }
+        }
+
+        return $prefix;
     }
 
 }
