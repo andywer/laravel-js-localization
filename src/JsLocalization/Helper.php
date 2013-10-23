@@ -1,11 +1,13 @@
 <?php
 namespace JsLocalization;
 
+use App;
 use Event;
+use Illuminate\Filesystem\FileNotFoundException;
 
 class Helper
 {
-
+    
     /**
      * Array of message keys. A set of messages that are
      * supposed to be exported to the JS code in addition
@@ -32,6 +34,34 @@ class Helper
             array_merge(
                 $this->messagesToExport,
                 $this->resolveMessageKeyArray($messageKeys)
+            )
+        );
+    }
+
+    /**
+     * Similar to addMessagesToExport(), but does not
+     * register an array of message keys, but the
+     * messages of a whole language file (one of the
+     * PHP files in app/lang).
+     *
+     * @param string $filePath  Path to the message file.
+     * @return void
+     */
+    public function addMessageFileToExport ($filePath)
+    {
+        $fs = App::make('files');
+
+        if (!$fs->isFile($filePath)) {
+            throw new FileNotFoundException("File not found: $filePath");
+        }
+
+        $messages = require_once $filePath;
+        $prefix = preg_replace('/\.php$/i', '', basename($filePath)) . '.';
+
+        $this->messagesToExport = array_unique(
+            array_merge(
+                $this->messagesToExport,
+                $this->resolveMessageArrayToMessageKeys($messages, $prefix)
             )
         );
     }
@@ -85,6 +115,28 @@ class Helper
     }
 
     /**
+     * Resolves a message array with nested
+     * sub-arrays to a flat array of fully
+     * qualified message keys.
+     *
+     * @param array $messages   Complex message array (like the ones in the app/lang/* files).
+     * @return array Flat array of fully qualified message keys.
+     */
+    public function resolveMessageArrayToMessageKeys (array $messages, $prefix="")
+    {
+        $flatArray = array();
+
+        foreach ($messages as $key=>$message) {
+            $this->resolveMessageToKeys($message, $key, function($qualifiedKey) use(&$flatArray)
+                {
+                    $flatArray[] = $qualifiedKey;
+                }, $prefix);
+        }
+
+        return $flatArray;
+    }
+
+    /**
      * Returns the concatenation of prefix and key if the key
      * is a string. If the key is an array then the function
      * will recurse.
@@ -101,6 +153,30 @@ class Helper
 
             foreach ($key as $_index=>$_key) {
                 $this->resolveMessageKey($_key, $_index, $callback, $_prefix);
+            }
+
+        } else {
+            $callback($prefix.$key);
+        }
+    }
+
+    /**
+     * Returns the concatenation of prefix and key if the value
+     * is a message. If the value is an array then the function
+     * will recurse.
+     *
+     * @param mixed $message        An array item read from a message file array.
+     * @param mixed $key            The array key of $message.
+     * @param callable $callback    A callback function: function($fullyQualifiedKey).
+     * @param string $prefix        Optional key prefix.
+     */
+    private function resolveMessageToKeys ($message, $key, $callback, $prefix="")
+    {
+        if (is_array($message)) {
+            $_prefix = $prefix ? $prefix.$key."." : $key.".";
+
+            foreach ($message as $_key=>$_message) {
+                $this->resolveMessageToKeys($_message, $_key, $callback, $_prefix);
             }
 
         } else {

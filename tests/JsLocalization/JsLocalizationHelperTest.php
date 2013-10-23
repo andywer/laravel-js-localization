@@ -3,30 +3,32 @@
 class JsLocalizationHelperTest extends TestCase
 {
 
-    private $additionalMessageKeys;
-    private $additionalMessageKeysFlat;
+    private $tmpFilePath;
 
-    public function setUp ()
-    {
-        parent::setUp();
-
-        $this->additionalMessageKeys = array(
+    protected $additionalMessageKeys = array(
             'additional' => array(
                 'message1',
                 'message2'
             )
         );
 
-        $this->additionalMessageKeysFlat = array(
+    protected $additionalMessageKeysFlat = array(
             'additional.message1', 'additional.message2'
         );
-    }
 
-    public function testResolveMessageKeyArray ()
-    {
-        $helper = App::make('JsLocalizationHelper');
 
-        $testKeys = array(
+    protected $testMessages = array(
+            'test1' => "Text for test1",
+            'prefix1' => array(
+                'prefix2' => array(
+                    'test2' => "Text for test2",
+                    'test3' => "Text for test3"
+                ),
+                'test4' => "Text for test4"
+            )
+        );
+
+    protected $testKeys = array(
             'test1',
             'prefix1' => array(
                 'prefix2' => array(
@@ -36,14 +38,43 @@ class JsLocalizationHelperTest extends TestCase
             )
         );
 
-        $testKeysFlat = array(
+    protected $testKeysFlat = array(
             'test1',
             'prefix1.prefix2.test2',
             'prefix1.prefix2.test3',
             'prefix1.test4'
         );
 
-        $this->assertEquals($testKeysFlat, $helper->resolveMessageKeyArray($testKeys));
+    public function setUp ()
+    {
+        parent::setUp();
+
+        $this->tmpFilePath = tempnam('/tmp', '');
+        unlink($this->tmpFilePath);
+
+        $this->tmpFilePath .= '.php';
+        touch($this->tmpFilePath);
+    }
+
+    public function tearDown ()
+    {
+        unlink($this->tmpFilePath);
+
+        parent::tearDown();
+    }
+
+    public function testResolveMessageKeyArray ()
+    {
+        $helper = App::make('JsLocalizationHelper');
+
+        $this->assertEquals($this->testKeysFlat, $helper->resolveMessageKeyArray($this->testKeys));
+    }
+
+    public function testResolveMessageArrayToMessageKeys ()
+    {
+        $helper = App::make('JsLocalizationHelper');
+
+        $this->assertEquals($this->testKeysFlat, $helper->resolveMessageArrayToMessageKeys($this->testMessages));
     }
     
     public function testAddingRetrieving ()
@@ -52,18 +83,19 @@ class JsLocalizationHelperTest extends TestCase
 
         $helper->addMessagesToExport($this->additionalMessageKeys);
 
-        $additionalMessageKeys = $helper->getAdditionalMessages();
-        $this->assertEquals($this->additionalMessageKeysFlat, $additionalMessageKeys);
+        $this->assertEquals(
+            $this->additionalMessageKeysFlat,
+            $helper->getAdditionalMessages()
+        );
 
 
         $this->addTestMessage('another', 'Another test text.');
 
         $helper->addMessagesToExport(array('another'));
 
-        $additionalMessageKeys = $helper->getAdditionalMessages();
         $this->assertEquals(
             array_merge($this->additionalMessageKeysFlat, array('another')),
-            $additionalMessageKeys
+            $helper->getAdditionalMessages()
         );
     }
     
@@ -72,19 +104,21 @@ class JsLocalizationHelperTest extends TestCase
         $helper = App::make('JsLocalizationHelper');
         $additionalMessageKeys = $this->additionalMessageKeys;
 
+
         Event::listen('JsLocalization.registerMessages', function()
         use($helper, $additionalMessageKeys)
         {
             $helper->addMessagesToExport($additionalMessageKeys);
         });
 
-        $additionalMessageKeys = $helper->getAdditionalMessages();
-        $this->assertEquals(array(), $additionalMessageKeys);
+        $this->assertEquals(array(), $helper->getAdditionalMessages());
 
         $helper->triggerRegisterMessages();
 
-        $additionalMessageKeys = $helper->getAdditionalMessages();
-        $this->assertEquals($this->additionalMessageKeysFlat, $additionalMessageKeys);
+        $this->assertEquals(
+            $this->additionalMessageKeysFlat,
+            $helper->getAdditionalMessages()
+        );
 
 
         $this->addTestMessage('another', 'Another test text.');
@@ -95,12 +129,30 @@ class JsLocalizationHelperTest extends TestCase
         });
 
         $helper->triggerRegisterMessages();
-        $additionalMessageKeys = $helper->getAdditionalMessages();
 
         $this->assertEquals(
             array_merge($this->additionalMessageKeysFlat, array('another')),
-            $additionalMessageKeys
+            $helper->getAdditionalMessages()
         );
+    }
+
+    public function testAddMessageFileToExport ()
+    {
+        $helper = App::make('JsLocalizationHelper');
+
+        $fileContents = '<?php return ' . var_export($this->testMessages, true) . ';';
+        file_put_contents($this->tmpFilePath, $fileContents);
+
+        $prefix = preg_replace('/\.php$/i', '', basename($this->tmpFilePath)) . '.';
+        $helper->addMessageFileToExport($this->tmpFilePath);
+
+        $testKeysFlat = $this->testKeysFlat;
+        array_walk($testKeysFlat, function(&$key) use($prefix)
+            {
+                $key = $prefix . $key;
+            });
+
+        $this->assertEquals($testKeysFlat, $helper->getAdditionalMessages());
     }
 
 }
