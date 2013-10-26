@@ -6,6 +6,7 @@ use Artisan;
 use Config;
 use View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\File;
 use JsLocalization\Console\RefreshCommand;
 
 class JsLocalizationServiceProvider extends ServiceProvider {
@@ -53,9 +54,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 
 	private function registerNamespaces ()
 	{
-		$fs = App::make('files');
-
-		if ($fs->isDirectory( app_path().'/config/packages/andywer/js-localization' )) {
+		if (File::isDirectory( app_path().'/config/packages/andywer/js-localization' )) {
 			Config::addNamespace('js-localization', app_path().'/config/packages/andywer/js-localization');
 		} else {
 			Config::addNamespace('js-localization', __DIR__.'/../config');

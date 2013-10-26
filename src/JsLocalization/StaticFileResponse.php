@@ -5,6 +5,7 @@ use App;
 use DateTime;
 use Exception;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 
 class StaticFileResponse extends Response
 {
@@ -12,9 +13,7 @@ class StaticFileResponse extends Response
     {
         parent::__construct();
 
-        $fs = App::make('files');
-
-        if (!$fs->isFile($filePath)) {
+        if (!File::isFile($filePath)) {
             throw new Exception("Cannot read file: $filePath");
         }
 
@@ -22,7 +21,7 @@ class StaticFileResponse extends Response
         $this->setContent($fileContent);
 
         $lastModified = new DateTime();
-        $lastModified->setTimestamp( $fs->lastModified($filePath) );
+        $lastModified->setTimestamp( File::lastModified($filePath) );
 
         $this->setLastModified($lastModified);
 

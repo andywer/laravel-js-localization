@@ -4,6 +4,7 @@ namespace JsLocalization;
 use App;
 use Event;
 use Illuminate\Filesystem\FileNotFoundException;
+use Illuminate\Support\Facades\File;
 
 class Helper
 {
@@ -50,9 +51,7 @@ class Helper
      */
     public function addMessageFileToExport ($filePath, $prefix="")
     {
-        $fs = App::make('files');
-
-        if (!$fs->isFile($filePath)) {
+        if (!File::isFile($filePath)) {
             throw new FileNotFoundException("File not found: $filePath");
         }
 
