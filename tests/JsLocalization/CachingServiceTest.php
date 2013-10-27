@@ -1,7 +1,7 @@
 <?php
 
 use Mockery as m;
-use JsLocalization\CachingService;
+use JsLocalization\Facades\CachingService;
 
 class CachingServiceTest extends TestCase
 {
@@ -12,10 +12,8 @@ class CachingServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->cachingService = new CachingService;
-        
-        Cache::forget(CachingService::CACHE_KEY);
-        Cache::forget(CachingService::CACHE_TIMESTAMP_KEY);
+        Cache::forget(JsLocalization\CachingService::CACHE_KEY);
+        Cache::forget(JsLocalization\CachingService::CACHE_TIMESTAMP_KEY);
     }
 
     public function tearDown ()
@@ -39,20 +37,20 @@ class CachingServiceTest extends TestCase
 
         // Now refresh the cache:
 
-        $this->cachingService->refreshMessageCache();
+        CachingService::refreshMessageCache();
 
         $this->assertMessagesJsonEquals($this->testMessages);
     }
 
     public function testGetLastRefreshTimestamp ()
     {
-        $timestamp = $this->cachingService->getLastRefreshTimestamp();
+        $timestamp = CachingService::getLastRefreshTimestamp();
         $this->assertEquals(0, $timestamp);
 
-        $this->cachingService->refreshMessageCache();
+        CachingService::refreshMessageCache();
         $refreshTime = time();
 
-        $timestamp = $this->cachingService->getLastRefreshTimestamp();
+        $timestamp = CachingService::getLastRefreshTimestamp();
         $this->assertEquals($refreshTime, $timestamp);
     }
 
@@ -60,12 +58,12 @@ class CachingServiceTest extends TestCase
     {
         Event::shouldReceive('fire')->once()->with('JsLocalization.registerMessages');
 
-        $this->cachingService->refreshMessageCache();
+        CachingService::refreshMessageCache();
     }
 
     private function assertMessagesJsonEquals (array $expectedMessages)
     {
-        $messagesJson = $this->cachingService->getMessagesJson();
+        $messagesJson = CachingService::getMessagesJson();
         $this->assertJson($messagesJson);
 
         $messages = json_decode($messagesJson, true);
