@@ -38,8 +38,8 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		require __DIR__.'/../../bindings.php';
-		require __DIR__.'/../../routes.php';
+		require __DIR__.'/../bindings.php';
+		require __DIR__.'/../routes.php';
 	}
 
 	/**
