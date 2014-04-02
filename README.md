@@ -133,6 +133,18 @@ class MyServiceProvider extends ServiceProvider
 ```
 
 
+Laravel 4.0
+-----------
+
+The package has been updated to work with Laravel 4.1. Edit your composer.json dependency if you are still using 4.0:
+
+```json
+    "require": {
+        "andywer/js-localization": "dev-laravel-4.0"
+    }
+```
+
+
 License
 -------
 
