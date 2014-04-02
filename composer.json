@@ -11,11 +11,11 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.0.x"
+        "illuminate/support": "4.1.x"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev",
-        "orchestra/testbench": "2.0.*",
+        "orchestra/testbench": "2.1.*",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
@@ -31,5 +31,11 @@
         "component": "package",
         "frameworks": ["Laravel 4"]
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git://github.com/orchestral/phpseclib.git"
+        }
+    ]
 }

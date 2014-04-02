@@ -1,6 +1,8 @@
 <?php
 
 use JsLocalization\JsLocalizationServiceProvider;
+use JsLocalization\Console\RefreshCommand;
+use Symfony\Component\Console\Tester\CommandTester;
 
 class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
 {
@@ -25,15 +27,12 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
 
     public function testRegisteredCommands ()
     {
-        $artisan = Artisan::getArtisan();
-
-        $this->assertTrue(
-            $artisan->has('js-localization:refresh'),
-            'js-localization:refresh command is not registered.'
-        );
-
-        $refreshCommand = $artisan->get('js-localization:refresh');
+        $refreshCommand = Artisan::find('js-localization:refresh');
         $this->assertInstanceOf('JsLocalization\Console\RefreshCommand', $refreshCommand);
+
+        $commandTester = new CommandTester($refreshCommand);
+        $commandTester->execute(array());
+        $this->assertEquals("Refreshing the message cache...\n", $commandTester->getDisplay());
     }
 
     public function testBindings ()

@@ -4,9 +4,11 @@ class JsLocalizationControllerTest extends TestCase
 {
     public function testCreateJsMessages ()
     {
-        // Prepare
+        // Prepare & Request
 
         $this->mockLang($locale = 'en');
+
+        Artisan::call('js-localization:refresh');
 
         $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
         $content = $response->getContent();
