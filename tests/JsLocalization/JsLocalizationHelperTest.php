@@ -47,6 +47,16 @@ class JsLocalizationHelperTest extends TestCase
             'prefix1.test4'
         );
 
+    protected function setUpTestMessagesFile ($filePath)
+    {
+        $fileContents = '<?php return ' . var_export($this->testMessages, true) . ';';
+        file_put_contents($filePath, $fileContents);
+
+        $prefix = preg_replace('/\.php$/i', '', basename($filePath));
+
+        return $prefix;
+    }
+
     public function setUp ()
     {
         parent::setUp();
@@ -74,7 +84,7 @@ class JsLocalizationHelperTest extends TestCase
     {
         $this->assertEquals($this->testKeysFlat, JsLocalizationHelper::resolveMessageArrayToMessageKeys($this->testMessages));
     }
-    
+
     public function testAddingRetrieving ()
     {
         JsLocalizationHelper::addMessagesToExport($this->additionalMessageKeys);
@@ -94,7 +104,7 @@ class JsLocalizationHelperTest extends TestCase
             JsLocalizationHelper::getAdditionalMessages()
         );
     }
-    
+
     public function testEventBasedAdding ()
     {
         $additionalMessageKeys = $this->additionalMessageKeys;
@@ -133,12 +143,11 @@ class JsLocalizationHelperTest extends TestCase
 
     public function testAddMessageFileToExport ()
     {
-        $fileContents = '<?php return ' . var_export($this->testMessages, true) . ';';
-        file_put_contents($this->tmpFilePath, $fileContents);
-
-        $prefix  = 'xyz::';
-        $prefix .= preg_replace('/\.php$/i', '', basename($this->tmpFilePath)) . '.';
+        $prefix = 'xyz::' . $this->setUpTestMessagesFile($this->tmpFilePath);
         JsLocalizationHelper::addMessageFileToExport($this->tmpFilePath, 'xyz::');
+
+        // since we just tested the method using a prefix without the trailing '.'
+        $prefix .= '.';
 
         $testKeysFlat = $this->testKeysFlat;
         array_walk($testKeysFlat, function(&$key) use($prefix)
@@ -147,6 +156,18 @@ class JsLocalizationHelperTest extends TestCase
             });
 
         $this->assertEquals($testKeysFlat, JsLocalizationHelper::getAdditionalMessages());
+    }
+
+    public function testAddMessageFileToExportExceptionHandling ()
+    {
+        $filePath = "/tmp/x/y/z/does-not-exist";
+
+        $this->setExpectedException(
+            'Illuminate\Filesystem\FileNotFoundException',
+            "File not found: $filePath"
+        );
+
+        JsLocalizationHelper::addMessageFileToExport($filePath, 'xyz::');
     }
 
 }
