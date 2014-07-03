@@ -12,6 +12,13 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
         return array('JsLocalization\JsLocalizationServiceProvider');
     }
 
+
+    public function testProvidesArray () {
+        $service = new JsLocalization\JsLocalizationServiceProvider($this->app);
+
+        $this->assertEquals( $service->provides(), array('js-localization') );
+    }
+
     public function testRegisteredNamespaces ()
     {
         $this->assertArrayHasKey(
