@@ -1,5 +1,7 @@
 <?php
 
+use Mockery as m;
+
 class JsLocalizationControllerTest extends TestCase
 {
     public function testCreateJsMessages ()
@@ -12,7 +14,7 @@ class JsLocalizationControllerTest extends TestCase
 
         $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
         $content = $response->getContent();
-        
+
         $this->assertTrue($response->isOk());
 
         // Test for Lang.setLocale()
@@ -22,6 +24,35 @@ class JsLocalizationControllerTest extends TestCase
         // Test for Lang.addMessages()
 
         $this->assertLangAddMessages($content, $this->testMessages);
+    }
+
+    public function testBackwardsCompatibility ()
+    {
+        // Prepare & Request
+
+        $this->mockLang($locale = 'en');
+        $this->mockCachingService($this->testMessages['en']);
+
+        $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
+        $content = $response->getContent();
+
+        $this->assertTrue($response->isOk());
+
+        // Test for Lang.addMessages()
+
+        $this->assertLangAddMessages($content, $this->testMessages);
+    }
+
+    private function mockCachingService (array $messages)
+    {
+        $service = m::mock('CachingServiceMock');
+        JsLocalization\Facades\CachingService::swap($service);
+
+        $service->shouldReceive('getMessagesJson')
+            ->andReturn(json_encode($messages));
+
+        $service->shouldReceive('getLastRefreshTimestamp')
+            ->andReturn(time());
     }
 
     private function assertLangAddMessages ($jsContent, array $expectedMessages)
