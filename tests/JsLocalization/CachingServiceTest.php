@@ -31,7 +31,7 @@ class CachingServiceTest extends TestCase
         // Add another string, but without refreshing the cache:
 
         $originalTestMessages = $this->testMessages;
-        $this->addTestMessage('test.new_message', "This is a new message.");
+        $this->addTestMessage('en','test.new_message', "This is a new message.");
 
         $this->assertMessagesJsonEquals($originalTestMessages);
 

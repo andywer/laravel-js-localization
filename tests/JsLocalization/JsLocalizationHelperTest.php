@@ -20,13 +20,15 @@ class JsLocalizationHelperTest extends TestCase
 
 
     protected $testMessages = array(
-            'test1' => "Text for test1",
-            'prefix1' => array(
-                'prefix2' => array(
-                    'test2' => "Text for test2",
-                    'test3' => "Text for test3"
-                ),
-                'test4' => "Text for test4"
+            'en' => array(
+                'test1' => "Text for test1",
+                'prefix1' => array(
+                    'prefix2' => array(
+                        'test2' => "Text for test2",
+                        'test3' => "Text for test3"
+                    ),
+                    'test4' => "Text for test4"
+                )
             )
         );
 
@@ -49,7 +51,7 @@ class JsLocalizationHelperTest extends TestCase
 
     protected function setUpTestMessagesFile ($filePath)
     {
-        $fileContents = '<?php return ' . var_export($this->testMessages, true) . ';';
+        $fileContents = '<?php return ' . var_export($this->testMessages['en'], true) . ';';
         file_put_contents($filePath, $fileContents);
 
         $prefix = preg_replace('/\.php$/i', '', basename($filePath));
@@ -82,7 +84,7 @@ class JsLocalizationHelperTest extends TestCase
 
     public function testResolveMessageArrayToMessageKeys ()
     {
-        $this->assertEquals($this->testKeysFlat, JsLocalizationHelper::resolveMessageArrayToMessageKeys($this->testMessages));
+        $this->assertEquals($this->testKeysFlat, JsLocalizationHelper::resolveMessageArrayToMessageKeys($this->testMessages['en']));
     }
 
     public function testAddingRetrieving ()
@@ -95,7 +97,7 @@ class JsLocalizationHelperTest extends TestCase
         );
 
 
-        $this->addTestMessage('another', 'Another test text.');
+        $this->addTestMessage('en', 'another', 'Another test text.');
 
         JsLocalizationHelper::addMessagesToExport(array('another'));
 
@@ -126,7 +128,7 @@ class JsLocalizationHelperTest extends TestCase
         );
 
 
-        $this->addTestMessage('another', 'Another test text.');
+        $this->addTestMessage('en', 'another', 'Another test text.');
 
         Event::listen('JsLocalization.registerMessages', function()
         {

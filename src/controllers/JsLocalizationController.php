@@ -4,20 +4,30 @@ use JsLocalization\Facades\CachingService;
 
 class JsLocalizationController extends Controller
 {
-    
+
     public function createJsMessages ()
     {
         $messages = CachingService::getMessagesJson();
+        $messages = $this->ensureBackwardsCompatibility($messages);
 
-        $contents  = 'Lang.setLocale("'.Lang::locale().'");';
-        $contents .= 'Lang.addMessages('.$messages.');';
+        $contents  = 'Lang.addMessages(' . $messages . ');';
+        $contents .= 'Lang.setLocale("' . Lang::locale() . '");';
 
         $lastModified = new DateTime();
         $lastModified->setTimestamp(CachingService::getLastRefreshTimestamp());
 
         return Response::make($contents)
                 ->header('Content-Type', 'text/javascript')
-                ->header('Last-Modified', $lastModified->format('D, d M Y H:i:s T'));
+                ->setLastModified($lastModified);
+    }
+
+    protected function ensureBackwardsCompatibility ($messages)
+    {
+        if(preg_match('/^\\{"[a-z]{2}":/', $messages)) {
+            return $messages;
+        } else {
+            return '{"' . Lang::locale() . '":' . $messages . '}';
+        }
     }
 
 }

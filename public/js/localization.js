@@ -44,11 +44,11 @@
          * @return {String} Translated message.
          */
         get : function(messageKey, replacements) {
-            if (typeof messages[messageKey] == "undefined") {
+            if (typeof messages[locale][messageKey] == "undefined") {
                 return messageKey;
             }
 
-            var message = messages[messageKey];
+            var message = messages[locale][messageKey];
 
             if (replacements) {
                 message = applyReplacements(message, replacements);
@@ -66,7 +66,7 @@
          * @return {Boolean} True if the given message exists.
          */
         has : function(messageKey) {
-            return typeof messages[messageKey] != "undefined";
+            return typeof messages[locale][messageKey] != "undefined";
         },
 
         /**
@@ -84,12 +84,12 @@
          * @return {String} Translated message.
          */
         choice : function(messageKey, count, replacements) {
-            if (typeof messages[messageKey] == "undefined") {
+            if (typeof messages[locale][messageKey] == "undefined") {
                 return messageKey;
             }
 
             var message;
-            var messageSplitted = messages[messageKey].split('|');
+            var messageSplitted = messages[locale][messageKey].split('|');
 
             if (count == 1) {
                 message = messageSplitted[0];
@@ -111,9 +111,17 @@
          * @method setLocale
          * @static
          * @param {String} localeId The locale returned by Laravel's Lang::locale().
+         * @throws {Error} An error is thrown if messages[localeId] is not defined.
          */
         setLocale : function(localeId) {
             locale = localeId;
+
+            if (!messages[localeId]) {
+                throw new Error(
+                    'No messages defined for locale: "' + localeId + '". ' +
+                    'Did you forget to enable it in the configuration?'
+                );
+            }
         },
 
         /**

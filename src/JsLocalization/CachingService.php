@@ -8,7 +8,7 @@ use JsLocalization\Facades\JsLocalizationHelper;
 
 class CachingService
 {
-    
+
     /**
      * The key used to cache the JSON encoded messages.
      *
@@ -35,7 +35,7 @@ class CachingService
         if (!Cache::has(self::CACHE_KEY)) {
             $this->refreshMessageCache();
         }
-        
+
         return Cache::get(self::CACHE_KEY);
     }
 
@@ -50,11 +50,14 @@ class CachingService
     {
         JsLocalizationHelper::triggerRegisterMessages();
 
+        $locales = $this->getLocales();
         $messageKeys = $this->getMessageKeys();
         $translatedMessages = array();
 
-        foreach ($messageKeys as $key) {
-            $translatedMessages[$key] = Lang::get($key);
+        foreach ($locales as $locale) {
+            foreach ($messageKeys as $key) {
+                $translatedMessages[$locale][$key] = Lang::get($key, array(), $locale);
+            }
         }
 
         Cache::forever(self::CACHE_KEY, json_encode($translatedMessages));
@@ -70,6 +73,11 @@ class CachingService
     public function getLastRefreshTimestamp ()
     {
         return Cache::get(self::CACHE_TIMESTAMP_KEY);
+    }
+
+    protected function getLocales ()
+    {
+        return Config::get('js-localization::config.locales');
     }
 
     /**

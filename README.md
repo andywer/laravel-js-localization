@@ -43,6 +43,10 @@ Example (exports all reminder messages):
 <?php
 
 return array(
+    // Set the locales you use
+    'locales' => array('en'),
+
+    // Set the keys of the messages you want to use in javascript
     'messages' => array(
         'reminder' => array(
             'password', 'user', 'token'

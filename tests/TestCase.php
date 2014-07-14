@@ -1,4 +1,4 @@
-<?php
+sh<?php
 
 use Mockery as m;
 
@@ -11,8 +11,10 @@ class TestCase extends Orchestra\Testbench\TestCase
         );
 
     protected $testMessages = array(
-            'test_string' => 'This is: test_string',
-            'test.string' => 'This is: test.string'
+            'en' => array(
+                'test_string' => 'This is: test_string',
+                'test.string' => 'This is: test.string'
+            )
         );
 
     public function setUp ()
@@ -47,17 +49,19 @@ class TestCase extends Orchestra\Testbench\TestCase
         $lang->shouldReceive('setLocale');
         $lang->shouldReceive('locale')->andReturn($locale);
 
-        foreach ($this->testMessages as $key=>$message) {
+        foreach ($this->testMessages[$locale] as $key=>$message) {
             $lang->shouldReceive('get')
                 ->with($key)->andReturn($message);
+            $lang->shouldReceive('get')
+                ->with($key, m::any(), $locale)->andReturn($message);
         }
     }
 
-    protected function addTestMessage ($messageKey, $message)
+    protected function addTestMessage ($locale, $messageKey, $message)
     {
         $this->testMessagesConfig[] = $messageKey;
 
-        $this->testMessages[$messageKey] = $message;
+        $this->testMessages[$locale][$messageKey] = $message;
 
         $this->updateMessagesConfig($this->testMessagesConfig);
         $this->mockLang();
