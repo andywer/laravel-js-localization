@@ -1,0 +1,16 @@
+filter:
+    excluded_paths: [vendor/*, app/*, web/*]
+
+before_commands:
+    - export COMPOSER_PROCESS_TIMEOUT=600
+    - composer install --dev --prefer-dist
+
+tools:
+    php_cpd: true
+    php_pdepend:
+        excluded_dirs: [tests, vendor]
+
+    php_code_coverage:
+        enabled: true
+        filter:
+            excluded_paths: [vendor/*]
