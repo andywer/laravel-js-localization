@@ -1,6 +1,7 @@
 <?php
 namespace JsLocalization\Console;
 
+use Config;
 use Illuminate\Console\Command;
 use JsLocalization\Facades\CachingService;
 use Symfony\Component\Console\Input\InputOption;
@@ -22,7 +23,7 @@ class RefreshCommand extends Command
      * @var string
      */
     protected $description = "Refresh message cache after changing the config file";
- 
+
     /**
      * Execute the console command.
      *
@@ -31,6 +32,12 @@ class RefreshCommand extends Command
     public function fire()
     {
         $this->line('Refreshing the message cache...');
+
+        $locales = Config::get('js-localization::config.locales');
+
+        if(!is_array($locales)) {
+          throw new \Exception('Please set the "locales" config! See https://github.com/andywer/laravel-js-localization#configuration');
+        }
 
         CachingService::refreshMessageCache();
     }
