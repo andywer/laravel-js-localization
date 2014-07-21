@@ -14,3 +14,4 @@ tools:
         enabled: true
         filter:
             excluded_paths: [vendor/*]
+    external_code_coverage: true
