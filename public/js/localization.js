@@ -44,11 +44,15 @@
          * @return {String} Translated message.
          */
         get : function(messageKey, replacements) {
-            if (typeof messages[locale][messageKey] == "undefined") {
-                return messageKey;
-            }
+            var keys = messageKey.split('.');
+            var message = messages[locale];
 
-            var message = messages[locale][messageKey];
+            keys.forEach(function (key) {
+                message = message[key];
+                if (typeof message !== 'string') {
+                    return messageKey;
+                }
+            });
 
             if (replacements) {
                 message = applyReplacements(message, replacements);
