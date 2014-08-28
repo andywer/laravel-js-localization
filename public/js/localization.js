@@ -49,10 +49,14 @@
 
             keys.forEach(function (key) {
                 message = message[key];
-                if (typeof message !== 'string') {
+                if (typeof message == 'undefined') {
                     return messageKey;
                 }
             });
+
+            if (typeof message !== 'string') {
+                return messageKey;
+            }
 
             if (replacements) {
                 message = applyReplacements(message, replacements);
