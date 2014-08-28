@@ -50,7 +50,7 @@
             keys.forEach(function (key) {
                 message = message[key];
                 if (typeof message == 'undefined') {
-                    return messageKey;
+                    message = {};
                 }
             });
 
