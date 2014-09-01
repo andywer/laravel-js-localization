@@ -6,16 +6,27 @@ class TestCase extends Orchestra\Testbench\TestCase
 {
 
     protected $testMessagesConfig = array(
-            'test_string',
-            'test' => array('string')
-        );
+        'test_string',
+        'test'              // this includes all messages with key 'test.*'
+    );
 
     protected $testMessages = array(
-            'en' => array(
-                'test_string' => 'This is: test_string',
-                'test.string' => 'This is: test.string'
-            )
-        );
+        'en' => array(
+            'test_string' => 'This is: test_string',
+            'test' => array(
+                'string' => 'This is: test.string'
+            ),
+
+            'test.string' => 'This is: test.string'
+        )
+    );
+
+    protected $testMessagesFlat = array(
+        'en' => array(
+            'test_string' => 'This is: test_string',
+            'test.string' => 'This is: test.string'
+        )
+    );
 
     public function setUp ()
     {
@@ -62,6 +73,15 @@ class TestCase extends Orchestra\Testbench\TestCase
         $this->testMessagesConfig[] = $messageKey;
 
         $this->testMessages[$locale][$messageKey] = $message;
+        $this->testMessagesFlat[$locale][$messageKey] = $message;
+
+        $keys = explode('.', $messageKey);
+        if (count($keys) == 2) {
+            if (!isset($this->testMessages[$locale][$keys[0]])) {
+                $this->testMessages[$locale][$keys[0]] = array();
+            }
+            $this->testMessages[$locale][$keys[0]][$keys[1]] = $message;
+        }
 
         $this->updateMessagesConfig($this->testMessagesConfig);
         $this->mockLang();

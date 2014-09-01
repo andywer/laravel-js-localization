@@ -26,11 +26,11 @@ class CachingServiceTest extends TestCase
 
     public function testGetMessagesJson ()
     {
-        $this->assertMessagesJsonEquals($this->testMessages);
+        $this->assertMessagesJsonEquals($this->testMessagesFlat);
 
         // Add another string, but without refreshing the cache:
 
-        $originalTestMessages = $this->testMessages;
+        $originalTestMessages = $this->testMessagesFlat;
         $this->addTestMessage('en','test.new_message', "This is a new message.");
 
         $this->assertMessagesJsonEquals($originalTestMessages);
@@ -39,7 +39,7 @@ class CachingServiceTest extends TestCase
 
         CachingService::refreshMessageCache();
 
-        $this->assertMessagesJsonEquals($this->testMessages);
+        $this->assertMessagesJsonEquals($this->testMessagesFlat);
     }
 
     public function testGetLastRefreshTimestamp ()

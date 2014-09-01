@@ -23,7 +23,7 @@ class JsLocalizationControllerTest extends TestCase
 
         // Test for Lang.addMessages()
 
-        $this->assertLangAddMessages($content, $this->testMessages);
+        $this->assertLangAddMessages($content, $this->testMessagesFlat);
     }
 
     public function testBackwardsCompatibility ()
@@ -31,7 +31,7 @@ class JsLocalizationControllerTest extends TestCase
         // Prepare & Request
 
         $this->mockLang($locale = 'en');
-        $this->mockCachingService($this->testMessages['en']);
+        $this->mockCachingService($this->testMessagesFlat['en']);
 
         $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
         $content = $response->getContent();
@@ -40,7 +40,7 @@ class JsLocalizationControllerTest extends TestCase
 
         // Test for Lang.addMessages()
 
-        $this->assertLangAddMessages($content, $this->testMessages);
+        $this->assertLangAddMessages($content, $this->testMessagesFlat);
     }
 
     private function mockCachingService (array $messages)

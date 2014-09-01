@@ -19,7 +19,7 @@ class JsLocalizationHelperTest extends TestCase
         );
 
 
-    protected $testMessages = array(
+    protected $testMessagesFlat = array(
             'en' => array(
                 'test1' => "Text for test1",
                 'prefix1' => array(
@@ -51,7 +51,7 @@ class JsLocalizationHelperTest extends TestCase
 
     protected function setUpTestMessagesFile ($filePath)
     {
-        $fileContents = '<?php return ' . var_export($this->testMessages['en'], true) . ';';
+        $fileContents = '<?php return ' . var_export($this->testMessagesFlat['en'], true) . ';';
         file_put_contents($filePath, $fileContents);
 
         $prefix = preg_replace('/\.php$/i', '', basename($filePath));
@@ -84,7 +84,7 @@ class JsLocalizationHelperTest extends TestCase
 
     public function testResolveMessageArrayToMessageKeys ()
     {
-        $this->assertEquals($this->testKeysFlat, JsLocalizationHelper::resolveMessageArrayToMessageKeys($this->testMessages['en']));
+        $this->assertEquals($this->testKeysFlat, JsLocalizationHelper::resolveMessageArrayToMessageKeys($this->testMessagesFlat['en']));
     }
 
     public function testAddingRetrieving ()
