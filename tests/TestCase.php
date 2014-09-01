@@ -14,6 +14,9 @@ class TestCase extends Orchestra\Testbench\TestCase
         'en' => array(
             'test_string' => 'This is: test_string',
             'test' => array(
+                'nested' => array(
+                    'leaf' => 'I am deeply nested!'
+                ),
                 'string' => 'This is: test.string'
             ),
 
@@ -24,6 +27,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     protected $testMessagesFlat = array(
         'en' => array(
             'test_string' => 'This is: test_string',
+            'test.nested.leaf' => 'I am deeply nested!',
             'test.string' => 'This is: test.string'
         )
     );
