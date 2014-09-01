@@ -91,6 +91,10 @@ class CachingService
         $translatedMessages = array();
 
         foreach ($locales as $locale) {
+            $translatedMessages[$locale] = array();
+        }
+
+        foreach ($locales as $locale) {
             foreach ($messageKeys as $key) {
                 $translation = Lang::get($key, array(), $locale);
 
