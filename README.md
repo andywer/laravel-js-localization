@@ -53,7 +53,12 @@ return array(
         )
     )
 
-    /* you could also use:
+    /*
+     * in short:
+     * 'messages' => array('reminder')
+     *
+     *
+     * you could also use:
      *
      * 'messages' => array(
      *     'reminder.password',
