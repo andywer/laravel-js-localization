@@ -77,7 +77,7 @@ The messages configuration will be cached when the JsLocalizationController is u
 Usage
 -----
 
-You just need to add the neccessary `<script>` tags to your view's `<head>`. Here is an example blade view:
+You just need to add the neccessary `<script>` tags to your layout. Here is an example blade view:
 
 ```html
 @include('js-localization::head')
