@@ -52,7 +52,7 @@ class CachingService
 
         $locales = $this->getLocales();
         $messageKeys = $this->getMessageKeys();
-        $translatedMessages = $this->getTranslatedMessages($messageKeys, $locales);
+        $translatedMessages = $this->getTranslatedMessagesForLocales($messageKeys, $locales);
 
         Cache::forever(self::CACHE_KEY, json_encode($translatedMessages));
         Cache::forever(self::CACHE_TIMESTAMP_KEY, time());
@@ -86,24 +86,40 @@ class CachingService
      * @param array $locales
      * @return array The translated messages as array(<locale> => array( <message id> => <translation>, ... ), ...)
      */
-    protected function getTranslatedMessages (array $messageKeys, array $locales)
+    protected function getTranslatedMessagesForLocales (array $messageKeys, array $locales)
     {
         $translatedMessages = array();
 
         foreach ($locales as $locale) {
-            $translatedMessages[$locale] = array();
+            if (!isset($translatedMessages[$locale])) {
+                $translatedMessages[$locale] = array();
+            }
+
+            $translatedMessages[$locale] = $this->getTranslatedMessages($messageKeys, $locale);
         }
 
-        foreach ($locales as $locale) {
-            foreach ($messageKeys as $key) {
-                $translation = Lang::get($key, array(), $locale);
+        return $translatedMessages;
+    }
 
-                if (is_array($translation)) {
-                    $flattened = $this->flattenTranslations($translation, $key.'.');
-                    $translatedMessages[$locale] = array_merge($translatedMessages[$locale], $flattened);
-                } else {
-                    $translatedMessages[$locale][$key] = $translation;
-                }
+    /**
+     * Returns the translated messages for the given keys.
+     * 
+     * @param array $messageKeys
+     * @param $locale
+     * @return array The translated messages as array( <message id> => <translation>, ... )
+     */
+    protected function getTranslatedMessages (array $messageKeys, $locale)
+    {
+        $translatedMessages = array();
+
+        foreach ($messageKeys as $key) {
+            $translation = Lang::get($key, array(), $locale);
+
+            if (is_array($translation)) {
+                $flattened = $this->flattenTranslations($translation, $key.'.');
+                $translatedMessages = array_merge($translatedMessages, $flattened);
+            } else {
+                $translatedMessages[$key] = $translation;
             }
         }
 
