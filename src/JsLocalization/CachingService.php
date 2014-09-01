@@ -123,8 +123,8 @@ class CachingService
 
         foreach ($nestedMessages as $key => $message) {
             if (is_array($message)) {
-                $flattenedMessage = $this->flattenTranslations($message, $keyPrefix . $key . '.');
-                $flattened[$keyPrefix.$key] = $flattenedMessage;
+                $flattenedMessages = $this->flattenTranslations($message, $keyPrefix . $key . '.');
+                $flattened = array_merge($flattened, $flattenedMessages);
             } else {
                 $flattened[$keyPrefix.$key] = $message;
             }
