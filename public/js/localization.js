@@ -25,6 +25,15 @@
         return message;
     };
 
+    var isEmpty = function (obj) {
+        for(var prop in obj) {
+            if(obj.hasOwnProperty(prop))
+                return false;
+        }
+
+        return true;
+    }
+
 
     /* Lang: */
 
@@ -32,6 +41,7 @@
      * Lang class. Works similar to the Laravel Lang object.
      * @class Lang
      */
+
     var Lang = {
 
         /**
@@ -43,12 +53,27 @@
          * @param {Object} [replacements]   Associative array: { variableName: "replacement", ... }
          * @return {String} Translated message.
          */
-        get : function(messageKey, replacements) {
-            if (typeof messages[locale][messageKey] == "undefined") {
+        get : function(messageKey, replacements, forceLocale) {
+            var uselocale = locale;
+            if (forceLocale) {
+                uselocale = forceLocale;
+            }
+            if (typeof messages[uselocale][messageKey] == "undefined") {
+                /* like Lang::get(), if messageKey is the name of a lang file, return it as an array */
+                var result = {};
+                for (var prop in messages[uselocale]) {
+                    if (prop.indexOf(messageKey + '.') > -1) {
+                        result[prop] = messages[uselocale][prop];
+                    }
+                };
+                if (!isEmpty(result)) {
+                    return result;
+                }
+                /* if there is nothing to return, return messageKey */
                 return messageKey;
             }
 
-            var message = messages[locale][messageKey];
+            var message = messages[uselocale][messageKey];
 
             if (replacements) {
                 message = applyReplacements(message, replacements);
