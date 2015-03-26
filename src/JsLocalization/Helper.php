@@ -3,8 +3,8 @@ namespace JsLocalization;
 
 use App;
 use Event;
-use Illuminate\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
+use JsLocalization\Exceptions\FileNotFoundException;
 
 class Helper
 {
@@ -12,7 +12,7 @@ class Helper
     /**
      * Array of message keys. A set of messages that are
      * supposed to be exported to the JS code in addition
-     * to Config::get('js-localization::config.messages').
+     * to Config::get('js-localization.messages').
      *
      * @var array
      */
@@ -22,7 +22,7 @@ class Helper
      * Allows registration of additional messages to
      * export to the JS code. The additional messages
      * registered using this method extend the
-     * Config::get('js-localization::config.messages')
+     * Config::get('js-localization.messages')
      * array.
      * Don't forget to run `php artisan js-localization:refresh`!
      *
@@ -48,6 +48,7 @@ class Helper
      * @param string $filePath  Path to the message file.
      * @param string $prefix    Optional. Prefix to prepend before the message keys.
      * @return void
+     * @throws FileNotFoundException
      */
     public function addMessageFileToExport ($filePath, $prefix="")
     {

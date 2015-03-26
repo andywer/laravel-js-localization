@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Lang;
 use JsLocalization\Facades\CachingService;
 
 class JsLocalizationController extends Controller
@@ -16,14 +18,14 @@ class JsLocalizationController extends Controller
         $lastModified = new DateTime();
         $lastModified->setTimestamp(CachingService::getLastRefreshTimestamp());
 
-        return Response::make($contents)
+        return response($contents)
                 ->header('Content-Type', 'text/javascript')
                 ->setLastModified($lastModified);
     }
 
     protected function ensureBackwardsCompatibility ($messages)
     {
-        if(preg_match('/^\\{"[a-z]{2}":/', $messages)) {
+        if (preg_match('/^\\{"[a-z]{2}":/', $messages)) {
             return $messages;
         } else {
             return '{"' . Lang::locale() . '":' . $messages . '}';

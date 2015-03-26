@@ -54,7 +54,7 @@ class TestCase extends Orchestra\Testbench\TestCase
 
     protected function updateMessagesConfig (array $config)
     {
-        Config::set('js-localization::config.messages', $config);
+        Config::set('js-localization.messages', $config);
     }
 
     protected function mockLang ($locale = "en")

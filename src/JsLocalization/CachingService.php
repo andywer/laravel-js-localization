@@ -76,7 +76,7 @@ class CachingService
      */
     protected function getLocales ()
     {
-        return Config::get('js-localization::config.locales');
+        return Config::get('js-localization.locales');
     }
 
     /**
@@ -157,7 +157,7 @@ class CachingService
      */
     protected function getMessageKeys ()
     {
-        $messageKeys = Config::get('js-localization::config.messages');
+        $messageKeys = Config::get('js-localization.messages');
         $messageKeys = JsLocalizationHelper::resolveMessageKeyArray($messageKeys);
 
         $messageKeys = array_unique(

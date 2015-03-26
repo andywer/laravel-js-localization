@@ -23,7 +23,7 @@ class RefreshCommandTest extends TestCase
         // Mock Config
         Illuminate\Support\Facades\Config::swap($config = m::mock('ConfigMock'));
 
-        $config->shouldReceive('get')->with('js-localization::config.locales')
+        $config->shouldReceive('get')->with('js-localization.locales')
           ->andReturn(null);
 
 

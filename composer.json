@@ -11,11 +11,11 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "~4.1"
+        "illuminate/support": "5.x"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev",
-        "orchestra/testbench": "2.1.*",
+        "orchestra/testbench": "3.0.*",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {

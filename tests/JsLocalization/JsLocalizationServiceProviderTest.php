@@ -21,11 +21,9 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
 
     public function testRegisteredNamespaces ()
     {
-        $this->assertArrayHasKey(
-            'js-localization', Config::getNamespaces(),
-            'Configuration namespace not registered: js-localization'
-        );
-
+        $this->assertEquals(array('en'), Config::get('js-localization.locales'));
+        $this->assertEquals(array(), Config::get('js-localization.messages'));
+        
         $this->assertArrayHasKey(
             'js-localization', View::getFinder()->getHints(),
             'View namespace not registered: js-localization'
@@ -34,7 +32,14 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
 
     public function testRegisteredCommands ()
     {
-        $refreshCommand = Artisan::find('js-localization:refresh');
+        $allCommands = Artisan::all();
+        
+        /** @var \Symfony\Component\Console\Command\Command $command */
+        foreach ($allCommands as $command) {
+            if ($command->getName() === 'js-localization:refresh') { break; }
+        }
+        
+        $refreshCommand = $command;
         $this->assertInstanceOf('JsLocalization\Console\RefreshCommand', $refreshCommand);
 
         $commandTester = new CommandTester($refreshCommand);
