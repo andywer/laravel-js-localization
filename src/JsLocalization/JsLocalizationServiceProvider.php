@@ -26,7 +26,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	public function boot()
 	{
         $this->publishes([
-            __DIR__.'/../config/config.php' => config_path('js-localization')
+            __DIR__.'/../config/config.php' => config_path('js-localization.php')
         ]);
         
         $this->mergeConfigFrom(

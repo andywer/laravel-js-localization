@@ -5,6 +5,7 @@ laravel-js-localization
 
 Simple, ease-to-use and flexible package for the [Laravel](http://laravel.com/) web framework. Allows you to use localized messages of the Laravel webapp (see `app/lang` directory) in your Javascript code. You may easily configure which messages you need to export.
 
+
 Installation
 ------------
 
@@ -12,7 +13,7 @@ Add the following line to the `require` section of your Laravel webapp's `compos
 
 ```javascript
     "require": {
-        "andywer/js-localization": "dev-master"
+        "andywer/js-localization": "dev-laravel-5"    // "dev-laravel-4.1", "dev-laravel-4.2" for Laravel 4
     }
 ```
 
@@ -30,10 +31,24 @@ Finally add the following line to the `providers` array of your `app/config/app.
 ```
 
 
+Branches
+--------
+
+Use the following branches according to the Laravel framework version you are using:
+
+- Laravel 4.0: `laravel-4.0`
+- Laravel 4.1: `laravel-4.1`
+- Laravel 4.2: `laravel-4.2`
+- Laravel 5.x: `laravel-5`
+
+So use the appropriate branch in your `composer.json` file as shown by [Installation](#installation).
+For example: Use `dev-laravel-4.2` for Laravel 4.2.
+
+
 Configuration
 -------------
 
-Run `php artisan config:publish andywer/js-localization` first. This command copies the package's default configuration to `app/config/packages/andywer/js-localization/config.php`.
+Run `php artisan vendor:publish` first. This command copies the package's default configuration to `config/js-localization.php`.
 
 You may now edit this file to define the messages you need in your Javascript code. Just edit the `messages` array in the config file.
 
@@ -138,18 +153,6 @@ class MyServiceProvider extends ServiceProvider
 
     /* ... */
 }
-```
-
-
-Laravel 4.0
------------
-
-The package has been updated to work with Laravel 4.1. Edit your composer.json dependency if you are still using 4.0:
-
-```json
-    "require": {
-        "andywer/js-localization": "dev-laravel-4.0"
-    }
 ```
 
 
