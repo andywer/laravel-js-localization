@@ -7,47 +7,47 @@ class JsLocalizationHelperTest extends TestCase
 
     private $tmpFilePath;
 
-    protected $additionalMessageKeys = array(
-            'additional' => array(
+    protected $additionalMessageKeys = [
+            'additional' => [
                 'message1',
                 'message2'
-            )
-        );
+            ]
+        ];
 
-    protected $additionalMessageKeysFlat = array(
+    protected $additionalMessageKeysFlat = [
             'additional.message1', 'additional.message2'
-        );
+        ];
 
 
-    protected $testMessagesFlat = array(
-            'en' => array(
+    protected $testMessagesFlat = [
+            'en' => [
                 'test1' => "Text for test1",
-                'prefix1' => array(
-                    'prefix2' => array(
+                'prefix1' => [
+                    'prefix2' => [
                         'test2' => "Text for test2",
                         'test3' => "Text for test3"
-                    ),
+                    ],
                     'test4' => "Text for test4"
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
-    protected $testKeys = array(
+    protected $testKeys = [
             'test1',
-            'prefix1' => array(
-                'prefix2' => array(
+            'prefix1' => [
+                'prefix2' => [
                     'test2', 'test3'
-                ),
+                ],
                 'test4'
-            )
-        );
+            ]
+        ];
 
-    protected $testKeysFlat = array(
+    protected $testKeysFlat = [
             'test1',
             'prefix1.prefix2.test2',
             'prefix1.prefix2.test3',
             'prefix1.test4'
-        );
+        ];
 
     protected function setUpTestMessagesFile ($filePath)
     {
@@ -99,10 +99,10 @@ class JsLocalizationHelperTest extends TestCase
 
         $this->addTestMessage('en', 'another', 'Another test text.');
 
-        JsLocalizationHelper::addMessagesToExport(array('another'));
+        JsLocalizationHelper::addMessagesToExport(['another']);
 
         $this->assertEquals(
-            array_merge($this->additionalMessageKeysFlat, array('another')),
+            array_merge($this->additionalMessageKeysFlat, ['another']),
             JsLocalizationHelper::getAdditionalMessages()
         );
     }
@@ -118,7 +118,7 @@ class JsLocalizationHelperTest extends TestCase
             JsLocalizationHelper::addMessagesToExport($additionalMessageKeys);
         });
 
-        $this->assertEquals(array(), JsLocalizationHelper::getAdditionalMessages());
+        $this->assertEquals([], JsLocalizationHelper::getAdditionalMessages());
 
         JsLocalizationHelper::triggerRegisterMessages();
 
@@ -132,13 +132,13 @@ class JsLocalizationHelperTest extends TestCase
 
         Event::listen('JsLocalization.registerMessages', function()
         {
-            JsLocalizationHelper::addMessagesToExport(array('another'));
+            JsLocalizationHelper::addMessagesToExport(['another']);
         });
 
         JsLocalizationHelper::triggerRegisterMessages();
 
         $this->assertEquals(
-            array_merge($this->additionalMessageKeysFlat, array('another')),
+            array_merge($this->additionalMessageKeysFlat, ['another']),
             JsLocalizationHelper::getAdditionalMessages()
         );
     }

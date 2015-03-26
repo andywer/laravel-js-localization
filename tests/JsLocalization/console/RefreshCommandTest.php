@@ -37,7 +37,7 @@ class RefreshCommandTest extends TestCase
         $cmd = new RefreshCommand();
 
         $cmd->run(
-            new Symfony\Component\Console\Input\ArrayInput(array('package' => 'foo')),
+            new Symfony\Component\Console\Input\ArrayInput(['package' => 'foo']),
             new Symfony\Component\Console\Output\NullOutput
         );
     }

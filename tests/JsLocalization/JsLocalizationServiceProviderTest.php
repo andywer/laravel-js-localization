@@ -1,28 +1,27 @@
 <?php
 
 use JsLocalization\JsLocalizationServiceProvider;
-use JsLocalization\Console\RefreshCommand;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
 {
 
-    protected function getPackageProviders()
+    protected function getPackageProviders($app)
     {
-        return array('JsLocalization\JsLocalizationServiceProvider');
+        return ['JsLocalization\JsLocalizationServiceProvider'];
     }
 
 
     public function testProvidesArray () {
-        $service = new JsLocalization\JsLocalizationServiceProvider($this->app);
+        $service = new JsLocalizationServiceProvider($this->app);
 
-        $this->assertEquals( $service->provides(), array('js-localization') );
+        $this->assertEquals( $service->provides(), ['js-localization'] );
     }
 
     public function testRegisteredNamespaces ()
     {
-        $this->assertEquals(array('en'), Config::get('js-localization.locales'));
-        $this->assertEquals(array(), Config::get('js-localization.messages'));
+        $this->assertEquals(['en'], Config::get('js-localization.locales'));
+        $this->assertEquals([], Config::get('js-localization.messages'));
         
         $this->assertArrayHasKey(
             'js-localization', View::getFinder()->getHints(),
@@ -43,7 +42,7 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
         $this->assertInstanceOf('JsLocalization\Console\RefreshCommand', $refreshCommand);
 
         $commandTester = new CommandTester($refreshCommand);
-        $commandTester->execute(array());
+        $commandTester->execute([]);
         $this->assertEquals("Refreshing the message cache...\n", $commandTester->getDisplay());
     }
 

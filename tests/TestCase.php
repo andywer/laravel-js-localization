@@ -5,32 +5,32 @@ use Mockery as m;
 class TestCase extends Orchestra\Testbench\TestCase
 {
 
-    protected $testMessagesConfig = array(
+    protected $testMessagesConfig = [
         'test_string',
         'test'              // this includes all messages with key 'test.*'
-    );
+    ];
 
-    protected $testMessages = array(
-        'en' => array(
+    protected $testMessages = [
+        'en' => [
             'test_string' => 'This is: test_string',
-            'test' => array(
-                'nested' => array(
+            'test' => [
+                'nested' => [
                     'leaf' => 'I am deeply nested!'
-                ),
+                ],
                 'string' => 'This is: test.string'
-            ),
+            ],
 
             'test.string' => 'This is: test.string'
-        )
-    );
+        ]
+    ];
 
-    protected $testMessagesFlat = array(
-        'en' => array(
+    protected $testMessagesFlat = [
+        'en' => [
             'test_string' => 'This is: test_string',
             'test.nested.leaf' => 'I am deeply nested!',
             'test.string' => 'This is: test.string'
-        )
-    );
+        ]
+    ];
 
     public function setUp ()
     {
@@ -47,9 +47,9 @@ class TestCase extends Orchestra\Testbench\TestCase
         parent::tearDown();
     }
 
-    protected function getPackageProviders()
+    protected function getPackageProviders($app)
     {
-        return array('JsLocalization\JsLocalizationServiceProvider');
+        return ['JsLocalization\JsLocalizationServiceProvider'];
     }
 
     protected function updateMessagesConfig (array $config)
@@ -82,7 +82,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         $keys = explode('.', $messageKey);
         if (count($keys) == 2) {
             if (!isset($this->testMessages[$locale][$keys[0]])) {
-                $this->testMessages[$locale][$keys[0]] = array();
+                $this->testMessages[$locale][$keys[0]] = [];
             }
             $this->testMessages[$locale][$keys[0]][$keys[1]] = $message;
         }
