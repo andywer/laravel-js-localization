@@ -16,7 +16,7 @@ class Helper
      *
      * @var array
      */
-    protected $messagesToExport = array();
+    protected $messagesToExport = [];
 
     /**
      * Allows registration of additional messages to
@@ -104,7 +104,7 @@ class Helper
      */
     public function resolveMessageKeyArray (array $messageKeys)
     {
-        $flatArray = array();
+        $flatArray = [];
 
         foreach ($messageKeys as $index=>$key) {
             $this->resolveMessageKey($key, $index, function($qualifiedKey) use(&$flatArray)
@@ -126,7 +126,7 @@ class Helper
      */
     public function resolveMessageArrayToMessageKeys (array $messages, $prefix="")
     {
-        $flatArray = array();
+        $flatArray = [];
 
         foreach ($messages as $key=>$message) {
             $this->resolveMessageToKeys($message, $key, function($qualifiedKey) use(&$flatArray)

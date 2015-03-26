@@ -84,15 +84,15 @@ class CachingService
      *
      * @param array $messageKeys
      * @param array $locales
-     * @return array The translated messages as array(<locale> => array( <message id> => <translation>, ... ), ...)
+     * @return array The translated messages as [<locale> => [ <message id> => <translation>, ... ], ...]
      */
     protected function getTranslatedMessagesForLocales (array $messageKeys, array $locales)
     {
-        $translatedMessages = array();
+        $translatedMessages = [];
 
         foreach ($locales as $locale) {
             if (!isset($translatedMessages[$locale])) {
-                $translatedMessages[$locale] = array();
+                $translatedMessages[$locale] = [];
             }
 
             $translatedMessages[$locale] = $this->getTranslatedMessages($messageKeys, $locale);
@@ -106,14 +106,14 @@ class CachingService
      * 
      * @param array $messageKeys
      * @param $locale
-     * @return array The translated messages as array( <message id> => <translation>, ... )
+     * @return array The translated messages as [ <message id> => <translation>, ... ]
      */
     protected function getTranslatedMessages (array $messageKeys, $locale)
     {
-        $translatedMessages = array();
+        $translatedMessages = [];
 
         foreach ($messageKeys as $key) {
-            $translation = Lang::get($key, array(), $locale);
+            $translation = Lang::get($key, [], $locale);
 
             if (is_array($translation)) {
                 $flattened = $this->flattenTranslations($translation, $key.'.');
@@ -135,7 +135,7 @@ class CachingService
      */
     protected function flattenTranslations (array $nestedMessages, $keyPrefix='')
     {
-        $flattened = array();
+        $flattened = [];
 
         foreach ($nestedMessages as $key => $message) {
             if (is_array($message)) {

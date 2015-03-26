@@ -52,7 +52,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('js-localization');
+		return ['js-localization'];
 	}
 
 	/**

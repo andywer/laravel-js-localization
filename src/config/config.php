@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -8,7 +8,7 @@ return array(
     |--------------------------------------------------------------------------
     */
 
-    'locales' => array('en'),
+    'locales' => ['en'],
 
     /*
     |--------------------------------------------------------------------------
@@ -22,12 +22,12 @@ return array(
     | messages to the minimum you really need.
     |
     | Supports nesting:
-    |   array( 'mynamespace' => array( 'test1', 'test2' ) )
+    |   [ 'mynamespace' => ['test1', 'test2'] ]
     | for instance will be internally resolved to:
-    |   array('mynamespace.test1', 'mynamespace.test2')
+    |   ['mynamespace.test1', 'mynamespace.test2']
     |
     */
 
-    'messages' => array(),
+    'messages' => [],
 
-);
+];

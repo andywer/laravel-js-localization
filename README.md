@@ -23,10 +23,10 @@ Run `composer update` to install the package.
 Finally add the following line to the `providers` array of your `app/config/app.php` file:
 
 ```php
-    'providers' => array(
+    'providers' => [
         /* ... */
         'JsLocalization\JsLocalizationServiceProvider'
-    )
+    ]
 ```
 
 
@@ -44,27 +44,27 @@ Example (exports all reminder messages):
 
 return array(
     // Set the locales you use
-    'locales' => array('en'),
+    'locales' => ['en'],
 
     // Set the keys of the messages you want to use in javascript
-    'messages' => array(
-        'reminder' => array(
+    'messages' => [
+        'reminder' => [
             'password', 'user', 'token'
-        )
-    )
+        ]
+    ]
 
     /*
      * in short:
-     * 'messages' => array('reminder')
+     * 'messages' => ['reminder']
      *
      *
      * you could also use:
      *
-     * 'messages' => array(
+     * 'messages' => [
      *     'reminder.password',
      *     'reminder.user',
      *     'reminder.token'
-     * )
+     * ]
      */
 );
 ```
