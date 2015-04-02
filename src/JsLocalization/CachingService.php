@@ -24,6 +24,23 @@ class CachingService
      */
     const CACHE_TIMESTAMP_KEY = 'js-localization-last-modified';
 
+    private $old_cache_driver;
+    private $old_cache_file_location;
+
+    public function __construct()
+    {
+        $this->old_cache_driver = Config::get('cache.driver');
+        $this->old_cache_file_location = Config::get('cache.path');
+        Config::set('cache.driver', 'file');
+        Config::set('cache.path', app_path('database/js-localization'));
+    }
+
+    public function __destruct()
+    {
+        Config::set('cache.driver', $this->old_cache_driver);
+        Config::set('cache.path',$this->old_cache_file_location);
+    }
+
     /**
      * Returns the cached messages (already JSON encoded).
      * Creates the neccessary cache item if neccessary.
@@ -103,7 +120,7 @@ class CachingService
 
     /**
      * Returns the translated messages for the given keys.
-     * 
+     *
      * @param array $messageKeys
      * @param $locale
      * @return array The translated messages as array( <message id> => <translation>, ... )
