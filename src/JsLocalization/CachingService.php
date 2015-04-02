@@ -24,21 +24,46 @@ class CachingService
      */
     const CACHE_TIMESTAMP_KEY = 'js-localization-last-modified';
 
-    private $old_cache_driver;
-    private $old_cache_file_location;
+    /**
+     * A property to remember the cache driver used by the app.
+     * @var string
+     */
+    private $app_cache_driver = '';
 
+    /**
+     * A property to remember the cache path used by the app.
+     * @var string
+     */
+    private $app_cache_path = '';
+
+    /**
+     * If we're using commitable_cache option then set the cache
+     * to use file system and a custom path.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        $this->old_cache_driver = Config::get('cache.driver');
-        $this->old_cache_file_location = Config::get('cache.path');
-        Config::set('cache.driver', 'file');
-        Config::set('cache.path', app_path('database/js-localization'));
+        if (Config::get('js-localization::config.commitable_cache')) {
+            $this->app_cache_driver = Config::get('cache.driver');
+            $this->app_cache_path = Config::get('cache.path');
+            Config::set('cache.driver', 'file');
+            Config::set('cache.path', app_path('database/js-localization'));
+        }
     }
 
+    /**
+     * If we're using commitable_cache option then change the cache
+     * settings back to what they were before implementing this class.
+     *
+     * @return void
+     */
     public function __destruct()
     {
-        Config::set('cache.driver', $this->old_cache_driver);
-        Config::set('cache.path',$this->old_cache_file_location);
+        if (Config::get('js-localization::config.commitable_cache')) {
+            Config::set('cache.driver', $this->app_cache_driver);
+            Config::set('cache.path',$this->app_cache_path);
+        }
     }
 
     /**
