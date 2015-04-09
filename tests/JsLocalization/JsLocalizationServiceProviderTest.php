@@ -12,13 +12,13 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
     }
 
 
-    public function testProvidesArray () {
+    public function testProvidesArray() {
         $service = new JsLocalizationServiceProvider($this->app);
 
         $this->assertEquals( $service->provides(), ['js-localization'] );
     }
 
-    public function testRegisteredNamespaces ()
+    public function testRegisteredNamespaces()
     {
         $this->assertEquals(['en'], Config::get('js-localization.locales'));
         $this->assertEquals([], Config::get('js-localization.messages'));
@@ -29,7 +29,7 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
         );
     }
 
-    public function testRegisteredCommands ()
+    public function testRegisteredCommands()
     {
         $allCommands = Artisan::all();
         
@@ -46,7 +46,7 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
         $this->assertEquals("Refreshing the message cache...\n", $commandTester->getDisplay());
     }
 
-    public function testBindings ()
+    public function testBindings()
     {
         $helper = App::make('JsLocalizationHelper');
         $this->assertInstanceOf('JsLocalization\Utils\Helper', $helper);

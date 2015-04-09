@@ -32,7 +32,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         ]
     ];
 
-    public function setUp ()
+    public function setUp()
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         $this->mockLang();
     }
 
-    public function tearDown ()
+    public function tearDown()
     {
         m::close();
 
@@ -52,12 +52,12 @@ class TestCase extends Orchestra\Testbench\TestCase
         return ['JsLocalization\JsLocalizationServiceProvider'];
     }
 
-    protected function updateMessagesConfig (array $config)
+    protected function updateMessagesConfig(array $config)
     {
         Config::set('js-localization.messages', $config);
     }
 
-    protected function mockLang ($locale = "en")
+    protected function mockLang($locale = "en")
     {
         Illuminate\Support\Facades\Lang::swap($lang = m::mock('LangMock'));
 
@@ -72,7 +72,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         }
     }
 
-    protected function addTestMessage ($locale, $messageKey, $message)
+    protected function addTestMessage($locale, $messageKey, $message)
     {
         $this->testMessagesConfig[] = $messageKey;
 

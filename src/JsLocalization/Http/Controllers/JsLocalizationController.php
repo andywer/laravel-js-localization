@@ -10,7 +10,7 @@ use JsLocalization\Facades\CachingService;
 class JsLocalizationController extends Controller
 {
 
-    public function createJsMessages ()
+    public function createJsMessages()
     {
         $messages = CachingService::getMessagesJson();
         $messages = $this->ensureBackwardsCompatibility($messages);
@@ -26,7 +26,7 @@ class JsLocalizationController extends Controller
                 ->setLastModified($lastModified);
     }
 
-    protected function ensureBackwardsCompatibility ($messages)
+    protected function ensureBackwardsCompatibility($messages)
     {
         if (preg_match('/^\\{"[a-z]{2}":/', $messages)) {
             return $messages;

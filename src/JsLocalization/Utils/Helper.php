@@ -29,7 +29,7 @@ class Helper
      * @param array $messageKeys    Array of message keys.
      * @return void
      */
-    public function addMessagesToExport (array $messageKeys)
+    public function addMessagesToExport(array $messageKeys)
     {
         $this->messagesToExport = array_unique(
             array_merge(
@@ -50,7 +50,7 @@ class Helper
      * @return void
      * @throws FileNotFoundException
      */
-    public function addMessageFileToExport ($filePath, $prefix="")
+    public function addMessageFileToExport($filePath, $prefix="")
     {
         if (!File::isFile($filePath)) {
             throw new FileNotFoundException("File not found: $filePath");
@@ -76,7 +76,7 @@ class Helper
      * @return array
      *      Array of message keys to export to the JS code.
      */
-    public function getAdditionalMessages ()
+    public function getAdditionalMessages()
     {
         return $this->messagesToExport;
     }
@@ -89,7 +89,7 @@ class Helper
      *
      * @return void
      */
-    public function triggerRegisterMessages ()
+    public function triggerRegisterMessages()
     {
         Event::fire('JsLocalization.registerMessages');
     }
@@ -102,7 +102,7 @@ class Helper
      * @param array $messageKeys    Complex array of message keys.
      * @return array Flat array of fully qualified message keys.
      */
-    public function resolveMessageKeyArray (array $messageKeys)
+    public function resolveMessageKeyArray(array $messageKeys)
     {
         $flatArray = [];
 
@@ -124,7 +124,7 @@ class Helper
      * @param array $messages   Complex message array (like the ones in the app/lang/* files).
      * @return array Flat array of fully qualified message keys.
      */
-    public function resolveMessageArrayToMessageKeys (array $messages, $prefix="")
+    public function resolveMessageArrayToMessageKeys(array $messages, $prefix="")
     {
         $flatArray = [];
 
@@ -148,7 +148,7 @@ class Helper
      * @param callable $callback    A callback function: function($fullyQualifiedKey).
      * @param string $prefix        Optional key prefix.
      */
-    private function resolveMessageKey ($key, $keyIndex, $callback, $prefix="")
+    private function resolveMessageKey($key, $keyIndex, $callback, $prefix="")
     {
         if (is_array($key)) {
             $_prefix = $prefix ? $prefix.$keyIndex."." : $keyIndex.".";
@@ -172,7 +172,7 @@ class Helper
      * @param callable $callback    A callback function: function($fullyQualifiedKey).
      * @param string $prefix        Optional key prefix.
      */
-    private function resolveMessageToKeys ($message, $key, $callback, $prefix="")
+    private function resolveMessageToKeys($message, $key, $callback, $prefix="")
     {
         if (is_array($message)) {
             $_prefix = $prefix ? $prefix.$key."." : $key.".";
@@ -192,7 +192,7 @@ class Helper
      * @param string $prefix    Prefix to validate and possibly append dot to.
      * @return string Processed prefix.
      */
-    private function prefix ($prefix)
+    private function prefix($prefix)
     {
         if ($prefix) {
             $prefixLastChar = substr($prefix, -1);

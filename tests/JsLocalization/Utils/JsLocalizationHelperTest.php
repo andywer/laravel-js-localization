@@ -49,7 +49,7 @@ class JsLocalizationHelperTest extends TestCase
             'prefix1.test4'
         ];
 
-    protected function setUpTestMessagesFile ($filePath)
+    protected function setUpTestMessagesFile($filePath)
     {
         $fileContents = '<?php return ' . var_export($this->testMessagesFlat['en'], true) . ';';
         file_put_contents($filePath, $fileContents);
@@ -59,7 +59,7 @@ class JsLocalizationHelperTest extends TestCase
         return $prefix;
     }
 
-    public function setUp ()
+    public function setUp()
     {
         parent::setUp();
 
@@ -70,24 +70,24 @@ class JsLocalizationHelperTest extends TestCase
         touch($this->tmpFilePath);
     }
 
-    public function tearDown ()
+    public function tearDown()
     {
         unlink($this->tmpFilePath);
 
         parent::tearDown();
     }
 
-    public function testResolveMessageKeyArray ()
+    public function testResolveMessageKeyArray()
     {
         $this->assertEquals($this->testKeysFlat, JsLocalizationHelper::resolveMessageKeyArray($this->testKeys));
     }
 
-    public function testResolveMessageArrayToMessageKeys ()
+    public function testResolveMessageArrayToMessageKeys()
     {
         $this->assertEquals($this->testKeysFlat, JsLocalizationHelper::resolveMessageArrayToMessageKeys($this->testMessagesFlat['en']));
     }
 
-    public function testAddingRetrieving ()
+    public function testAddingRetrieving()
     {
         JsLocalizationHelper::addMessagesToExport($this->additionalMessageKeys);
 
@@ -107,7 +107,7 @@ class JsLocalizationHelperTest extends TestCase
         );
     }
 
-    public function testEventBasedAdding ()
+    public function testEventBasedAdding()
     {
         $additionalMessageKeys = $this->additionalMessageKeys;
 
@@ -143,7 +143,7 @@ class JsLocalizationHelperTest extends TestCase
         );
     }
 
-    public function testAddMessageFileToExport ()
+    public function testAddMessageFileToExport()
     {
         $prefix = 'xyz::' . $this->setUpTestMessagesFile($this->tmpFilePath);
         JsLocalizationHelper::addMessageFileToExport($this->tmpFilePath, 'xyz::');
@@ -160,7 +160,7 @@ class JsLocalizationHelperTest extends TestCase
         $this->assertEquals($testKeysFlat, JsLocalizationHelper::getAdditionalMessages());
     }
 
-    public function testAddMessageFileToExportExceptionHandling ()
+    public function testAddMessageFileToExportExceptionHandling()
     {
         $filePath = "/tmp/x/y/z/does-not-exist";
 

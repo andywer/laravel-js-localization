@@ -2,7 +2,7 @@
 
 class LocalizationScriptTest extends TestCase
 {
-    public function testScriptRetrieval ()
+    public function testScriptRetrieval()
     {
         $response = $this->call('GET', '/js-localization/localization.js');
 

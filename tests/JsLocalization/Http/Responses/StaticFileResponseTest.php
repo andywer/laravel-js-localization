@@ -7,7 +7,7 @@ class StaticFileResponseTest extends TestCase
 {
     protected $testFilePath, $testFileContent;
 
-    public function setUp ()
+    public function setUp()
     {
         parent::setUp();
 
@@ -17,7 +17,7 @@ class StaticFileResponseTest extends TestCase
         File::put($this->testFilePath, $this->testFileContent);
     }
 
-    public function testServingFile ()
+    public function testServingFile()
     {
         $response = new StaticFileResponse($this->testFilePath);
 
@@ -29,7 +29,7 @@ class StaticFileResponseTest extends TestCase
         $this->assertEquals($response->getLastModified()->getTimestamp(), $lastModified->getTimestamp());
     }
 
-    public function testExceptionHandling ()
+    public function testExceptionHandling()
     {
         $filePath = "/tmp/x/y/z/does-not-exist";
         $this->setExpectedException('Exception', "Cannot read file: $filePath");

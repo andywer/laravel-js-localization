@@ -4,7 +4,7 @@ use Mockery as m;
 
 class JsLocalizationControllerTest extends TestCase
 {
-    public function testCreateJsMessages ()
+    public function testCreateJsMessages()
     {
         // Prepare & Request
 
@@ -26,7 +26,7 @@ class JsLocalizationControllerTest extends TestCase
         $this->assertLangAddMessages($content, $this->testMessagesFlat);
     }
 
-    public function testBackwardsCompatibility ()
+    public function testBackwardsCompatibility()
     {
         // Prepare & Request
 
@@ -43,7 +43,7 @@ class JsLocalizationControllerTest extends TestCase
         $this->assertLangAddMessages($content, $this->testMessagesFlat);
     }
 
-    private function mockCachingService (array $messages)
+    private function mockCachingService(array $messages)
     {
         $service = m::mock('CachingServiceMock');
         JsLocalization\Facades\CachingService::swap($service);
@@ -55,7 +55,7 @@ class JsLocalizationControllerTest extends TestCase
             ->andReturn(time());
     }
 
-    private function assertLangAddMessages ($jsContent, array $expectedMessages)
+    private function assertLangAddMessages($jsContent, array $expectedMessages)
     {
         $addMessagesRegex = '/Lang\.addMessages\( (\{.*?\}) \);/x';
         $this->assertRegExp($addMessagesRegex, $jsContent);
