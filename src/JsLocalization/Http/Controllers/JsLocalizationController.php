@@ -1,5 +1,8 @@
 <?php
 
+namespace JsLocalization\Http\Controllers;
+
+use DateTime;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Lang;
 use JsLocalization\Facades\CachingService;

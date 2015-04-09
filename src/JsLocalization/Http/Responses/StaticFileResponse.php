@@ -1,5 +1,5 @@
 <?php
-namespace JsLocalization;
+namespace JsLocalization\Http\Responses;
 
 use App;
 use DateTime;

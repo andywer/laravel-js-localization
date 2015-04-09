@@ -1,5 +1,5 @@
 <?php
-namespace JsLocalization;
+namespace JsLocalization\Caching;
 
 use Cache;
 use Config;

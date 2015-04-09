@@ -1,7 +1,7 @@
 <?php
 
-use JsLocalization\CachingService;
-use JsLocalization\Helper;
+use JsLocalization\Caching\CachingService;
+use JsLocalization\Utils\Helper;
 
 App::singleton('JsLocalizationHelper', function()
 {

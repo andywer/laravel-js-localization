@@ -12,7 +12,7 @@ class JsLocalizationControllerTest extends TestCase
 
         Artisan::call('js-localization:refresh');
 
-        $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
+        $response = $this->call('GET', '/js-localization/messages');
         $content = $response->getContent();
 
         $this->assertTrue($response->isOk());
@@ -33,7 +33,7 @@ class JsLocalizationControllerTest extends TestCase
         $this->mockLang($locale = 'en');
         $this->mockCachingService($this->testMessagesFlat['en']);
 
-        $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
+        $response = $this->call('GET', '/js-localization/messages');
         $content = $response->getContent();
 
         $this->assertTrue($response->isOk());

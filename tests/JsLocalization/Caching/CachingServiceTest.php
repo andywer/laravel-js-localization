@@ -12,8 +12,8 @@ class CachingServiceTest extends TestCase
     {
         parent::setUp();
 
-        Cache::forget(JsLocalization\CachingService::CACHE_KEY);
-        Cache::forget(JsLocalization\CachingService::CACHE_TIMESTAMP_KEY);
+        Cache::forget(JsLocalization\Caching\CachingService::CACHE_KEY);
+        Cache::forget(JsLocalization\Caching\CachingService::CACHE_TIMESTAMP_KEY);
     }
 
     public function tearDown ()

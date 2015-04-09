@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\File;
-use JsLocalization\StaticFileResponse;
+use JsLocalization\Http\Responses\StaticFileResponse;
 
 class StaticFileResponseTest extends TestCase
 {

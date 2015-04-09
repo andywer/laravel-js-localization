@@ -1,5 +1,5 @@
 <?php
-namespace JsLocalization;
+namespace JsLocalization\Utils;
 
 use App;
 use Event;

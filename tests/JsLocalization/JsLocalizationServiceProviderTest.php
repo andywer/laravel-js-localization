@@ -49,10 +49,10 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
     public function testBindings ()
     {
         $helper = App::make('JsLocalizationHelper');
-        $this->assertInstanceOf('JsLocalization\Helper', $helper);
+        $this->assertInstanceOf('JsLocalization\Utils\Helper', $helper);
 
         $cachingService = App::make('JsLocalizationCachingService');
-        $this->assertInstanceOf('JsLocalization\CachingService', $cachingService);
+        $this->assertInstanceOf('JsLocalization\Caching\CachingService', $cachingService);
     }
 
 }
