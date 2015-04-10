@@ -22,8 +22,8 @@
         "classmap": [
             "tests/TestCase.php"
         ],
-        "psr-0": {
-            "JsLocalization": "src/"
+        "psr-4": {
+            "JsLocalization\\": "src/"
         }
     },
     "extra": {
