@@ -1,6 +1,6 @@
 laravel-js-localization
 =======================
-[![Build Status](https://travis-ci.org/andywer/laravel-js-localization.svg?branch=master)](https://travis-ci.org/andywer/laravel-js-localization) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/andywer/laravel-js-localization/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/andywer/laravel-js-localization/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/andywer/laravel-js-localization/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/andywer/laravel-js-localization/?branch=master) [![Total Downloads](https://poser.pugx.org/andywer/js-localization/downloads.svg)](https://packagist.org/packages/andywer/js-localization)
+[![Build Status](https://travis-ci.org/andywer/laravel-js-localization.svg?branch=laravel-4.2)](https://travis-ci.org/andywer/laravel-js-localization) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/andywer/laravel-js-localization/badges/quality-score.png?b=laravel-4.2)](https://scrutinizer-ci.com/g/andywer/laravel-js-localization/?branch=laravel-4.2) [![Code Coverage](https://scrutinizer-ci.com/g/andywer/laravel-js-localization/badges/coverage.png?b=laravel-4.2)](https://scrutinizer-ci.com/g/andywer/laravel-js-localization/?branch=laravel-4.2) [![Total Downloads](https://poser.pugx.org/andywer/js-localization/downloads.svg)](https://packagist.org/packages/andywer/js-localization)
 
 
 Simple, ease-to-use and flexible package for the [Laravel](http://laravel.com/) web framework. Allows you to use localized messages of the Laravel webapp (see `app/lang` directory) in your Javascript code. You may easily configure which messages you need to export.
@@ -12,7 +12,7 @@ Add the following line to the `require` section of your Laravel webapp's `compos
 
 ```javascript
     "require": {
-        "andywer/js-localization": "dev-master"
+        "andywer/js-localization": "dev-laravel-4.2"
     }
 ```
 
