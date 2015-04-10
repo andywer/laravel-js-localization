@@ -4,7 +4,7 @@ use Mockery as m;
 
 class JsLocalizationControllerTest extends TestCase
 {
-    public function testCreateJsMessages ()
+    public function testCreateJsMessages()
     {
         // Prepare & Request
 
@@ -12,7 +12,7 @@ class JsLocalizationControllerTest extends TestCase
 
         Artisan::call('js-localization:refresh');
 
-        $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
+        $response = $this->call('GET', '/js-localization/messages');
         $content = $response->getContent();
 
         $this->assertTrue($response->isOk());
@@ -26,14 +26,14 @@ class JsLocalizationControllerTest extends TestCase
         $this->assertLangAddMessages($content, $this->testMessagesFlat);
     }
 
-    public function testBackwardsCompatibility ()
+    public function testBackwardsCompatibility()
     {
         // Prepare & Request
 
         $this->mockLang($locale = 'en');
         $this->mockCachingService($this->testMessagesFlat['en']);
 
-        $response = $this->action('GET', 'JsLocalizationController@createJsMessages');
+        $response = $this->call('GET', '/js-localization/messages');
         $content = $response->getContent();
 
         $this->assertTrue($response->isOk());
@@ -43,7 +43,7 @@ class JsLocalizationControllerTest extends TestCase
         $this->assertLangAddMessages($content, $this->testMessagesFlat);
     }
 
-    private function mockCachingService (array $messages)
+    private function mockCachingService(array $messages)
     {
         $service = m::mock('CachingServiceMock');
         JsLocalization\Facades\CachingService::swap($service);
@@ -55,7 +55,7 @@ class JsLocalizationControllerTest extends TestCase
             ->andReturn(time());
     }
 
-    private function assertLangAddMessages ($jsContent, array $expectedMessages)
+    private function assertLangAddMessages($jsContent, array $expectedMessages)
     {
         $addMessagesRegex = '/Lang\.addMessages\( (\{.*?\}) \);/x';
         $this->assertRegExp($addMessagesRegex, $jsContent);

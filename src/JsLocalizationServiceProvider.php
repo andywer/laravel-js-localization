@@ -33,7 +33,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
             __DIR__.'/../config/config.php', 'js-localization'
         );
         
-		$this->loadViewsFrom(__DIR__.'/../views', 'js-localization');
+		$this->loadViewsFrom(__DIR__.'/../resources/views', 'js-localization');
         
         $this->registerRefreshCommand();
 	}
@@ -45,8 +45,8 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		require __DIR__.'/../bindings.php';
-		require __DIR__.'/../routes.php';
+		require __DIR__.'/bindings.php';
+		require __DIR__.'/Http/routes.php';
 	}
 
 	/**
@@ -62,9 +62,9 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	/**
 	 * Register js-localization.refresh
 	 */
-	private function registerRefreshCommand ()
+	private function registerRefreshCommand()
 	{
-		$this->app['js-localization.refresh'] = $this->app->share(function($app)
+		$this->app['js-localization.refresh'] = $this->app->share(function()
 		{
 			return new RefreshCommand;
 		});

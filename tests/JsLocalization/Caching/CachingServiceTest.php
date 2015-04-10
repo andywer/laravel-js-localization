@@ -6,17 +6,15 @@ use JsLocalization\Facades\CachingService;
 class CachingServiceTest extends TestCase
 {
 
-    private $cachingService;
-
-    public function setUp ()
+    public function setUp()
     {
         parent::setUp();
 
-        Cache::forget(JsLocalization\CachingService::CACHE_KEY);
-        Cache::forget(JsLocalization\CachingService::CACHE_TIMESTAMP_KEY);
+        Cache::forget(JsLocalization\Caching\CachingService::CACHE_KEY);
+        Cache::forget(JsLocalization\Caching\CachingService::CACHE_TIMESTAMP_KEY);
     }
 
-    public function tearDown ()
+    public function tearDown()
     {
         m::close();
 
@@ -24,7 +22,7 @@ class CachingServiceTest extends TestCase
     }
 
 
-    public function testGetMessagesJson ()
+    public function testGetMessagesJson()
     {
         $this->assertMessagesJsonEquals($this->testMessagesFlat);
 
@@ -42,7 +40,7 @@ class CachingServiceTest extends TestCase
         $this->assertMessagesJsonEquals($this->testMessagesFlat);
     }
 
-    public function testGetLastRefreshTimestamp ()
+    public function testGetLastRefreshTimestamp()
     {
         $timestamp = CachingService::getLastRefreshTimestamp();
         $this->assertEquals(0, $timestamp);
@@ -54,14 +52,14 @@ class CachingServiceTest extends TestCase
         $this->assertEquals($refreshTime, $timestamp);
     }
 
-    public function testRefreshMessageCacheEvent ()
+    public function testRefreshMessageCacheEvent()
     {
         Event::shouldReceive('fire')->once()->with('JsLocalization.registerMessages');
 
         CachingService::refreshMessageCache();
     }
 
-    private function assertMessagesJsonEquals (array $expectedMessages)
+    private function assertMessagesJsonEquals(array $expectedMessages)
     {
         $messagesJson = CachingService::getMessagesJson();
         $this->assertJson($messagesJson);

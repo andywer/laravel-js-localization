@@ -1,5 +1,5 @@
 <?php
-namespace JsLocalization;
+namespace JsLocalization\Caching;
 
 use Cache;
 use Config;
@@ -30,7 +30,7 @@ class CachingService
      *
      * @return string JSON encoded messages object.
      */
-    public function getMessagesJson ()
+    public function getMessagesJson()
     {
         if (!Cache::has(self::CACHE_KEY)) {
             $this->refreshMessageCache();
@@ -46,7 +46,7 @@ class CachingService
      *
      * @return void
      */
-    public function refreshMessageCache ()
+    public function refreshMessageCache()
     {
         JsLocalizationHelper::triggerRegisterMessages();
 
@@ -64,7 +64,7 @@ class CachingService
      *
      * @return int UNIX timestamp
      */
-    public function getLastRefreshTimestamp ()
+    public function getLastRefreshTimestamp()
     {
         return Cache::get(self::CACHE_TIMESTAMP_KEY);
     }
@@ -74,7 +74,7 @@ class CachingService
      *
      * @return array Locales.
      */
-    protected function getLocales ()
+    protected function getLocales()
     {
         return Config::get('js-localization.locales');
     }
@@ -86,7 +86,7 @@ class CachingService
      * @param array $locales
      * @return array The translated messages as [<locale> => [ <message id> => <translation>, ... ], ...]
      */
-    protected function getTranslatedMessagesForLocales (array $messageKeys, array $locales)
+    protected function getTranslatedMessagesForLocales(array $messageKeys, array $locales)
     {
         $translatedMessages = [];
 
@@ -108,7 +108,7 @@ class CachingService
      * @param $locale
      * @return array The translated messages as [ <message id> => <translation>, ... ]
      */
-    protected function getTranslatedMessages (array $messageKeys, $locale)
+    protected function getTranslatedMessages(array $messageKeys, $locale)
     {
         $translatedMessages = [];
 
@@ -133,7 +133,7 @@ class CachingService
      * @param string $keyPrefix
      * @return array Flattened translations array.
      */
-    protected function flattenTranslations (array $nestedMessages, $keyPrefix='')
+    protected function flattenTranslations(array $nestedMessages, $keyPrefix='')
     {
         $flattened = [];
 
@@ -155,7 +155,7 @@ class CachingService
      *
      * @return array Array of message keys.
      */
-    protected function getMessageKeys ()
+    protected function getMessageKeys()
     {
         $messageKeys = Config::get('js-localization.messages');
         $messageKeys = JsLocalizationHelper::resolveMessageKeyArray($messageKeys);

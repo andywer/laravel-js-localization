@@ -6,19 +6,19 @@ use JsLocalization\Console\RefreshCommand;
 class RefreshCommandTest extends TestCase
 {
 
-    public function setUp ()
+    public function setUp()
     {
         parent::setUp();
     }
 
-    public function tearDown ()
+    public function tearDown()
     {
         m::close();
 
         parent::tearDown();
     }
 
-    public function testNoLocalesConfigException ()
+    public function testNoLocalesConfigException()
     {
         // Mock Config
         Illuminate\Support\Facades\Config::swap($config = m::mock('ConfigMock'));
@@ -32,7 +32,7 @@ class RefreshCommandTest extends TestCase
         $this->runCommand();
     }
 
-    protected function runCommand ()
+    protected function runCommand()
     {
         $cmd = new RefreshCommand();
 

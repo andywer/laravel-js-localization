@@ -1,5 +1,5 @@
 <?php
-namespace JsLocalization;
+namespace JsLocalization\Http\Responses;
 
 use App;
 use DateTime;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 
 class StaticFileResponse extends Response
 {
-    public function __construct ($filePath)
+    public function __construct($filePath)
     {
         parent::__construct();
 
