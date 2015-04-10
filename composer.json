@@ -14,7 +14,7 @@
         "illuminate/support": "5.x"
     },
     "require-dev": {
-        "mockery/mockery": "dev-master@dev",
+        "mockery/mockery": "~0.9.4",
         "orchestra/testbench": "3.0.*",
         "phpunit/phpunit": "3.7.*"
     },
@@ -28,7 +28,7 @@
     },
     "extra": {
         "component": "package",
-        "frameworks": ["Laravel 4"]
+        "frameworks": ["Laravel 5"]
     },
     "minimum-stability": "dev",
     "repositories": [
