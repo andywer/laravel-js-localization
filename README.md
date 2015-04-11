@@ -6,6 +6,21 @@ laravel-js-localization
 Simple, ease-to-use and flexible package for the [Laravel](http://laravel.com/) web framework. Allows you to use localized messages of the Laravel webapp (see `resources/lang` directory) in your Javascript code. You may easily configure which messages you need to export.
 
 
+News
+----
+
+A major bug that prevented proper behavior when using the package with Laravel 5 has been fixed.
+
+Additionally, the `master` branch has been droppped. Always use the branch that matches your framework version:
+
+ Laravel | Branch
+:--------|:-------
+ 5.0     | laravel-5
+ 4.2     | laravel-4.2
+ 4.1     | laravel-4.1 (near end of life)
+ 4.0     | laravel-4.0 (end of life)
+
+
 Installation
 ------------
 
