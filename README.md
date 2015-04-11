@@ -9,7 +9,7 @@ Simple, ease-to-use and flexible package for the [Laravel](http://laravel.com/) 
 News
 ----
 
-A major bug that prevented proper behavior when using the package with Laravel 5 has been fixed.
+A major bug when using the package with Laravel 5 has been fixed.
 
 Additionally, the `master` branch has been droppped. Always use the branch that matches your framework version:
 
