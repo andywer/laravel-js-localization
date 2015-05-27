@@ -1,6 +1,5 @@
 <?php
 
-use JsLocalization\Http\Responses\StaticFileResponse;
 
 Route::group([ 'namespace' => '\JsLocalization\Http\Controllers' ], function()
 {

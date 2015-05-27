@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Lang;
 use JsLocalization\Facades\CachingService;
+use JsLocalization\Http\Responses\StaticFileResponse;
 
 class JsLocalizationController extends Controller
 {
