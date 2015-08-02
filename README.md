@@ -11,7 +11,7 @@ News
 
 A major bug when using the package with Laravel 5 has been fixed.
 
-Additionally, the `master` branch has been droppped. Always use the branch that matches your framework version:
+Additionally, the `master` branch has been dropped. Use the branch that matches your framework version:
 
  Laravel | Branch
 :--------|:-------
@@ -46,20 +46,6 @@ Finally add the following line to the `providers` array of your `app/config/app.
 ```
 
 
-Branches
---------
-
-Use the following branches according to the Laravel framework version you are using:
-
-- Laravel 4.0: `laravel-4.0`
-- Laravel 4.1: `laravel-4.1`
-- Laravel 4.2: `laravel-4.2`
-- Laravel 5.x: `laravel-5`
-
-So use the appropriate branch in your `composer.json` file as shown by [Installation](#installation).
-For example: Use `dev-laravel-4.2` for Laravel 4.2.
-
-
 Configuration
 -------------
 
@@ -72,7 +58,7 @@ Example (exports all reminder messages):
 ```php
 <?php
 
-return array(
+return [
     // Set the locales you use
     'locales' => ['en'],
 
@@ -96,7 +82,7 @@ return array(
      *     'reminder.token'
      * ]
      */
-);
+];
 ```
 
 __Important:__
@@ -159,10 +145,10 @@ class MyServiceProvider extends ServiceProvider
     {
         Event::listen('JsLocalization.registerMessages', function()
         {
-            JsLocalizationHelper::addMessagesToExport(array(
+            JsLocalizationHelper::addMessagesToExport([
                 // list the keys of the messages here, similar
                 // to the 'messages' array in the config file
-            ));
+            ]);
         });
     }
 
