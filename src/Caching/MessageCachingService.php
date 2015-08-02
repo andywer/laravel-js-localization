@@ -33,7 +33,7 @@ class MessageCachingService extends AbstractCachingService
 
     /**
      * Returns the cached messages (already JSON encoded).
-     * Creates the neccessary cache item if neccessary.
+     * Creates the necessary cache item if necessary.
      *
      * @return string JSON encoded messages object.
      */
@@ -61,8 +61,7 @@ class MessageCachingService extends AbstractCachingService
         $messageKeys = $this->getMessageKeys();
         $translatedMessages = $this->getTranslatedMessagesForLocales($messageKeys, $locales);
 
-        Cache::forever($this->cacheKey, json_encode($translatedMessages));
-        Cache::forever($this->cacheTimestampKey, time());
+        parent::refreshCache(json_encode($translatedMessages));
     }
 
     /**

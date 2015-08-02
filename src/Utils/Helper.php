@@ -131,7 +131,7 @@ class Helper
      * will recurse.
      *
      * @param mixed $key            An array item read from the configuration ('messages' array).
-     * @param mixed $keyIndex       The array index of $key. Is neccessary if $key is an array.
+     * @param mixed $keyIndex       The array index of $key. Is necessary if $key is an array.
      * @param callable $callback    A callback function: function($fullyQualifiedKey).
      * @param string $prefix        Optional key prefix.
      */
@@ -174,7 +174,7 @@ class Helper
     }
 
     /**
-     * Appends a dot to the prefix if neccessary.
+     * Appends a dot to the prefix if necessary.
      *
      * @param string $prefix    Prefix to validate and possibly append dot to.
      * @return string Processed prefix.

@@ -32,7 +32,7 @@
         }
 
         return true;
-    }
+    };
 
 
     /* Lang: */
@@ -162,7 +162,7 @@
 
         /**
          * Used to initialize the message catalog. You may use this
-         * method to add further messages on runtime if neccessary.
+         * method to add further messages on runtime if necessary.
          *
          * @method addMessages
          * @static

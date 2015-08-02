@@ -52,8 +52,12 @@ abstract class AbstractCachingService {
     /**
      * Refresh the cached data.
      *
-     * @return void
+     * @param mixed $data
      */
-    abstract public function refreshCache();
+    public function refreshCache($data)
+    {
+        Cache::forever($this->cacheKey, $data);
+        Cache::forever($this->cacheTimestampKey, time());
+    }
     
 }
