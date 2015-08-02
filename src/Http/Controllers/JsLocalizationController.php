@@ -5,7 +5,7 @@ namespace JsLocalization\Http\Controllers;
 use DateTime;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Lang;
-use JsLocalization\Facades\CachingService;
+use JsLocalization\Facades\MessageCachingService;
 use JsLocalization\Http\Responses\StaticFileResponse;
 
 class JsLocalizationController extends Controller
@@ -22,7 +22,7 @@ class JsLocalizationController extends Controller
         $contents = $this->getMessages();
 
         $lastModified = new DateTime();
-        $lastModified->setTimestamp(CachingService::getLastRefreshTimestamp());
+        $lastModified->setTimestamp(MessageCachingService::getLastRefreshTimestamp());
 
         return response($contents)
                 ->header('Content-Type', 'text/javascript')
@@ -56,7 +56,7 @@ class JsLocalizationController extends Controller
         $contents .= $this->getMessages();
 
         $lastModified = new DateTime();
-        $lastModified->setTimestamp(CachingService::getLastRefreshTimestamp());
+        $lastModified->setTimestamp(MessageCachingService::getLastRefreshTimestamp());
 
         return response($contents)
             ->header('Content-Type', 'text/javascript')
@@ -79,7 +79,7 @@ class JsLocalizationController extends Controller
      */
     private function getMessages()
     {
-        $messages = CachingService::getMessagesJson();
+        $messages = MessageCachingService::getMessagesJson();
         $messages = $this->ensureBackwardsCompatibility($messages);
 
         $contents  = 'Lang.addMessages(' . $messages . ');';

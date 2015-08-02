@@ -4,7 +4,7 @@ namespace JsLocalization\Console;
 use Config;
 use Illuminate\Console\Command;
 use JsLocalization\Exceptions\ConfigException;
-use JsLocalization\Facades\CachingService;
+use JsLocalization\Facades\MessageCachingService;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -41,7 +41,7 @@ class RefreshCommand extends Command
           throw new ConfigException('Please set the "locales" config! See https://github.com/andywer/laravel-js-localization#configuration');
         }
 
-        CachingService::refreshMessageCache();
+        MessageCachingService::refreshCache();
     }
 
 }

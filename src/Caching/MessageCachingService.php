@@ -3,10 +3,11 @@ namespace JsLocalization\Caching;
 
 use Cache;
 use Config;
+use Event;
 use Lang;
 use JsLocalization\Facades\JsLocalizationHelper;
 
-class CachingService
+class MessageCachingService extends AbstractCachingService
 {
 
     /**
@@ -18,11 +19,17 @@ class CachingService
 
     /**
      * The key used to cache the timestamp of the last
-     * refreshMessageCache() call.
+     * refreshCache() call.
      *
      * @var string
      */
     const CACHE_TIMESTAMP_KEY = 'js-localization-last-modified';
+
+    
+    public function __construct()
+    {
+        parent::__construct(self::CACHE_KEY, self::CACHE_TIMESTAMP_KEY);
+    }
 
     /**
      * Returns the cached messages (already JSON encoded).
@@ -32,11 +39,11 @@ class CachingService
      */
     public function getMessagesJson()
     {
-        if (!Cache::has(self::CACHE_KEY)) {
-            $this->refreshMessageCache();
+        if (!Cache::has($this->cacheKey)) {
+            $this->refreshCache();
         }
 
-        return Cache::get(self::CACHE_KEY);
+        return Cache::get($this->cacheKey);
     }
 
     /**
@@ -46,27 +53,16 @@ class CachingService
      *
      * @return void
      */
-    public function refreshMessageCache()
+    public function refreshCache()
     {
-        JsLocalizationHelper::triggerRegisterMessages();
+        Event::fire('JsLocalization.registerMessages');
 
         $locales = $this->getLocales();
         $messageKeys = $this->getMessageKeys();
         $translatedMessages = $this->getTranslatedMessagesForLocales($messageKeys, $locales);
 
-        Cache::forever(self::CACHE_KEY, json_encode($translatedMessages));
-        Cache::forever(self::CACHE_TIMESTAMP_KEY, time());
-    }
-
-    /**
-     * Returns the UNIX timestamp of the last
-     * refreshMessageCache() call.
-     *
-     * @return int UNIX timestamp
-     */
-    public function getLastRefreshTimestamp()
-    {
-        return Cache::get(self::CACHE_TIMESTAMP_KEY);
+        Cache::forever($this->cacheKey, json_encode($translatedMessages));
+        Cache::forever($this->cacheTimestampKey, time());
     }
 
     /**

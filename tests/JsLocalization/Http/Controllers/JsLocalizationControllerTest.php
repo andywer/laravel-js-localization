@@ -46,7 +46,7 @@ class JsLocalizationControllerTest extends TestCase
     private function mockCachingService(array $messages)
     {
         $service = m::mock('CachingServiceMock');
-        JsLocalization\Facades\CachingService::swap($service);
+        JsLocalization\Facades\MessageCachingService::swap($service);
 
         $service->shouldReceive('getMessagesJson')
             ->andReturn(json_encode($messages));

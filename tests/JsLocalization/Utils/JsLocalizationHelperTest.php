@@ -120,7 +120,7 @@ class JsLocalizationHelperTest extends TestCase
 
         $this->assertEquals([], JsLocalizationHelper::getAdditionalMessages());
 
-        JsLocalizationHelper::triggerRegisterMessages();
+        Event::fire('JsLocalization.registerMessages');
 
         $this->assertEquals(
             $this->additionalMessageKeysFlat,
@@ -135,7 +135,7 @@ class JsLocalizationHelperTest extends TestCase
             JsLocalizationHelper::addMessagesToExport(['another']);
         });
 
-        JsLocalizationHelper::triggerRegisterMessages();
+        Event::fire('JsLocalization.registerMessages');
 
         $this->assertEquals(
             array_merge($this->additionalMessageKeysFlat, ['another']),

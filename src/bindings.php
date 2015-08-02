@@ -1,6 +1,6 @@
 <?php
 
-use JsLocalization\Caching\CachingService;
+use JsLocalization\Caching\MessageCachingService;
 use JsLocalization\Utils\Helper;
 
 App::singleton('JsLocalizationHelper', function()
@@ -8,7 +8,7 @@ App::singleton('JsLocalizationHelper', function()
     return new Helper;
 });
 
-App::singleton('JsLocalizationCachingService', function()
+App::singleton('JsLocalizationMessageCachingService', function()
 {
-    return new CachingService;
+    return new MessageCachingService;
 });

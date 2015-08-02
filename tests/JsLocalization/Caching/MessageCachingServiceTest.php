@@ -1,17 +1,17 @@
 <?php
 
 use Mockery as m;
-use JsLocalization\Facades\CachingService;
+use JsLocalization\Facades\MessageCachingService;
 
-class CachingServiceTest extends TestCase
+class MessageCachingServiceTest extends TestCase
 {
 
     public function setUp()
     {
         parent::setUp();
 
-        Cache::forget(JsLocalization\Caching\CachingService::CACHE_KEY);
-        Cache::forget(JsLocalization\Caching\CachingService::CACHE_TIMESTAMP_KEY);
+        Cache::forget(JsLocalization\Caching\MessageCachingService::CACHE_KEY);
+        Cache::forget(JsLocalization\Caching\MessageCachingService::CACHE_TIMESTAMP_KEY);
     }
 
     public function tearDown()
@@ -35,20 +35,20 @@ class CachingServiceTest extends TestCase
 
         // Now refresh the cache:
 
-        CachingService::refreshMessageCache();
+        MessageCachingService::refreshCache();
 
         $this->assertMessagesJsonEquals($this->testMessagesFlat);
     }
 
     public function testGetLastRefreshTimestamp()
     {
-        $timestamp = CachingService::getLastRefreshTimestamp();
+        $timestamp = MessageCachingService::getLastRefreshTimestamp();
         $this->assertEquals(0, $timestamp);
 
-        CachingService::refreshMessageCache();
+        MessageCachingService::refreshCache();
         $refreshTime = time();
 
-        $timestamp = CachingService::getLastRefreshTimestamp();
+        $timestamp = MessageCachingService::getLastRefreshTimestamp();
         $this->assertEquals($refreshTime, $timestamp);
     }
 
@@ -56,12 +56,12 @@ class CachingServiceTest extends TestCase
     {
         Event::shouldReceive('fire')->once()->with('JsLocalization.registerMessages');
 
-        CachingService::refreshMessageCache();
+        MessageCachingService::refreshCache();
     }
 
     private function assertMessagesJsonEquals(array $expectedMessages)
     {
-        $messagesJson = CachingService::getMessagesJson();
+        $messagesJson = MessageCachingService::getMessagesJson();
         $this->assertJson($messagesJson);
 
         $messages = json_decode($messagesJson, true);

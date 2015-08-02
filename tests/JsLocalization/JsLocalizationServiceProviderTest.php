@@ -51,8 +51,8 @@ class JsLocalizationServiceProviderTest extends Orchestra\Testbench\TestCase
         $helper = App::make('JsLocalizationHelper');
         $this->assertInstanceOf('JsLocalization\Utils\Helper', $helper);
 
-        $cachingService = App::make('JsLocalizationCachingService');
-        $this->assertInstanceOf('JsLocalization\Caching\CachingService', $cachingService);
+        $cachingService = App::make('JsLocalizationMessageCachingService');
+        $this->assertInstanceOf('JsLocalization\Caching\MessageCachingService', $cachingService);
     }
 
 }

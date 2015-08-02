@@ -82,19 +82,6 @@ class Helper
     }
 
     /**
-     * Trigger registerMessages event.
-     * Other Laravel packages that use this package
-     * and need to export their own messages to
-     * the JS code should use a listener on that event.
-     *
-     * @return void
-     */
-    public function triggerRegisterMessages()
-    {
-        Event::fire('JsLocalization.registerMessages');
-    }
-
-    /**
      * Takes an array of message keys with nested
      * sub-arrays and returns a flat array of
      * fully qualified message keys.
