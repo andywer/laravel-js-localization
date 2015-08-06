@@ -23,7 +23,7 @@ class MessageCachingService extends AbstractCachingService
      *
      * @var string
      */
-    const CACHE_TIMESTAMP_KEY = 'js-localization-last-modified';
+    const CACHE_TIMESTAMP_KEY = 'js-localization-messages-last-modified';
 
     
     public function __construct()
@@ -39,11 +39,7 @@ class MessageCachingService extends AbstractCachingService
      */
     public function getMessagesJson()
     {
-        if (!Cache::has($this->cacheKey)) {
-            $this->refreshCache();
-        }
-
-        return Cache::get($this->cacheKey);
+        return $this->getData();
     }
 
     /**
@@ -61,7 +57,7 @@ class MessageCachingService extends AbstractCachingService
         $messageKeys = $this->getMessageKeys();
         $translatedMessages = $this->getTranslatedMessagesForLocales($messageKeys, $locales);
 
-        parent::refreshCache(json_encode($translatedMessages));
+        $this->refreshCacheUsing(json_encode($translatedMessages));
     }
 
     /**

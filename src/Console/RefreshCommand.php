@@ -4,6 +4,7 @@ namespace JsLocalization\Console;
 use Config;
 use Illuminate\Console\Command;
 use JsLocalization\Exceptions\ConfigException;
+use JsLocalization\Facades\ConfigCachingService;
 use JsLocalization\Facades\MessageCachingService;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -42,6 +43,7 @@ class RefreshCommand extends Command
         }
 
         MessageCachingService::refreshCache();
+        ConfigCachingService::refreshCache();
     }
 
 }

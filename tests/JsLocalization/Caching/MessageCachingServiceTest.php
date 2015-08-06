@@ -42,13 +42,13 @@ class MessageCachingServiceTest extends TestCase
 
     public function testGetLastRefreshTimestamp()
     {
-        $timestamp = MessageCachingService::getLastRefreshTimestamp();
+        $timestamp = MessageCachingService::getLastRefreshTimestamp()->getTimestamp();
         $this->assertEquals(0, $timestamp);
 
         MessageCachingService::refreshCache();
         $refreshTime = time();
 
-        $timestamp = MessageCachingService::getLastRefreshTimestamp();
+        $timestamp = MessageCachingService::getLastRefreshTimestamp()->getTimestamp();
         $this->assertEquals($refreshTime, $timestamp);
     }
 

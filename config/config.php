@@ -30,4 +30,23 @@ return [
 
     'messages' => [],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Set the keys of config properties you want to use in javascript.
+    | Caution: Do not expose any configuration values that should be kept privately!
+    |--------------------------------------------------------------------------
+    */
+    'config' => [
+        'app.debug'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Disables the config cache if set to true, so you don't have to
+    | run `php artisan js-localization:refresh` each time you change configuration files.
+    | Attention: Should not be used in production mode due to decreased performance.
+    |--------------------------------------------------------------------------
+    */
+    'disable_config_cache' => false,
+
 ];

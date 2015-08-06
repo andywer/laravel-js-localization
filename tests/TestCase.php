@@ -9,7 +9,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         'test_string',
         'test'              // this includes all messages with key 'test.*'
     ];
-
+    
     protected $testMessages = [
         'en' => [
             'test_string' => 'This is: test_string',
@@ -32,11 +32,17 @@ class TestCase extends Orchestra\Testbench\TestCase
         ]
     ];
 
+    protected $testConfigExportFlat = [
+        'js-localization.test-config' => 'some test property value'
+    ];
+
+
     public function setUp()
     {
         parent::setUp();
 
         $this->updateMessagesConfig($this->testMessagesConfig);
+        $this->updateConfigExportConfig($this->testConfigExportFlat);
         $this->mockLang();
     }
 
@@ -55,6 +61,15 @@ class TestCase extends Orchestra\Testbench\TestCase
     protected function updateMessagesConfig(array $config)
     {
         Config::set('js-localization.messages', $config);
+    }
+    
+    protected function updateConfigExportConfig(array $configData)
+    {
+        Config::set('js-localization.config', array_keys($configData));
+        
+        foreach ($configData as $propertyName => $propertyValue) {
+            Config::set($propertyName, $propertyValue);
+        }
     }
 
     protected function mockLang($locale = "en")

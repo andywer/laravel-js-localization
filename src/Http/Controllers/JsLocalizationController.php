@@ -5,6 +5,7 @@ namespace JsLocalization\Http\Controllers;
 use DateTime;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Lang;
+use JsLocalization\Facades\ConfigCachingService;
 use JsLocalization\Facades\MessageCachingService;
 use JsLocalization\Http\Responses\StaticFileResponse;
 
@@ -14,25 +15,41 @@ class JsLocalizationController extends Controller
     /**
      * Create the JS-Response for all configured translation messages
      *
-     * @return Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function createJsMessages()
     {
-
-        $contents = $this->getMessages();
-
-        $lastModified = new DateTime();
-        $lastModified->setTimestamp(MessageCachingService::getLastRefreshTimestamp());
+        $contents = $this->getMessagesJson();
 
         return response($contents)
                 ->header('Content-Type', 'text/javascript')
-                ->setLastModified($lastModified);
+                ->setLastModified(MessageCachingService::getLastRefreshTimestamp());
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function createJsConfig()
+    {
+        $contents = $this->getConfigJson();
+        
+        /** @var \Illuminate\Http\Response $response */
+        $response = response($contents);
+        $response->header('Content-Type', 'text/javascript');
+
+        if (ConfigCachingService::isDisabled()) {
+            $response->setEtag(md5($contents));
+        } else {
+            $response->setLastModified(ConfigCachingService::getLastRefreshTimestamp());
+        }
+
+        return $response;
     }
 
     /**
      * Deliver the Framework for getting the translation in JS
      *
-     * @return Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function deliverLocalizationJS()
     {
@@ -47,22 +64,34 @@ class JsLocalizationController extends Controller
      * Deliver one file that combines messages and framework.
      * Saves one additional HTTP-Request
      *
-     * @return Http\Response
+     * @return \Illuminate\Http\Response
      */
-    public function deliverLocalizationJSAndMessages()
+    public function deliverAllInOne()
     {
         $contents = file_get_contents( __DIR__."/../../../public/js/localization.min.js" );
         $contents .= "\n";
-        $contents .= $this->getMessages();
+        $contents .= $this->getMessagesJson();
+        $contents .= $this->getConfigJson();
 
-        $lastModified = new DateTime();
-        $lastModified->setTimestamp(MessageCachingService::getLastRefreshTimestamp());
+        /** @var \Illuminate\Http\Response $response */
+        $response = response($contents);
+        $response->header('Content-Type', 'text/javascript');
 
-        return response($contents)
-            ->header('Content-Type', 'text/javascript')
-            ->setLastModified($lastModified);
+        if (ConfigCachingService::isDisabled()) {
+            $response->setEtag(md5($contents));
+        } else {
+            $response->setLastModified(MessageCachingService::getLastRefreshTimestamp());
+        }
+
+        return $response;
     }
 
+    /**
+     * Transforms the cached data to stay compatible to old versions of the package.
+     * 
+     * @param string $messages
+     * @return string
+     */
     protected function ensureBackwardsCompatibility($messages)
     {
         if (preg_match('/^\\{"[a-z]{2}":/', $messages)) {
@@ -77,7 +106,7 @@ class JsLocalizationController extends Controller
      *
      * @return string
      */
-    private function getMessages()
+    protected function getMessagesJson()
     {
         $messages = MessageCachingService::getMessagesJson();
         $messages = $this->ensureBackwardsCompatibility($messages);
@@ -85,6 +114,20 @@ class JsLocalizationController extends Controller
         $contents  = 'Lang.addMessages(' . $messages . ');';
         $contents .= 'Lang.setLocale("' . Lang::locale() . '");';
 
+        return $contents;
+    }
+
+    /**
+     * Get the JSON-encoded config properties that shall be passed to the client.
+     * 
+     * @return string
+     */
+    protected function getConfigJson()
+    {
+        $config = ConfigCachingService::getConfigJson();
+        
+        $contents = 'Config.addConfig(' . $config . ');';
+        
         return $contents;
     }
 

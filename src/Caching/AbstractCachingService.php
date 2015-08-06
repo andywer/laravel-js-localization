@@ -9,6 +9,7 @@
 namespace JsLocalization\Caching;
 
 use Cache;
+use DateTime;
 
 abstract class AbstractCachingService {
 
@@ -39,14 +40,18 @@ abstract class AbstractCachingService {
     }
 
     /**
-     * Returns the UNIX timestamp of the last
-     * refreshCache() call.
+     * Returns the timestamp of the last refreshCache() call.
      *
-     * @return int UNIX timestamp
+     * @return DateTime
      */
     public function getLastRefreshTimestamp()
     {
-        return Cache::get($this->cacheTimestampKey);
+        $unixTime = Cache::get($this->cacheTimestampKey);
+        
+        $dateTime = new DateTime;
+        $dateTime->setTimestamp($unixTime);
+        
+        return $dateTime;
     }
 
     /**
@@ -54,10 +59,32 @@ abstract class AbstractCachingService {
      *
      * @param mixed $data
      */
-    public function refreshCache($data)
+    public function refreshCacheUsing($data)
     {
         Cache::forever($this->cacheKey, $data);
         Cache::forever($this->cacheTimestampKey, time());
+    }
+
+    /**
+     * Create up-to-date data and update cache using refreshCacheUsing().
+     * Trigger some event.
+     * 
+     * @return void
+     */
+    abstract public function refreshCache();
+
+    /**
+     * Return the cached data. Refresh cache if cache has not yet been initialized.
+     * 
+     * @return mixed
+     */
+    public function getData()
+    {
+        if (!Cache::has($this->cacheKey)) {
+            $this->refreshCache();
+        }
+
+        return Cache::get($this->cacheKey);
     }
     
 }

@@ -67,7 +67,7 @@ return [
         'reminder' => [
             'password', 'user', 'token'
         ]
-    ]
+    ],
 
     /*
      * in short:
@@ -82,18 +82,29 @@ return [
      *     'reminder.token'
      * ]
      */
+     
+     // Set the keys of config properties you want to use in javascript.
+     // Caution: Do not expose any configuration values that should be kept privately!
+     'config' => [
+         'app.debug'
+     ],
+     
+     // Disables the config cache if set to true, so you don't have to run `php artisan js-localization:refresh`
+     // each time you change configuration files.
+     // Attention: Should not be used in production mode due to decreased performance.
+     'disable_config_cache' => false,
 ];
 ```
 
 __Important:__
 
-The messages configuration will be cached when the JsLocalizationController is used for the first time. After changing the messages configuration you will need to call __`php artisan js-localization:refresh`__ to refresh that cache.
+The messages configuration will be cached when the JsLocalizationController is used for the first time. After changing the messages configuration you will need to call __`php artisan js-localization:refresh`__ to refresh that cache. That also affects the config properties you export to javascript, since they are cached, too.
 
 
 Usage
 -----
 
-You just need to add the neccessary `<script>` tags to your layout. Here is an example blade view:
+You just need to add the necessary `<script>` tags to your layout. Here is an example blade view:
 
 ```html
 @include('js-localization::head')
@@ -118,6 +129,7 @@ Features
 --------
 
 You may use Lang.get(), Lang.has(), Lang.choice(), Lang.locale() and trans() (alias for Lang.get()) in your Javascript code. They work just like Laravel's `Lang` facade.
+Additionally, you are able to pass configuration properties to your Javascript code as well. There is Config.get() in Javascript, too. Configure which config properties to pass to the client using the `config` field in `config/js-localization.php`. Attention: Do not export any security-critical properties like DB credentials or similar, since they would be visible to anyone using your application!
 
 Variables in messages are supported. For instance: `"This is my test string for :name."`.
 

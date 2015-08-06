@@ -11,7 +11,7 @@ class LocalizationScriptTest extends TestCase
         
         // Test for JS content
         
-        $this->assertRegExp('/^\(function\(.*\);/', $content);
+        $this->assertRegExp('/^!?\(?function\(.*\);/', $content);
     }
     
     public function testScriptAndTranslationCombinedRetrieval()
@@ -23,16 +23,21 @@ class LocalizationScriptTest extends TestCase
 
         // Test for JS content
 
-        $this->assertRegExp('/^\(function\(.*\);/', $content);
+        $this->assertRegExp('/^!?\(?function\(.*\);/', $content);
 
         // Test for Lang.setLocale()
 
         $locale = \Illuminate\Support\Facades\Lang::locale();
         $this->assertRegExp('/Lang\.setLocale\("'.$locale.'"\);/', $content);
         
-        // Test for Land.addMessages()
+        // Test for Lang.addMessages()
 
         $addMessagesRegex = '/Lang\.addMessages\( (\{.*?\}) \);/x';
         $this->assertRegExp($addMessagesRegex, $content);
+        
+        // Test for Config.addConfig()
+
+        $addConfigRegex = '/Config\.addConfig\( (\{.*?\}) \);/x';
+        $this->assertRegExp($addConfigRegex, $content);
     }
 }
