@@ -15,7 +15,7 @@ Additionally, the `master` branch has been dropped. Use the branch that matches 
 
  Laravel | Branch
 :--------|:-------
- 5.0     | laravel-5
+ 5.x     | laravel-5
  4.2     | laravel-4.2
  4.1     | laravel-4.1 (near end of life)
  4.0     | laravel-4.0 (end of life)
@@ -64,22 +64,22 @@ return [
 
     // Set the keys of the messages you want to use in javascript
     'messages' => [
-        'reminder' => [
+        'passwords' => [
             'password', 'user', 'token'
         ]
     ],
 
     /*
      * in short:
-     * 'messages' => ['reminder']
+     * 'messages' => ['passwords']
      *
      *
      * you could also use:
      *
      * 'messages' => [
-     *     'reminder.password',
-     *     'reminder.user',
-     *     'reminder.token'
+     *     'passwords.password',
+     *     'passwords.user',
+     *     'passwords.token'
      * ]
      */
      
