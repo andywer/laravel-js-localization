@@ -13,4 +13,7 @@
 
 @section('js-localization.head.all_in_one')
     <script type="text/javascript" src="{{ url('/js-localization/all.js') }}"></script>
+    <script type="text/javascript">
+        Lang.setLocale("{{ App::getLocale() }}");
+    </script>
 @stop
