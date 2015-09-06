@@ -17,10 +17,6 @@ class JsLocalizationControllerTest extends TestCase
 
         $this->assertTrue($response->isOk());
 
-        // Test for Lang.setLocale()
-
-        $this->assertRegExp('/Lang\.setLocale\("'.$locale.'"\);/', $content);
-
         // Test for Lang.addMessages()
 
         $this->assertLangAddMessages($content, $this->testMessagesFlat);

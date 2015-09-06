@@ -25,11 +25,6 @@ class LocalizationScriptTest extends TestCase
 
         $this->assertRegExp('/^!?\(?function\(.*\);/', $content);
 
-        // Test for Lang.setLocale()
-
-        $locale = \Illuminate\Support\Facades\Lang::locale();
-        $this->assertRegExp('/Lang\.setLocale\("'.$locale.'"\);/', $content);
-        
         // Test for Lang.addMessages()
 
         $addMessagesRegex = '/Lang\.addMessages\( (\{.*?\}) \);/x';
