@@ -41,7 +41,7 @@ Finally add the following line to the `providers` array of your `app/config/app.
 ```php
     'providers' => [
         /* ... */
-        'JsLocalization\JsLocalizationServiceProvider'
+        JsLocalization\JsLocalizationServiceProvider::class
     ]
 ```
 
