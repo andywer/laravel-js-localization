@@ -108,7 +108,7 @@ You just need to add the necessary `<script>` tags to your layout. Here is an ex
 
 ```html
 @include('js-localization::head')
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Test view</title>
@@ -124,6 +124,11 @@ You just need to add the necessary `<script>` tags to your layout. Here is an ex
     </body>
 </html>
 ```
+
+Remember it's best to not put the `@yield('js-localization.head')` in the `<head>` as it contains the `<script>` tag
+shipping the frontend part of this package. It's best practice to put it at the end of the `<body>`, but **before**
+other `<script>` tags. The example above simply includes it in the head, since it's the simplest form to use it. 
+
 
 Features
 --------
