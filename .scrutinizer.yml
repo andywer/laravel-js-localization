@@ -15,3 +15,8 @@ tools:
         filter:
             excluded_paths: [vendor/*]
     external_code_coverage: true
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
