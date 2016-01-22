@@ -4,6 +4,7 @@ namespace JsLocalization;
 use App;
 use Artisan;
 use Config;
+use JsLocalization\Console\ExportCommand;
 use View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\File;
@@ -36,6 +37,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 		$this->loadViewsFrom(__DIR__.'/../resources/views', 'js-localization');
         
         $this->registerRefreshCommand();
+        $this->registerExportCommand();
 	}
 
 	/**
@@ -62,7 +64,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	/**
 	 * Register js-localization.refresh
 	 */
-	private function registerRefreshCommand()
+	protected function registerRefreshCommand()
 	{
 		$this->app['js-localization.refresh'] = $this->app->share(function()
 		{
@@ -71,5 +73,18 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 
 		$this->commands('js-localization.refresh');
 	}
+
+    /**
+     * Register js-localization.export
+     */
+    protected function registerExportCommand()
+    {
+        $this->app['js-localization.export'] = $this->app->share(function()
+        {
+            return new ExportCommand();
+        });
+
+        $this->commands('js-localization.export');
+    }
 
 }
