@@ -5,6 +5,7 @@ namespace JsLocalization\Http\Controllers;
 use Illuminate\Routing\Controller;
 use JsLocalization\Facades\ConfigCachingService;
 use JsLocalization\Facades\MessageCachingService;
+use JsLocalization\Facades\TranslationData;
 use JsLocalization\Http\Responses\StaticFileResponse;
 
 class JsLocalizationController extends Controller
@@ -17,7 +18,7 @@ class JsLocalizationController extends Controller
      */
     public function createJsMessages()
     {
-        $contents = $this->getMessagesJson();
+        $contents = TranslationData::getMessagesJson();
 
         return response($contents)
             ->header('Content-Type', 'text/javascript')
@@ -29,7 +30,7 @@ class JsLocalizationController extends Controller
      */
     public function createJsConfig()
     {
-        $contents = $this->getConfigJson();
+        $contents = TranslationData::getConfigJson();
 
         /** @var \Illuminate\Http\Response $response */
         $response = response($contents);
@@ -68,8 +69,8 @@ class JsLocalizationController extends Controller
     {
         $contents = file_get_contents( __DIR__."/../../../public/js/localization.min.js" );
         $contents .= "\n";
-        $contents .= $this->getMessagesJson();
-        $contents .= $this->getConfigJson();
+        $contents .= TranslationData::getMessagesJson();
+        $contents .= TranslationData::getConfigJson();
 
         /** @var \Illuminate\Http\Response $response */
         $response = response($contents);
@@ -82,50 +83,6 @@ class JsLocalizationController extends Controller
         }
 
         return $response;
-    }
-
-    /**
-     * Transforms the cached data to stay compatible to old versions of the package.
-     *
-     * @param string $messages
-     * @return string
-     */
-    protected function ensureBackwardsCompatibility($messages)
-    {
-        if (preg_match('/^\\{"[a-z]{2}":/', $messages)) {
-            return $messages;
-        } else {
-            return '{"' . app()->getLocale() . '":' . $messages . '}';
-        }
-    }
-
-    /**
-     * Get the configured messages from the translation files
-     *
-     * @return string
-     */
-    protected function getMessagesJson()
-    {
-        $messages = MessageCachingService::getMessagesJson();
-        $messages = $this->ensureBackwardsCompatibility($messages);
-
-        $contents  = 'Lang.addMessages(' . $messages . ');';
-
-        return $contents;
-    }
-
-    /**
-     * Get the JSON-encoded config properties that shall be passed to the client.
-     *
-     * @return string
-     */
-    protected function getConfigJson()
-    {
-        $config = ConfigCachingService::getConfigJson();
-
-        $contents = 'Config.addConfig(' . $config . ');';
-
-        return $contents;
     }
 
 }
