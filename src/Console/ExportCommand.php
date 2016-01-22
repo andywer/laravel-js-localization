@@ -36,12 +36,16 @@ class ExportCommand extends Command {
      */
     public function fire()
     {
-        $toStdout = false;
-        $outFile = $this->input->getOption('outfile');
+        $toStdout = $this->input->getOption('stdout');
         
-        if (!$outFile) {
+        if ($toStdout) {
             $outFile = 'php://stdout';
-            $toStdout = true;
+        } else {
+            $outFile = $this->input->getOption('outfile');
+            if (!$outFile) {
+                $this->output->writeln('Usage: ' . $this->getSynopsis());
+                return;
+            }
         }
         
         $jsonData = $this->input->getOption('config') ? TranslationData::getConfigJson() : TranslationData::getMessagesJson();
@@ -60,8 +64,9 @@ class ExportCommand extends Command {
     protected function getOptions()
     {
         return [
-            ['outfile', 'o', InputOption::VALUE_OPTIONAL, 'The output file to write to. Will use stdout if not set.'],
-            ['config', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_NONE, 'Write exported config values instead of translations.'],
+            ['outfile', 'o', InputOption::VALUE_OPTIONAL, 'The output file to write to. Alternatively use --stdout.'],
+            ['stdout', null, InputOption::VALUE_NONE, 'Write file to stdout.'],
+            ['config', null, InputOption::VALUE_NONE, 'Write exported config values instead of translations.'],
         ];
     }
     
