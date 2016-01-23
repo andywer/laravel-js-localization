@@ -1,7 +1,20 @@
-(function() {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        Lang = factory();
+
+        /* Export: */
+        root.Lang        = Lang;
+        root.trans       = Lang.get;
+        root.transChoice = Lang.choice;
+    }
+}(this, function () {
+
     var locale;
     var messages = {};
-
 
     /* Utility functions: */
 
@@ -18,22 +31,22 @@
         for (var replacementName in replacements) {
             var replacement = replacements[replacementName];
 
-            var regex = new RegExp(':'+replacementName, 'g');
-            message = message.replace(regex, replacement);
+            var regex = new RegExp(':' + replacementName, 'g');
+            message   = message.replace(regex, replacement);
         }
 
         return message;
     };
 
     var isEmpty = function (obj) {
-        for(var prop in obj) {
-            if(obj.hasOwnProperty(prop))
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
                 return false;
+            }
         }
 
         return true;
     };
-
 
     /* Lang: */
 
@@ -53,22 +66,27 @@
          * @param {Object} [replacements]   Associative array: { variableName: "replacement", ... }
          * @return {String} Translated message.
          */
-        get : function(messageKey, replacements, forceLocale) {
+        get: function (messageKey, replacements, forceLocale) {
             var uselocale = locale;
+
             if (forceLocale) {
                 uselocale = forceLocale;
             }
+
             if (typeof messages[uselocale][messageKey] == "undefined") {
                 /* like Lang::get(), if messageKey is the name of a lang file, return it as an array */
                 var result = {};
+
                 for (var prop in messages[uselocale]) {
                     if (prop.indexOf(messageKey + '.') > -1) {
                         result[prop] = messages[uselocale][prop];
                     }
-                };
+                }
+
                 if (!isEmpty(result)) {
                     return result;
                 }
+
                 /* if there is nothing to return, return messageKey */
                 return messageKey;
             }
@@ -90,7 +108,7 @@
          * @param {String} messageKey   Message key.
          * @return {Boolean} True if the given message exists.
          */
-        has : function(messageKey) {
+        has: function (messageKey) {
             return typeof messages[locale][messageKey] != "undefined";
         },
 
@@ -108,7 +126,7 @@
          * @param {Object} [replacements]   Associative array: { variableName: "replacement", ... }
          * @return {String} Translated message.
          */
-        choice : function(messageKey, count, replacements) {
+        choice: function (messageKey, count, replacements) {
             if (typeof messages[locale][messageKey] == "undefined") {
                 return messageKey;
             }
@@ -138,7 +156,7 @@
          * @param {String} localeId The locale returned by Laravel's Lang::locale().
          * @throws {Error} An error is thrown if messages[localeId] is not defined.
          */
-        setLocale : function(localeId) {
+        setLocale: function (localeId) {
             locale = localeId;
 
             if (!messages[localeId]) {
@@ -156,7 +174,7 @@
          * @static
          * @return {String} The current locale.
          */
-        locale : function() {
+        locale: function () {
             return locale;
         },
 
@@ -168,17 +186,12 @@
          * @static
          * @param {Object} _messages  An associative array: { messageKey: "message", ... }
          */
-        addMessages : function(_messages) {
+        addMessages: function (_messages) {
             for (var key in _messages) {
                 messages[key] = _messages[key];
             }
         }
     };
 
-
-    /* Export: */
-
-    this.Lang   = Lang;
-    this.trans  = Lang.get;
-    this.transChoice = Lang.choice;
-})();
+    return Lang;
+}));
