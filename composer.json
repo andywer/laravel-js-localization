@@ -19,12 +19,14 @@
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "classmap": [
-            "tests/TestCase.php"
-        ],
         "psr-4": {
             "JsLocalization\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
     },
     "extra": {
         "component": "package",
