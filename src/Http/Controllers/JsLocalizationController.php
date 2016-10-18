@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use JsLocalization\Facades\ConfigCachingService;
 use JsLocalization\Facades\MessageCachingService;
 use JsLocalization\Http\Responses\StaticFileResponse;
+use Config;
 
 class JsLocalizationController extends Controller
 {
