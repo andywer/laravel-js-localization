@@ -56,5 +56,5 @@ return [
     | two characters
     |--------------------------------------------------------------------------
     */
-    'enable_backward_compatibility' => false
+    'ensure_backwards_compatibility' => false
 ];
