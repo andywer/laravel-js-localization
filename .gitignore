@@ -1,5 +1,6 @@
 /node_modules
 /vendor
+_ide_fix.php
 composer.phar
 .DS_Store
 .idea
