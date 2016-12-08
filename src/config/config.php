@@ -12,6 +12,20 @@ return array(
 
     /*
     |--------------------------------------------------------------------------
+    | Commitable cache
+    |--------------------------------------------------------------------------
+    |
+    | Set to true to store the messages cache in a file that can be committed
+    | to version control. This is so you don't need to remember to run
+    | `php artisan js-localization:refresh` in your production environment
+    | every time you push an update.
+    |
+    */
+
+    'commitable_cache' => false,
+
+    /*
+    |--------------------------------------------------------------------------
     | Define the messages to export
     |--------------------------------------------------------------------------
     |

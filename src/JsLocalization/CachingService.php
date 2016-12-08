@@ -25,6 +25,48 @@ class CachingService
     const CACHE_TIMESTAMP_KEY = 'js-localization-last-modified';
 
     /**
+     * A property to remember the cache driver used by the app.
+     * @var string
+     */
+    private $app_cache_driver = '';
+
+    /**
+     * A property to remember the cache path used by the app.
+     * @var string
+     */
+    private $app_cache_path = '';
+
+    /**
+     * If we're using commitable_cache option then set the cache
+     * to use file system and a custom path.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (Config::get('js-localization::config.commitable_cache')) {
+            $this->app_cache_driver = Config::get('cache.driver');
+            $this->app_cache_path = Config::get('cache.path');
+            Config::set('cache.driver', 'file');
+            Config::set('cache.path', app_path('database/js-localization'));
+        }
+    }
+
+    /**
+     * If we're using commitable_cache option then change the cache
+     * settings back to what they were before implementing this class.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        if (Config::get('js-localization::config.commitable_cache')) {
+            Config::set('cache.driver', $this->app_cache_driver);
+            Config::set('cache.path',$this->app_cache_path);
+        }
+    }
+
+    /**
      * Returns the cached messages (already JSON encoded).
      * Creates the neccessary cache item if neccessary.
      *
@@ -103,7 +145,7 @@ class CachingService
 
     /**
      * Returns the translated messages for the given keys.
-     * 
+     *
      * @param array $messageKeys
      * @param $locale
      * @return array The translated messages as array( <message id> => <translation>, ... )
