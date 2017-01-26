@@ -64,7 +64,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 	 */
 	private function registerRefreshCommand()
 	{
-		$this->app['js-localization.refresh'] = $this->app->share(function()
+		$this->app->singleton('js-localization.refresh', function()
 		{
 			return new RefreshCommand;
 		});
