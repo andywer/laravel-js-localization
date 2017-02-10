@@ -30,7 +30,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
         ]);
 
         $this->publishes([
-            __DIR__.'/../public/js/localization.min.js' => public_path('vendor/js-localization'),
+            __DIR__.'/../public/js/localization.min.js' => public_path('vendor/js-localization/js-localization.min.js'),
         ], 'public');
         
         $this->mergeConfigFrom(
