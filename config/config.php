@@ -12,6 +12,33 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Define the target to save the exported messages to
+    |--------------------------------------------------------------------------
+    |
+    | A string defining where the messages should be saved.
+    |
+    | Possible options:
+    |  - cache: Uses the app's standard cache (default).
+    |  - file: Store the translations in a static file for direct inclusion in
+    |    markup, or for compilation with other assets.
+    |
+    */
+
+    'storage' => 'cache',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Define the target to save the exported messages to
+    |--------------------------------------------------------------------------
+    |
+    | Directory for storing the static files generated when using file storage.
+    |
+    */
+
+    'storage_path' => public_path('vendor/js-localization/'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Define the messages to export
     |--------------------------------------------------------------------------
     |
