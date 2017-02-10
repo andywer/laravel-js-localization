@@ -3,7 +3,6 @@ namespace JsLocalization\Console;
 
 use Config;
 use Illuminate\Console\Command;
-use File;
 use JsLocalization\Exceptions\ConfigException;
 use JsLocalization\Facades\ConfigCachingService;
 use JsLocalization\Facades\MessageCachingService;
