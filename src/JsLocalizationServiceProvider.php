@@ -7,6 +7,7 @@ use Config;
 use View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\File;
+use JsLocalization\Console\ExportCommand;
 use JsLocalization\Console\RefreshCommand;
 
 class JsLocalizationServiceProvider extends ServiceProvider {
@@ -40,6 +41,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 		$this->loadViewsFrom(__DIR__.'/../resources/views', 'js-localization');
         
         $this->registerRefreshCommand();
+        $this->registerExportCommand();
 	}
 
 	/**
@@ -74,6 +76,19 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 		});
 
 		$this->commands('js-localization.refresh');
+	}
+
+	/**
+	 * Register js-localization.export
+	 */
+	private function registerExportCommand()
+	{
+		$this->app->singleton('js-localization.export', function()
+		{
+			return new ExportCommand;
+		});
+
+		$this->commands('js-localization.export');
 	}
 
 }
