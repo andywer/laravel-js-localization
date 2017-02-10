@@ -28,6 +28,10 @@ class JsLocalizationServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__.'/../config/config.php' => config_path('js-localization.php')
         ]);
+
+        $this->publishes([
+            __DIR__.'/../public/js/localization.min.js' => public_path('vendor/js-localization'),
+        ], 'public');
         
         $this->mergeConfigFrom(
             __DIR__.'/../config/config.php', 'js-localization'
