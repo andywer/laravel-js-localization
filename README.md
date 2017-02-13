@@ -104,6 +104,8 @@ The messages configuration will be cached when the JsLocalizationController is u
 Usage
 -----
 
+The translation assets can either be generated at run-time, by requesting them from the route endpoints registered by the js-localization package, or they can be pre-generated as static JavaScript files, served straight from your web server or CDN, or to be included in your build process.
+
 ### Run-time generation
 
 The normal way to use the package is to add the header tags that points to the endpoints registered by the package.
@@ -159,6 +161,8 @@ The files can then be generated using the artisan command:
 This will generate two files in your target dir
  * `messags.js` contains your translation strings
  * `config.js` contains your exported config values
+
+Remember that the files needs to be regenerated using `php artisan js-localization:export` every time any translation strings are edited, added or removed.
 
 Features
 --------
