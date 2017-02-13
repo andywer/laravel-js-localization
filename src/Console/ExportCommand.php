@@ -43,10 +43,30 @@ class ExportCommand extends Command
         }
 
         MessageCachingService::refreshCache();
-        $this->generateMessagesFile(Config::get('js-localization.storage_path'));
+        $messagesFilePath = $this->createPath('messages.js');
+        $this->generateMessagesFile($messagesFilePath);
 
         ConfigCachingService::refreshCache();
-        $this->generateConfigFile(Config::get('js-localization.storage_path'));
+        $configFilePath = $this->createPath('config.js');
+        $this->generateConfigFile($configFilePath);
+    }
+
+    /**
+     * Create full file path.
+     * This method will also generate the directories if they don't exist already.
+     *
+     * @var string $filename
+     *
+     * @return string $path
+     */
+    public function createPath($filename)
+    {
+        $dir = Config::get('js-localization.storage_path');
+        if (!is_dir($dir)) {
+            mkdir($dir, '0777', true);
+        }
+
+        return $dir . $filename;
     }
 
     /**
@@ -57,14 +77,9 @@ class ExportCommand extends Command
     public function generateMessagesFile($path)
     {
         $messages = MessageCachingService::getMessagesJson();
-        $messages = $this->ensureBackwardsCompatibility($messages);
 
         $contents  = 'Lang.addMessages(' . $messages . ');';
 
-        if (!is_dir($path)) {
-            mkdir($path, '0777', true);
-        }
-        $path = $path . 'messages';
         File::put($path, $contents);
 
         $this->line("Generated $path");
@@ -79,32 +94,14 @@ class ExportCommand extends Command
     {
         $config = ConfigCachingService::getConfigJson();
         if ($config === '{}') {
+            $this->line('No config specified. Config not written to file.');
             return;
         }
 
         $contents = 'Config.addConfig(' . $config . ');';
 
-        if (!is_dir($path)) {
-            mkdir($path, '0777', true);
-        }
-        $path = $path . 'config';
         File::put($path, $contents);
 
         $this->line("Generated $path");
-    }
-
-    /**
-     * Transforms the cached data to stay compatible to old versions of the package.
-     *
-     * @param string $messages
-     * @return string
-     */
-    protected function ensureBackwardsCompatibility($messages)
-    {
-        if (preg_match('/^\\{"[a-z]{2}":/', $messages)) {
-            return $messages;
-        } else {
-            return '{"' . app()->getLocale() . '":' . $messages . '}';
-        }
     }
 }
