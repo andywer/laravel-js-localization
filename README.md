@@ -104,11 +104,9 @@ The messages configuration will be cached when the JsLocalizationController is u
 Usage
 -----
 
-The translation assets can either be generated at run-time, by requesting them from the route endpoints registered by the js-localization package, or they can be pre-generated as static JavaScript files, served straight from your web server or CDN, or to be included in your build process.
+The translation resources for JavaScript can either be served by your Laravel app at run-time or they can be pre-generated as static JavaScript files, allowing you to serve them straight from your web server or CDN or to be included in your build process.
 
 ### Run-time generation
-
-The normal way to use the package is to add the header tags that points to the endpoints registered by the package.
 
 You just need to add the necessary `<script>` tags to your layout. Here is an example blade view:
 
@@ -135,11 +133,11 @@ Remember it's best to not put the `@yield('js-localization.head')` in the `<head
 shipping the frontend part of this package. It's best practice to put it at the end of the `<body>`, but **before**
 other `<script>` tags. The example above simply includes it in the head, since it's the simplest form to use it. 
 
-### Static generated assets
+### Static generation
 
-For increased performance it is possible to generate statis JavaScript files with all of your generated strings. These files can either be served directly as static files, or included as a part of your frontend asset build process.
+For increased performance it is possible to generate static JavaScript files with all of your generated strings. These files can either be served directly as static files, or included as a part of your frontend asset build process.
 
-To specify the output dir for the assets, just add a `$storage_path` string to your configuration file.
+To specify the output directory for the assets, just set the `$storage_path` string in your `config/js-localization.php` file accordingly (see [Configuration](#configuration)).
 
 ```
     /*
@@ -158,7 +156,7 @@ The files can then be generated using the artisan command:
 
 `php artisan js-localization:export`
 
-This will generate two files in your target dir
+This will generate two files in your target directory:
  * `messags.js` contains your translation strings
  * `config.js` contains your exported config values
 
