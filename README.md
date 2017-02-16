@@ -104,6 +104,10 @@ The messages configuration will be cached when the JsLocalizationController is u
 Usage
 -----
 
+The translation resources for JavaScript can either be served by your Laravel app at run-time or they can be pre-generated as static JavaScript files, allowing you to serve them straight from your web server or CDN or to be included in your build process.
+
+### Run-time generation
+
 You just need to add the necessary `<script>` tags to your layout. Here is an example blade view:
 
 ```html
@@ -129,6 +133,34 @@ Remember it's best to not put the `@yield('js-localization.head')` in the `<head
 shipping the frontend part of this package. It's best practice to put it at the end of the `<body>`, but **before**
 other `<script>` tags. The example above simply includes it in the head, since it's the simplest form to use it. 
 
+### Static generation
+
+For increased performance it is possible to generate static JavaScript files with all of your generated strings. These files can either be served directly as static files, or included as a part of your frontend asset build process.
+
+To specify the output directory for the assets, just set the `$storage_path` string in your `config/js-localization.php` file accordingly (see [Configuration](#configuration)).
+
+```
+    /*
+    |--------------------------------------------------------------------------
+    | Define the target to save the exported messages to
+    |--------------------------------------------------------------------------
+    |
+    | Directory for storing the static files generated when using file storage.
+    |
+    */
+
+    'storage_path' => public_path('vendor/js-localization/'),
+```
+
+The files can then be generated using the artisan command:
+
+`php artisan js-localization:export`
+
+This will generate two files in your target directory:
+ * `messags.js` contains your translation strings
+ * `config.js` contains your exported config values
+
+Remember that the files needs to be regenerated using `php artisan js-localization:export` every time any translation strings are edited, added or removed.
 
 Features
 --------

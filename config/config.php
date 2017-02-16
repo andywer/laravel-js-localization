@@ -12,6 +12,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Define the target to save the exported messages to
+    |--------------------------------------------------------------------------
+    |
+    | Directory for storing the static files generated when using file storage.
+    |
+    */
+
+    'storage_path' => public_path('vendor/js-localization/'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Define the messages to export
     |--------------------------------------------------------------------------
     |

@@ -7,6 +7,7 @@ use Config;
 use View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\File;
+use JsLocalization\Console\ExportCommand;
 use JsLocalization\Console\RefreshCommand;
 
 class JsLocalizationServiceProvider extends ServiceProvider {
@@ -28,6 +29,10 @@ class JsLocalizationServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__.'/../config/config.php' => config_path('js-localization.php')
         ]);
+
+        $this->publishes([
+            __DIR__.'/../public/js/localization.min.js' => public_path('vendor/js-localization/js-localization.min.js'),
+        ], 'public');
         
         $this->mergeConfigFrom(
             __DIR__.'/../config/config.php', 'js-localization'
@@ -36,6 +41,7 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 		$this->loadViewsFrom(__DIR__.'/../resources/views', 'js-localization');
         
         $this->registerRefreshCommand();
+        $this->registerExportCommand();
 	}
 
 	/**
@@ -70,6 +76,19 @@ class JsLocalizationServiceProvider extends ServiceProvider {
 		});
 
 		$this->commands('js-localization.refresh');
+	}
+
+	/**
+	 * Register js-localization.export
+	 */
+	private function registerExportCommand()
+	{
+		$this->app->singleton('js-localization.export', function()
+		{
+			return new ExportCommand;
+		});
+
+		$this->commands('js-localization.export');
 	}
 
 }

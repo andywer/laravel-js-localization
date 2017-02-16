@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 
 class RefreshCommand extends Command
 {
-
     /**
      * The console command name.
      *
@@ -45,5 +44,4 @@ class RefreshCommand extends Command
         MessageCachingService::refreshCache();
         ConfigCachingService::refreshCache();
     }
-
 }
