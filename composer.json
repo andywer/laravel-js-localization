@@ -38,5 +38,8 @@
             "type": "vcs",
             "url": "git://github.com/orchestral/phpseclib.git"
         }
-    ]
+    ],
+    "suggest": {
+        "clentfort/laravel-find-js-localizations": "An Artisan command that helps finding untranslated strings in JavaScript-soruces"
+    }
 }
