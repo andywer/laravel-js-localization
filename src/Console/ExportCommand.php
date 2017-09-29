@@ -32,7 +32,7 @@ class ExportCommand extends Command
      * @return void
      * @throws ConfigException
      */
-    public function fire()
+    public function handle()
     {
         $this->line('Refreshing and exporting the message cache...');
 

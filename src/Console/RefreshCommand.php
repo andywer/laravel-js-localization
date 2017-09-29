@@ -31,7 +31,7 @@ class RefreshCommand extends Command
      * @return void
      * @throws ConfigException
      */
-    public function fire()
+    public function handle()
     {
         $this->line('Refreshing the message cache...');
 
