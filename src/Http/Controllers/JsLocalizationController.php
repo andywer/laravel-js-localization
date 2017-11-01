@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use JsLocalization\Facades\ConfigCachingService;
 use JsLocalization\Facades\MessageCachingService;
 use JsLocalization\Http\Responses\StaticFileResponse;
+use Config;
 
 class JsLocalizationController extends Controller
 {
@@ -107,8 +108,11 @@ class JsLocalizationController extends Controller
     protected function getMessagesJson()
     {
         $messages = MessageCachingService::getMessagesJson();
-        $messages = $this->ensureBackwardsCompatibility($messages);
-
+        
+        if(Config::get('js-localization.ensure_backwards_compatibility')) {
+            $messages = $this->ensureBackwardsCompatibility($messages);
+        }
+        
         $contents  = 'Lang.addMessages(' . $messages . ');';
 
         return $contents;

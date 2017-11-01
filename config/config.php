@@ -59,5 +59,13 @@ return [
     |--------------------------------------------------------------------------
     */
     'disable_config_cache' => false,
-
+    
+        /*
+    |--------------------------------------------------------------------------
+    | Enables backward compatility, disable this to be able to handle locales like
+    | `nl_NL` and `es-mx` as the backward compatibility checker only allows locales that are
+    | two characters
+    |--------------------------------------------------------------------------
+    */
+    'ensure_backwards_compatibility' => false
 ];
