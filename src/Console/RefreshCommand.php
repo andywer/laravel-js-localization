@@ -31,7 +31,7 @@ class RefreshCommand extends Command
      * @return void
      * @throws ConfigException
      */
-    public function fire()
+    public function handle()
     {
         $this->line('Refreshing the message cache...');
 
@@ -43,5 +43,17 @@ class RefreshCommand extends Command
 
         MessageCachingService::refreshCache();
         ConfigCachingService::refreshCache();
+    }
+    
+    /**
+     * Execute the console command.
+     * Compatibility with previous Laravel 5.x versions.
+     *
+     * @return void
+     * @throws ConfigException
+     */
+    public function fire()
+    {
+        $this->handle();
     }
 }

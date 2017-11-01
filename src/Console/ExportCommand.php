@@ -32,7 +32,7 @@ class ExportCommand extends Command
      * @return void
      * @throws ConfigException
      */
-    public function fire()
+    public function handle()
     {
         $this->line('Refreshing and exporting the message cache...');
 
@@ -49,6 +49,18 @@ class ExportCommand extends Command
         ConfigCachingService::refreshCache();
         $configFilePath = $this->createPath('config.js');
         $this->generateConfigFile($configFilePath);
+    }
+    
+    /**
+     * Execute the console command.
+     * Compatibility with previous Laravel 5.x versions.
+     *
+     * @return void
+     * @throws ConfigException
+     */
+    public function fire()
+    {
+        $this->handle();
     }
 
     /**
