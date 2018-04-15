@@ -8,12 +8,8 @@ Simple, ease-to-use and flexible package for the [Laravel](http://laravel.com/) 
 **⚠️ Looking for a new maintainer. Please contact me if you are interested.**
 
 
-News
-----
-
-A major bug when using the package with Laravel 5 has been fixed.
-
-Additionally, the `master` branch has been dropped. Use the branch that matches your framework version:
+Branches
+--------
 
  Laravel | Branch
 :--------|:-------
