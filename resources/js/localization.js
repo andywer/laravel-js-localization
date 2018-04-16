@@ -18,8 +18,18 @@
         for (var replacementName in replacements) {
             var replacement = replacements[replacementName];
 
-            var regex = new RegExp(':'+replacementName, 'g');
-            message = message.replace(regex, replacement);
+            message = message.replace(
+                new RegExp(':' + replacementName, 'g'),
+                replacement
+            );
+            message = message.replace(
+                new RegExp(':' + replacementName.toUpperCase(), 'g'),
+                replacement.toUpperCase()
+            );
+            message = message.replace(
+                new RegExp(':' + (replacementName.charAt(0).toUpperCase() + replacementName.substr(1)), 'g'),
+                replacement.charAt(0).toUpperCase() + replacement.substr(1)
+            );
         }
 
         return message;
