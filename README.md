@@ -163,7 +163,7 @@ The files can then be generated using the artisan command:
 `php artisan js-localization:export`
 
 This will generate two files in your target directory:
- * `messags.js` contains your translation strings
+ * `messages.js` contains your translation strings
  * `config.js` contains your exported config values
  * `lang-{locale}.js` contains one language's translation strings, if the `split_export_files` config option is set to true
 
