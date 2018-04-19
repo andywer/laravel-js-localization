@@ -60,4 +60,11 @@ return [
     */
     'disable_config_cache' => false,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Whether or not to split up the exported messages.js file into separate
+    | lang-{locale}.js files.
+    |--------------------------------------------------------------------------
+    */
+    'split_export_files' => false,
 ];

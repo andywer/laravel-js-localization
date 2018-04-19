@@ -88,13 +88,41 @@ class ExportCommand extends Command
      */
     public function generateMessagesFile($path)
     {
+        $splitFiles = Config::get('js-localization.split_export_files');
         $messages = MessageCachingService::getMessagesJson();
 
-        $contents  = 'Lang.addMessages(' . $messages . ');';
+        if ($splitFiles) {
+            $this->generateMessageFiles(File::dirname($path), $messages);
+        }
+
+        $contents = 'Lang.addMessages(' . $messages . ');';
 
         File::put($path, $contents);
 
         $this->line("Generated $path");
+    }
+
+    /**
+     * Generate the lang-{locale}.js files
+     *
+     * @param string $path Directory to where we will store the files
+     * @param string $messages JSON string of messages
+     */
+    protected function generateMessageFiles(string $path, string $messages)
+    {
+        $locales = Config::get('js-localization.locales');
+        $messages = json_decode($messages, true);
+
+        foreach ($locales as $locale) {
+            $fileName = $path . "/lang-{$locale}.js";
+
+            if (key_exists($locale, $messages)) {
+                $content = 'Lang.addMessages(' . json_encode([$locale => $messages[$locale]], JSON_PRETTY_PRINT) . ');';
+            }
+
+            File::put($fileName, $content);
+            $this->line("Generated $fileName");
+        }
     }
 
     /**
