@@ -85,20 +85,20 @@ return [
      * ]
      */
      
-     // Set the keys of config properties you want to use in javascript.
-     // Caution: Do not expose any configuration values that should be kept privately!
-     'config' => [
-         'app.debug'
-     ],
+    // Set the keys of config properties you want to use in javascript.
+    // Caution: Do not expose any configuration values that should be kept privately!
+    'config' => [
+        'app.debug'
+    ],
      
-     // Disables the config cache if set to true, so you don't have to run `php artisan js-localization:refresh`
-     // each time you change configuration files.
-     // Attention: Should not be used in production mode due to decreased performance.
-     'disable_config_cache' => false,
+    // Disables the config cache if set to true, so you don't have to run `php artisan js-localization:refresh`
+    // each time you change configuration files.
+    // Attention: Should not be used in production mode due to decreased performance.
+    'disable_config_cache' => false,
 
     // Split up the exported messages.js file into separate files for each locale.
     // This is to ensue faster loading times so one doesn't have to load translations for _all_ languages.
-     'split_export_files' => true,
+    'split_export_files' => true,
 ];
 ```
 
