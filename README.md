@@ -165,6 +165,14 @@ The files can then be generated using the artisan command:
 This will generate two files in your target directory:
  * `messages.js` contains your translation strings
  * `config.js` contains your exported config values
+
+If you want to automatically split up the `messages.js` file into separate .js files for each locale, you can set the following to true in your `config/js-localization.php` config file:
+
+```
+    'split_export_files' => true,
+```
+
+This will in turn _also_ generate the following file(s) in your target directory:
  * `lang-{locale}.js` contains one language's translation strings, if the `split_export_files` config option is set to true
 
 With static generation you can also make use of `@yield('js-localization.head.exported')` in your blade template. This will automatically include your statically generated .js files for you.
