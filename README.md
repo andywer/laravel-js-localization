@@ -175,8 +175,6 @@ If you want to automatically split up the `messages.js` file into separate .js f
 This will in turn _also_ generate the following file(s) in your target directory:
  * `lang-{locale}.js` contains one language's translation strings, if the `split_export_files` config option is set to true
 
-With static generation you can also make use of `@yield('js-localization.head.exported')` in your blade template. This will automatically include your statically generated .js files for you.
-
 Remember that the files needs to be regenerated using `php artisan js-localization:export` every time any translation strings are edited, added or removed.
 
 Features
