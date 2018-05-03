@@ -81,16 +81,20 @@ return [
      * ]
      */
      
-     // Set the keys of config properties you want to use in javascript.
-     // Caution: Do not expose any configuration values that should be kept privately!
-     'config' => [
-         'app.debug'
-     ],
+    // Set the keys of config properties you want to use in javascript.
+    // Caution: Do not expose any configuration values that should be kept privately!
+    'config' => [
+        'app.debug'
+    ],
      
-     // Disables the config cache if set to true, so you don't have to run `php artisan js-localization:refresh`
-     // each time you change configuration files.
-     // Attention: Should not be used in production mode due to decreased performance.
-     'disable_config_cache' => false,
+    // Disables the config cache if set to true, so you don't have to run `php artisan js-localization:refresh`
+    // each time you change configuration files.
+    // Attention: Should not be used in production mode due to decreased performance.
+    'disable_config_cache' => false,
+
+    // Split up the exported messages.js file into separate files for each locale.
+    // This is to ensue faster loading times so one doesn't have to load translations for _all_ languages.
+    'split_export_files' => true,
 ];
 ```
 
@@ -155,8 +159,17 @@ The files can then be generated using the artisan command:
 `php artisan js-localization:export`
 
 This will generate two files in your target directory:
- * `messags.js` contains your translation strings
+ * `messages.js` contains your translation strings
  * `config.js` contains your exported config values
+
+If you want to automatically split up the `messages.js` file into separate .js files for each locale, you can set the following to true in your `config/js-localization.php` config file:
+
+```
+    'split_export_files' => true,
+```
+
+This will in turn _also_ generate the following file(s) in your target directory:
+ * `lang-{locale}.js` contains one language's translation strings, if the `split_export_files` config option is set to true
 
 Remember that the files needs to be regenerated using `php artisan js-localization:export` every time any translation strings are edited, added or removed.
 
