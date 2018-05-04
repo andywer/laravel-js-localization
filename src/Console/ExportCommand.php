@@ -126,7 +126,7 @@ class ExportCommand extends Command
     }
 
     /**
-     * Generage the config file.
+     * Generate the config file.
      *
      * @param string $path
      */
