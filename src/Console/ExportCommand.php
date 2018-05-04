@@ -118,15 +118,15 @@ class ExportCommand extends Command
 
             if (key_exists($locale, $messages)) {
                 $content = 'Lang.addMessages(' . json_encode([$locale => $messages[$locale]], JSON_PRETTY_PRINT) . ');';
-            }
 
-            File::put($fileName, $content);
-            $this->line("Generated $fileName");
+                File::put($fileName, $content);
+                $this->line("Generated $fileName");
+            }
         }
     }
 
     /**
-     * Generage the config file.
+     * Generate the config file.
      *
      * @param string $path
      */
