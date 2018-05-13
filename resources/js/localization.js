@@ -16,7 +16,7 @@
      */
     var applyReplacements = function (message, replacements) {
         for (var replacementName in replacements) {
-            var replacement = replacements[replacementName];
+            var replacement = String(replacements[replacementName]);
 
             // 'welcome' => 'Welcome, :name' => 'Welcome, dayle'
             message = message.replace(
