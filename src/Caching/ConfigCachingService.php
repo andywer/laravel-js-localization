@@ -8,10 +8,22 @@ use Event;
  * Class ConfigCachingService
  * @package JsLocalization\Caching
  */
-class ConfigCachingService extends AbstractCachingService {
+class ConfigCachingService extends AbstractCachingService
+{
 
+    /**
+     * The key used to cache the JSON encoded messages.
+     *
+     * @var string
+     */
     const CACHE_KEY = 'js-localization-config-json';
 
+    /**
+     * The key used to cache the timestamp of the last
+     * refreshCache() call.
+     *
+     * @var string
+     */
     const CACHE_TIMESTAMP_KEY = 'js-localization-config-last-modified';
 
 
@@ -21,6 +33,10 @@ class ConfigCachingService extends AbstractCachingService {
     }
 
     /**
+     * Refreshes the cache item containing the JSON encoded
+     * config object.
+     * Fires the 'JsLocalization.registerConfig' event.
+     *
      * @return void
      */
     public function refreshCache()
@@ -32,11 +48,12 @@ class ConfigCachingService extends AbstractCachingService {
     }
 
     /**
-     * @return string   The JSON-encoded config exports.
+     * @param bool $noCache
+     * @return mixed|string string   The JSON-encoded config exports.
      */
-    public function getConfigJson()
+    public function getConfigJson($noCache = false)
     {
-        if ($this->isDisabled()) {
+        if ($noCache or $this->isDisabled()) {
             return $this->createConfigJson();
         } else {
             return $this->getData();
