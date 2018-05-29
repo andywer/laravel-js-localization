@@ -17,7 +17,14 @@ class ExportCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'js-localization:export {--no-cache : Ignores cached values and exports}';
+    protected $name = 'js-localization:export';
+
+    /**
+     * The console command signature.
+     *
+     * @var string
+     */
+    protected $signature = 'js-localization:export {--no-cache : Ignores cache completely}';
 
     /**
      * The console command description.
@@ -25,6 +32,18 @@ class ExportCommand extends Command
      * @var string
      */
     protected $description = "Refresh message cache and export to static files";
+
+    /**
+     *  Options defined for Laravel < 5.1
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['no-cache', 'd', InputOption::VALUE_NONE, 'Ignores cache completely'],
+        ];
+    }
 
     /**
      * Execute the console command.
