@@ -20,11 +20,30 @@ class ExportCommand extends Command
     protected $name = 'js-localization:export';
 
     /**
+     * The console command signature.
+     *
+     * @var string
+     */
+    protected $signature = 'js-localization:export {--no-cache : Ignores cache completely}';
+
+    /**
      * The console command description.
      *
      * @var string
      */
     protected $description = "Refresh message cache and export to static files";
+
+    /**
+     *  Options defined for Laravel < 5.1
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['no-cache', 'd', InputOption::VALUE_NONE, 'Ignores cache completely'],
+        ];
+    }
 
     /**
      * Execute the console command.
@@ -34,7 +53,9 @@ class ExportCommand extends Command
      */
     public function handle()
     {
-        $this->line('Refreshing and exporting the message cache...');
+        $noCache = $this->option('no-cache');
+        if ($noCache == true) $this->line('Exporting messages and config...');
+        else $this->line('Refreshing and exporting the message and config cache...');
 
         $locales = Config::get('js-localization.locales');
 
@@ -42,13 +63,13 @@ class ExportCommand extends Command
           throw new ConfigException('Please set the "locales" config! See https://github.com/andywer/laravel-js-localization#configuration');
         }
 
-        MessageCachingService::refreshCache();
+        if ($noCache == false) MessageCachingService::refreshCache();
         $messagesFilePath = $this->createPath('messages.js');
-        $this->generateMessagesFile($messagesFilePath);
+        $this->generateMessagesFile($messagesFilePath, $noCache);
 
-        ConfigCachingService::refreshCache();
+        if ($noCache == false) ConfigCachingService::refreshCache();
         $configFilePath = $this->createPath('config.js');
-        $this->generateConfigFile($configFilePath);
+        $this->generateConfigFile($configFilePath, $noCache);
     }
     
     /**
@@ -85,11 +106,12 @@ class ExportCommand extends Command
      * Generate the messages file.
      *
      * @param string $path
+     * @param bool $noCache
      */
-    public function generateMessagesFile($path)
+    public function generateMessagesFile($path, $noCache = false)
     {
         $splitFiles = Config::get('js-localization.split_export_files');
-        $messages = MessageCachingService::getMessagesJson();
+        $messages = MessageCachingService::getMessagesJson($noCache);
 
         if ($splitFiles) {
             $this->generateMessageFiles(File::dirname($path), $messages);
@@ -129,10 +151,11 @@ class ExportCommand extends Command
      * Generate the config file.
      *
      * @param string $path
+     * @param bool $noCache
      */
-    public function generateConfigFile($path)
+    public function generateConfigFile($path, $noCache = false)
     {
-        $config = ConfigCachingService::getConfigJson();
+        $config = ConfigCachingService::getConfigJson($noCache);
         if ($config === '{}') {
             $this->line('No config specified. Config not written to file.');
             return;
