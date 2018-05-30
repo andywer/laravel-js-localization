@@ -54,7 +54,7 @@ class ExportCommand extends Command
     public function handle()
     {
         $noCache = (bool)$this->option('no-cache');
-        if ($noCache == true) $this->line('Exporting messages and config...');
+        if ($noCache === true) $this->line('Exporting messages and config...');
         else $this->line('Refreshing and exporting the message and config cache...');
 
         $locales = Config::get('js-localization.locales');
@@ -63,11 +63,11 @@ class ExportCommand extends Command
           throw new ConfigException('Please set the "locales" config! See https://github.com/andywer/laravel-js-localization#configuration');
         }
 
-        if ($noCache == false) MessageCachingService::refreshCache();
+        if ($noCache === false) MessageCachingService::refreshCache();
         $messagesFilePath = $this->createPath('messages.js');
         $this->generateMessagesFile($messagesFilePath, $noCache);
 
-        if ($noCache == false) ConfigCachingService::refreshCache();
+        if ($noCache === false) ConfigCachingService::refreshCache();
         $configFilePath = $this->createPath('config.js');
         $this->generateConfigFile($configFilePath, $noCache);
     }
