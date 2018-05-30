@@ -5,7 +5,8 @@ use JsLocalization\Http\Responses\StaticFileResponse;
 
 class StaticFileResponseTest extends TestCase
 {
-    protected $testFilePath, $testFileContent;
+    protected $testFilePath;
+    protected $testFileContent;
 
     public function setUp()
     {
@@ -34,7 +35,6 @@ class StaticFileResponseTest extends TestCase
         $filePath = "/tmp/x/y/z/does-not-exist";
         $this->setExpectedException('Exception', "Cannot read file: $filePath");
 
-        $response = new StaticFileResponse($filePath);
+        new StaticFileResponse($filePath);
     }
 }
-?>

@@ -53,7 +53,7 @@ class ExportCommand extends Command
      */
     public function handle()
     {
-        $noCache = $this->option('no-cache');
+        $noCache = (bool)$this->option('no-cache');
         if ($noCache == true) $this->line('Exporting messages and config...');
         else $this->line('Refreshing and exporting the message and config cache...');
 

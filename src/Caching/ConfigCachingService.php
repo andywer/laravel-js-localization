@@ -48,12 +48,15 @@ class ConfigCachingService extends AbstractCachingService
     }
 
     /**
-     * @param bool $noCache
+     * Returns the config (already JSON encoded).
+     * Refreshes the cache if necessary.
+     *
+     * @param bool $noCache (optional) Defines if cache should be ignored.
      * @return mixed|string string   The JSON-encoded config exports.
      */
     public function getConfigJson($noCache = false)
     {
-        if ($noCache or $this->isDisabled()) {
+        if ($noCache || $this->isDisabled()) {
             return $this->createConfigJson();
         } else {
             return $this->getData();
