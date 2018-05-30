@@ -36,9 +36,10 @@ class MessageCachingService extends AbstractCachingService
     }
 
     /**
-     * Returns the messages (already JSON encoded), fresh if wanted.
-     * Creates the necessary cache item if necessary.
+     * Returns the messages (already JSON encoded).
+     * Refreshes the cache if necessary.
      *
+     * @param bool $noCache (optional) Defines if cache should be ignored.
      * @return string JSON encoded messages object.
      */
     public function getMessagesJson($noCache = false)
