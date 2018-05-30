@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  * 
  * @method static void refreshCache()
  * @method static \DateTime getLastRefreshTimestamp()
- * @method static string getMessagesJson()
+ * @method static string getMessagesJson(bool $noCache = false)
  * @method static void public function refreshCache()
  */
 class MessageCachingService extends Facade

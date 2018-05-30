@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @method static void refreshCache()
  * @method static \DateTime getLastRefreshTimestamp()
- * @method static string getConfigJson()
+ * @method static string getConfigJson(bool $noCache = false)
  * @method static bool isDisabled()
  * @method static void public function refreshCache()
  */
