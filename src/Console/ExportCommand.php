@@ -96,7 +96,7 @@ class ExportCommand extends Command
     {
         $dir = Config::get('js-localization.storage_path');
         if (!is_dir($dir)) {
-            mkdir($dir, '0777', true);
+            mkdir($dir, 0777, true);
         }
 
         return $dir . $filename;
