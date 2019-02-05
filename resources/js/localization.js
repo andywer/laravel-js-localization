@@ -13,7 +13,7 @@
     }
 }(this, function () {
 
-    var locale;
+    var locale, defaultLocale = "en";
     var messages = {};
 
     /* Utility functions: */
@@ -87,8 +87,10 @@
                     return result;
                 }
 
-                /* if there is nothing to return, return messageKey */
-                return messageKey;
+                /* if there is nothing to return, return in default lang */
+                /* if message not defined in default language then return message key */
+                var defaultLangMessage = messages[defaultLocale][messageKey];
+                return typeof defaultLangMessage == "undefined" ? messageKey : defaultLangMessage;
             }
 
             var message = messages[uselocale][messageKey];
@@ -127,12 +129,8 @@
          * @return {String} Translated message.
          */
         choice: function (messageKey, count, replacements) {
-            if (typeof messages[locale][messageKey] == "undefined") {
-                return messageKey;
-            }
-
             var message;
-            var messageSplitted = messages[locale][messageKey].split('|');
+            var messageSplitted = this.get(messageKey).split('|');
 
             if (count == 1) {
                 message = messageSplitted[0];
@@ -144,7 +142,7 @@
                 message = applyReplacements(message, replacements);
             }
 
-            return message;
+            return typeof message == "undefined" ? messageKey : message;
         },
 
         /**
@@ -165,6 +163,37 @@
                     'Did you forget to enable it in the configuration?'
                 );
             }
+        },
+
+        /**
+         * Sets the default locale. Normally only used once
+         * during initialization.
+         *
+         * @method setDefaultLocale
+         * @static
+         * @param {String} localeId The locale returned by Laravel's Lang::locale().
+         * @throws {Error} An error is thrown if messages[localeId] is not defined.
+         */
+        setDefaultLocale: function (localeId) {
+            defaultLocale = localeId;
+
+            if (!messages[defaultLocale]) {
+                throw new Error(
+                    'No messages defined for default locale: "' + defaultLocale + '". ' +
+                    'Did you forget to enable it in the configuration?'
+                );
+            }
+        },
+
+        /**
+         * Returns the default locale.
+         *
+         * @method locale
+         * @static
+         * @return {String} The current locale.
+         */
+        defaultLocale: function () {
+            return defaultLocale;
         },
 
         /**
