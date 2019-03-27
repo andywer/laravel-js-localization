@@ -41,7 +41,7 @@ class ConfigCachingService extends AbstractCachingService
      */
     public function refreshCache()
     {
-        Event::fire('JsLocalization.registerConfig');
+        Event::dispatch('JsLocalization.registerConfig');
         
         $configJson = $this->createConfigJson();
         $this->refreshCacheUsing($configJson);
