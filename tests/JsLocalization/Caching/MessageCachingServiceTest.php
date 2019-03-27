@@ -6,7 +6,7 @@ use JsLocalization\Facades\MessageCachingService;
 class MessageCachingServiceTest extends TestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -14,7 +14,7 @@ class MessageCachingServiceTest extends TestCase
         Cache::forget(JsLocalization\Caching\MessageCachingService::CACHE_TIMESTAMP_KEY);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
 

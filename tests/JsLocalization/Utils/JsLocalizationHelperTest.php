@@ -59,7 +59,7 @@ class JsLocalizationHelperTest extends TestCase
         return $prefix;
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -70,7 +70,7 @@ class JsLocalizationHelperTest extends TestCase
         touch($this->tmpFilePath);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unlink($this->tmpFilePath);
 

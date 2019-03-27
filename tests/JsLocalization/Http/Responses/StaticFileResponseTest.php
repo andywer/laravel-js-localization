@@ -8,7 +8,7 @@ class StaticFileResponseTest extends TestCase
     protected $testFilePath;
     protected $testFileContent;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

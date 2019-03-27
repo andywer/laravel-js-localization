@@ -5,7 +5,7 @@ use JsLocalization\Facades\ConfigCachingService;
 
 class ConfigCachingServiceTest extends TestCase {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -13,7 +13,7 @@ class ConfigCachingServiceTest extends TestCase {
         Cache::forget(JsLocalization\Caching\ConfigCachingService::CACHE_TIMESTAMP_KEY);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
 

@@ -5,13 +5,7 @@ use JsLocalization\Console\RefreshCommand;
 
 class RefreshCommandTest extends TestCase
 {
-
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
 

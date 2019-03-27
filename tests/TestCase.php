@@ -37,7 +37,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     ];
 
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +46,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         $this->mockLang();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
 
