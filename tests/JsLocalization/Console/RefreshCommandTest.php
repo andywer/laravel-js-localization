@@ -20,8 +20,7 @@ class RefreshCommandTest extends TestCase
         $config->shouldReceive('get')->with('js-localization.locales')
           ->andReturn(null);
 
-
-        $this->setExpectedException('Exception');
+        $this->expectException(Exception::class);
 
         $this->runCommand();
     }
@@ -30,8 +29,10 @@ class RefreshCommandTest extends TestCase
     {
         $cmd = new RefreshCommand();
 
+        $cmd->setLaravel(resolve(\Illuminate\Contracts\Foundation\Application::class));
+
         $cmd->run(
-            new Symfony\Component\Console\Input\ArrayInput(['package' => 'foo']),
+            new Symfony\Component\Console\Input\ArrayInput([]),
             new Symfony\Component\Console\Output\NullOutput
         );
     }

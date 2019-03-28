@@ -54,7 +54,11 @@ class MessageCachingServiceTest extends TestCase
 
     public function testRefreshMessageCacheEvent()
     {
-        Event::shouldReceive('fire')->once()->with('JsLocalization.registerMessages');
+        $this->addToAssertionCount(
+            \Mockery::getContainer()->mockery_getExpectationCount()
+        );
+
+        Event::shouldReceive('dispatch')->once()->with('JsLocalization.registerMessages');
 
         MessageCachingService::refreshCache();
     }

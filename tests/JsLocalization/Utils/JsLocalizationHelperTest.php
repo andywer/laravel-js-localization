@@ -120,7 +120,7 @@ class JsLocalizationHelperTest extends TestCase
 
         $this->assertEquals([], JsLocalizationHelper::getAdditionalMessages());
 
-        Event::fire('JsLocalization.registerMessages');
+        Event::dispatch('JsLocalization.registerMessages');
 
         $this->assertEquals(
             $this->additionalMessageKeysFlat,
@@ -135,7 +135,7 @@ class JsLocalizationHelperTest extends TestCase
             JsLocalizationHelper::addMessagesToExport(['another']);
         });
 
-        Event::fire('JsLocalization.registerMessages');
+        Event::dispatch('JsLocalization.registerMessages');
 
         $this->assertEquals(
             array_merge($this->additionalMessageKeysFlat, ['another']),
@@ -164,8 +164,8 @@ class JsLocalizationHelperTest extends TestCase
     {
         $filePath = "/tmp/x/y/z/does-not-exist";
 
-        $this->setExpectedException(
-            'JsLocalization\Exceptions\FileNotFoundException',
+        $this->expectException(
+            JsLocalization\Exceptions\FileNotFoundException::class,
             "File not found: $filePath"
         );
 
