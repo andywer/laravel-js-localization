@@ -8,7 +8,7 @@ class StaticFileResponseTest extends TestCase
     protected $testFilePath;
     protected $testFileContent;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -33,7 +33,8 @@ class StaticFileResponseTest extends TestCase
     public function testExceptionHandling()
     {
         $filePath = "/tmp/x/y/z/does-not-exist";
-        $this->setExpectedException('Exception', "Cannot read file: $filePath");
+
+        $this->expectException(Exception::class, "Cannot read file: $filePath");
 
         new StaticFileResponse($filePath);
     }

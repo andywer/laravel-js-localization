@@ -60,7 +60,7 @@ class MessageCachingService extends AbstractCachingService
      */
     public function refreshCache()
     {
-        Event::fire('JsLocalization.registerMessages');
+        Event::dispatch('JsLocalization.registerMessages');
 
         $messagesJSON = $this->createMessagesJson();
         $this->refreshCacheUsing($messagesJSON);
