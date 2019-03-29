@@ -11,12 +11,10 @@ Simple, ease-to-use and flexible package for the [Laravel](http://laravel.com/) 
 Branches
 --------
 
- Laravel | Branch
-:--------|:-------
- 5.x     | laravel-5
- 4.2     | laravel-4.2
- 4.1     | laravel-4.1 (near end of life)
- 4.0     | laravel-4.0 (end of life)
+  Laravel  | Branch
+:----------|:-------
+ 5.8       | laravel-5.8
+ 5.0 - 5.7 | laravel-5 (end of life)
 
 
 Installation
@@ -26,7 +24,7 @@ Add the following line to the `require` section of your Laravel webapp's `compos
 
 ```javascript
     "require": {
-        "andywer/js-localization": "dev-laravel-5"    // "dev-laravel-4.1", "dev-laravel-4.2" for Laravel 4
+        "andywer/js-localization": "dev-laravel-5.8"    // see table above
     }
 ```
 
