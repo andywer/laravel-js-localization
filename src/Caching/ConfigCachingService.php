@@ -1,8 +1,8 @@
 <?php
 namespace JsLocalization\Caching;
 
-use Config;
-use Event;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
 
 /**
  * Class ConfigCachingService
