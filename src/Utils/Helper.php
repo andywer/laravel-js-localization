@@ -2,13 +2,13 @@
 namespace JsLocalization\Utils;
 
 use App;
-use Event;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use JsLocalization\Exceptions\FileNotFoundException;
 
 class Helper
 {
-    
+
     /**
      * Array of message keys. A set of messages that are
      * supposed to be exported to the JS code in addition
