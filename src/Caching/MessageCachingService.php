@@ -122,7 +122,7 @@ class MessageCachingService extends AbstractCachingService
         $translatedMessages = [];
 
         foreach ($messageKeys as $key) {
-            $translation = Lang::get($key, [], $locale);
+            $translation = __($key, [], $locale);
 
             if (is_array($translation)) {
                 $flattened = $this->flattenTranslations($translation, $key.'.');
