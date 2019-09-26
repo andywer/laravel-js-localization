@@ -80,9 +80,9 @@ class TestCase extends Orchestra\Testbench\TestCase
         $lang->shouldReceive('locale')->andReturn($locale);
 
         foreach ($this->testMessages[$locale] as $key=>$message) {
-            $lang->shouldReceive('getFromJson')
+            $lang->shouldReceive('get')
                 ->with($key)->andReturn($message);
-            $lang->shouldReceive('getFromJson')
+            $lang->shouldReceive('get')
                 ->with($key, m::any(), $locale)->andReturn($message);
         }
     }
