@@ -29,7 +29,7 @@ class RefreshCommandTest extends TestCase
     {
         $cmd = new RefreshCommand();
 
-        $cmd->setLaravel(resolve(\Illuminate\Contracts\Foundation\Application::class));
+        $cmd->setLaravel(app(\Illuminate\Contracts\Foundation\Application::class));
 
         $cmd->run(
             new Symfony\Component\Console\Input\ArrayInput([]),
