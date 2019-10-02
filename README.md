@@ -13,6 +13,7 @@ Branches
 
   Laravel  | Branch
 :----------|:-------
+ 6         | laravel-6
  5.8       | laravel-5.8
  5.0 - 5.7 | laravel-5 (end of life)
 
@@ -24,7 +25,7 @@ Add the following line to the `require` section of your Laravel webapp's `compos
 
 ```javascript
     "require": {
-        "andywer/js-localization": "dev-laravel-5.8"    // see table above
+        "andywer/js-localization": "dev-laravel-6"      // see table above
     }
 ```
 
