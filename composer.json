@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=7.2.5",
-        "illuminate/support": "6.*|7.*"
+        "php": ">=7.3.0",
+        "illuminate/support": "6.*|7.*|8.*"
     },
     "require-dev": {
         "mockery/mockery": "~1.0",
@@ -30,7 +30,7 @@
     },
     "extra": {
         "component": "package",
-        "frameworks": ["Laravel 7"]
+        "frameworks": ["Laravel 8"]
     },
     "minimum-stability": "dev",
     "repositories": [
