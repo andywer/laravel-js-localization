@@ -13,6 +13,8 @@ Branches
 
   Laravel  | Branch
 :----------|:-------
+ 8         | laravel-8
+ 7         | laravel-7
  6         | laravel-6
  5.8       | laravel-5.8
  5.0 - 5.7 | laravel-5 (end of life)
